@@ -6,11 +6,31 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/10 14:01:50 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/10 15:55:06 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char *ft_getenv(const char *name, char **envp)
+{
+	size_t	len;
+	size_t	i;
+
+	if (!envp || !*name)
+		return (NULL);
+	len = ft_strlen(name);
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
+		{
+			return (envp[i] + len + 1);
+		}
+		i++;
+	}
+	return (NULL);
+}
 
 int	count_line(char **array)
 {
@@ -65,13 +85,7 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	(void) envp;
 	char *input;
-	// int	i;
-	// char **env;
 
-	// i = 0;
-	// env = arraydup(envp);
-	// while (env[i])
-	// 	printf("%s\n", env[i++]);
 	while (1)
 	{
 		input = readline("minishell>");

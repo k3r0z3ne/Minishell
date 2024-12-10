@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:51:58 by witong            #+#    #+#             */
-/*   Updated: 2024/12/10 14:09:11 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/10 16:13:06 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ typedef enum e_tok_type
 	END,
 }		t_tok_type;
 
+typedef struct s_token
+{
+	t_tok_type type;
+	char	*value;
+	struct s_token *next;
+}	t_token;
+
 // exec
 // typedef struct	s_Command
 // {
@@ -71,5 +78,7 @@ typedef enum e_tok_type
 // 	pid_t	*pids;
 // 	t_Command	*Commands;
 // }				t_shell;
+
+char *ft_getenv(const char *name, char **envp);
 
 #endif
