@@ -3,50 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 18:04:08 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/09 18:02:20 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/10 13:51:58 by witong            #+#    #+#             */
+/*   Updated: 2024/12/10 14:09:11 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/wait.h>
+# include "../libft/libft.h"
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <limits.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
 
-typedef struct	s_Command
+// lexer
+typedef enum e_tok_type
 {
-	int		_numberOfSimpleCmds;
-	char	*_infile;
-	char	*_outfile;
-	char	*_errfile;
-	t_SimpleCommand	**SimpleCommand;
-}				t_Command;
+	WORD,
+	PIPE,
+	SIMPLEQ,
+	DOUBLEQ,
+	DOLLAR,
+	OPEIN,
+	OPEOUT,
+	APPEND,
+	HEREDOC,
+	UNKNOWN,
+	END,
+}		t_tok_type;
 
-typedef struct	s_SimpleCommand
-{
-	int		_numberOfArgs;
-	char	**_commands;
-}				t_SimpleCommand;
+// exec
+// typedef struct	s_Command
+// {
+// 	int		_numberOfSimpleCmds;
+// 	char	*_infile;
+// 	char	*_outfile;
+// 	char	*_errfile;
+// 	t_SimpleCommand	**SimpleCommand;
+// }				t_Command;
 
-typedef struct	s_shell
-{
-	char	**argv;
-	char	**envp;
-	int		infile;
-	int		outfile;
-	int		nb_cmd;
-	int		**pipe;
-	pid_t	*pids;
-	t_Command	*Commands;
-}				t_shell;
+// typedef struct	s_SimpleCommand
+// {
+// 	int		_numberOfArgs;
+// 	char	**_commands;
+// }				t_SimpleCommand;
 
-/* minishell */
-int	main(int argc, char **argv, char **envp);
+// typedef struct	s_shell
+// {
+// 	char	**argv;
+// 	char	**envp;
+// 	int		infile;
+// 	int		outfile;
+// 	int		nb_cmd;
+// 	int		**pipe;
+// 	pid_t	*pids;
+// 	t_Command	*Commands;
+// }				t_shell;
 
 #endif

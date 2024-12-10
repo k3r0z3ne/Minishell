@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+         #
+#    By: witong <witong@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 18:05:29 by arotondo          #+#    #+#              #
-#    Updated: 2024/12/10 12:53:50 by arotondo         ###   ########.fr        #
+#    Updated: 2024/12/10 14:03:54 by witong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,12 @@ OBJ_DIR = obj
 INC_DIR = include
 LIBFT_DIR = libft
 
-SRC = minishell.c
+SRC = main.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g
 CFLAGS = -Wall -Wextra -Werror -g3 -I $(INC_DIR) -I $(LIBFT_DIR)
-LIBS = -L $(LIBFT_DIR) -lft
+LIBS = -L $(LIBFT_DIR) -lft -lreadline
 
 DEF_COLOR = \033[0;39m
 GREEN = \033[0;92m
