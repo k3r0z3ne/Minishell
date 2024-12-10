@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 14:14:19 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/09 14:28:40 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:16:37 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
-	handle_argc_error(argc);
-	init_shell(&shell, envp);
+	(void)argc;
+	// handle_argc_error(argc);
+	init_shell(&shell, argv, envp);
 	return (0);
 }
