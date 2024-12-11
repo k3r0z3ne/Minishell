@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*   lexer_extract.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/11 16:17:38 by witong           ###   ########.fr       */
+/*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
+/*   Updated: 2024/12/11 17:21:26 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_isspace(char c)
+char	*extract_word(const char *line, int *i)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
-}
+	int		start;
 
-int	is_redirection(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
+	start = *i;
+	while (line[(*i)] && !ft_isspace(line[(*i)]) && !is_special_char(line[(*i)]))
+		(*i)++;
+	return (ft_substr(line, start, *i - start));
 }
-int	is_special_char(char c)
-{
-	return (c == '|' || c == '<' || c == '>'
-		|| c == '$' || c == '\'' || c == '\"');
-}
+// char *extract_single_quote(const char *line, int *i)
+// {
+
+// }
+// char *extract_double_quote(const char *line, int *i)
+// {
+
+// }
+// char *extract_dollar(const char *line, int *i);
