@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   lexer_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 14:14:19 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/09 14:28:40 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
+/*   Updated: 2024/12/11 14:10:01 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_isspace(char c)
 {
-	t_shell	shell;
+	return (c == 32 || (c >= 9 && c <= 13));
+}
 
-	handle_argc_error(argc);
-	init_shell(&shell, envp);
-	return (0);
+int	is_operator(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == '$');
 }
