@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 14:14:19 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/10 16:16:37 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/10 17:08:20 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_isupper(int c)
 {
-	t_shell	shell;
-
-	(void)argc;
-	// handle_argc_error(argc);
-	init_shell(&shell, argv, envp);
+	if (c > 64 && c < 91)
+		return (1);
 	return (0);
+}
+
+char	*ft_getenv(const char *name, char **envp)
+{
+	size_t	len;
+	size_t	i;
+
+	if (!envp || !*envp || !*name)
+		return (NULL);
+	len = ft_strlen(name);
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
+			return (envp[i] + len + 1);
+		i++;
+	}
+	return (NULL);
 }

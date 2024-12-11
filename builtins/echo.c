@@ -6,21 +6,34 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/10 17:54:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:36:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_flag(char *flag, int *i)
+// en suspens : test avec append void test_echo.sh
+
+void	apply_flag(int flag)
 {
-	if (flag == NULL)
+	if (flag == 0)
+		write(1, "\n", 1);
+}
+
+int	check_flag(char **flag, int *idx)
+{
+	int	i;
+
+	i = 1;
+	if (flag[i] == NULL)
 		return (0);
-	if (ft_strncmp(flag, "-n", 2) == 0)
+	while (flag[i] && ft_strncmp(flag[i], "-n", 3) == 0)
 	{
-		(*i)++;
-		return (1);
+		(*idx)++;
+		i++;
 	}
+	if (i > 1)
+		return (1);
 	return (0);
 }
 
@@ -31,7 +44,7 @@ int	ft_echo(int nb, char **arg, char **envp)
 	int	flag;
 
 	i = 0;
-	flag = check_flag(arg[1], &i);
+	flag = check_flag(arg, &i);
 	while (++i < nb)
 	{
 		j = 0;
@@ -46,9 +59,9 @@ int	ft_echo(int nb, char **arg, char **envp)
 				break ;
 		}
 		ft_putstr_fd(arg[i], 1);
-		ft_putchar_fd(' ', 1);
+		if (i != nb - 1)
+			ft_putchar_fd(' ', 1);
 	}
-	if (flag == 0)
-		write(1, "\n", 1);
+	apply_flag(flag);
 	return (0);
 }
