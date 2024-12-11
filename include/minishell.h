@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:51:58 by witong            #+#    #+#             */
-/*   Updated: 2024/12/10 16:13:06 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/11 11:44:14 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef enum e_tok_type
 	SIMPLEQ,
 	DOUBLEQ,
 	DOLLAR,
-	OPEIN,
-	OPEOUT,
+	REDIRIN,
+	REDIROUT,
 	APPEND,
 	HEREDOC,
 	UNKNOWN,
@@ -50,6 +50,14 @@ typedef struct s_token
 	char	*value;
 	struct s_token *next;
 }	t_token;
+
+// lexer and utils
+t_token	*lexer(char *line);
+t_token	*create_token(t_tok_type type, char *value);
+void token_add_back(t_token **list, t_token *new_token);
+void print_tokens(t_token *token);
+int	ft_isspace(char c);
+int	is_special_char(char c);
 
 // exec
 // typedef struct	s_Command

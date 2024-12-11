@@ -6,7 +6,7 @@
 #    By: witong <witong@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 18:05:29 by arotondo          #+#    #+#              #
-#    Updated: 2024/12/10 14:03:54 by witong           ###   ########.fr        #
+#    Updated: 2024/12/11 12:31:05 by witong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJ_DIR = obj
 INC_DIR = include
 LIBFT_DIR = libft
 
-SRC = main.c
+SRC = main.c lexer/lexer.c lexer/lexer_utils.c lexer/lexer_utils2.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g
@@ -35,6 +35,7 @@ $(NAME): $(OBJ)
 	@echo "${GREEN}Compilation of $(NAME) done.${DEF_COLOR}"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/minishell.h | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):

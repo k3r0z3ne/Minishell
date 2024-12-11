@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/10 15:55:06 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/11 12:31:42 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,17 @@ int	main(int ac, char **av, char **envp)
 	(void) av;
 	(void) envp;
 	char *input;
+	t_token	*tokens;
 
 	while (1)
 	{
-		input = readline("minishell>");
+		input = readline("minishell> ");
 		if (!input)
 			break ;
 		if (*input != '\0')
 			add_history(input);
+		tokens = lexer(input);
+		print_tokens(tokens);
 	}
 	rl_clear_history();
 	return (0);
