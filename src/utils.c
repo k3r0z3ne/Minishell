@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/11 14:23:54 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/10 17:08:20 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-int	ft_isspace(char c)
+int	ft_isupper(int c)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
+	if (c > 64 && c < 91)
+		return (1);
+	return (0);
 }
 
-int	is_operator(char c)
+char	*ft_getenv(const char *name, char **envp)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '$');
+	size_t	len;
+	size_t	i;
+
+	if (!envp || !*envp || !*name)
+		return (NULL);
+	len = ft_strlen(name);
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
+			return (envp[i] + len + 1);
+		i++;
+	}
+	return (NULL);
 }

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/11 14:23:54 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/10 17:55:14 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/10 18:08:52 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-int	ft_isspace(char c)
+void	ft_pwd(int argc)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
-}
+	char	*curr_dir;
 
-int	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '$');
+	if (argc != 1)
+	{
+		ft_putstr_fd("pwd: too many arguments\n", 2);
+		return ;
+	}
+	curr_dir = malloc(sizeof(char) * 1024);
+	if (!curr_dir)
+		return ; 
+	if (getcwd(curr_dir, 1024) == NULL)
+	{
+		free(curr_dir);
+		return ;
+	}
+	ft_putendl_fd(curr_dir, 1);
+	free(curr_dir);
 }

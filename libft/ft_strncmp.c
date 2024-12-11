@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:47:47 by arotondo          #+#    #+#             */
-/*   Updated: 2024/05/24 19:10:01 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:23:02 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	else
 		return (*conv_s1 - *conv_s2);
 }
+
+// int	ft_strncmp(const char *s1, const char *s2, size_t n)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	if (n == 0)
+// 		return (0);
+// 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0' && i < n - 1)
+// 		i++;
+// 	return (s1[i] - s2[i]);
+// }
+
 /*
 int	main(int argc, char **argv)
 {

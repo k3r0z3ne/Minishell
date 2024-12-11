@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/11 14:23:54 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/11 12:49:07 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-int	ft_isspace(char c)
+void	ft_exit(int status)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
-}
-
-int	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '$');
+	
 }

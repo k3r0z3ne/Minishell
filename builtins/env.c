@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/11 14:23:54 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/11 14:20:50 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-int	ft_isspace(char c)
+int	ft_env(char **envp)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
-}
+	int	i;
 
-int	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '$');
+	i = 0;
+	while (envp[i])
+	{
+		ft_putendl_fd(envp[i], 1);
+		i++;
+	}
+	return (0);
 }
