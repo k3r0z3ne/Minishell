@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2024/12/11 12:25:28 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/12 10:51:12 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,44 @@ void token_add_back(t_token **list, t_token *new_token)
 }
 
 
-void print_tokens(t_token *token)
+void print_tokens(t_token *head)
 {
 	t_token *current;
 
-	current = token;
+	current = head;
 	while (current)
 	{
-		printf("[%d : '%s'] ->\n", current->type, current->value);
+		printf("[%d:%s] -> ", current->type, current->value);
 		current = current->next;
 	}
+	printf("\n");
 }
+
+void	free_token(t_token **list)
+{
+	t_token *tmp;
+
+	if (!list || !(*list))
+		return ;
+	while (*list)
+	{
+		tmp = (*list)->next;
+		free(*list);
+		*list = tmp;
+	}
+	*list = NULL;
+}
+
+/*
+int main(void)
+{
+	char *input = "echo hello | cat < file";
+	t_token*	token = create_token(5, input);
+	t_token*	token2 = create_token(10, "Hello, world");
+	token_add_back(&token, token2);
+
+	print_tokens(token);
+	return (0);
+}
+*/
 
