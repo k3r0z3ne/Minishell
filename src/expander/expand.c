@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/12 14:14:42 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:18:39 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,40 @@ void	expand_str(t_shell *shell, t_token *token)
 {
 	int		i;
 	int		j;
-	char	*var;
+	char	*path;
+	t_token	*new;
 
 	i = 0;
 	while (token->value[i] && token->value[i] != '$')
 		i++;
 	j = i;
-	while (token->value[i] && ft_isupper(token->value[i]))
-	{
-		if ()
+	while (token->value[i] != ' ' && token->value[i] != '\t')
 		i++;
+	path = ft_getenv(token->value + i - j, shell->envp);
+	if (path != NULL)
+	{
+		new = create_token(0, path);
+		join_token(shell->lst, token);
 	}
+	free_token(token);
 }
 
 void	expand_env(t_shell *shell, t_token *token)
 {
-	
+	t_token	*new;
+	char	*path;
+
+	new = NULL;
+	path = NULL;
+	if (!token->value || token->value[0] != '$')
+		return ;
+	path = ft_getenv(token->value, shell->envp);
+	if (path != NULL)
+	{
+		new = create_token(0, path);
+		join_token(shell->lst, token);
+	}
+	free_token(token);
 }
 
 void	expander(t_shell *shell, t_token *token)
