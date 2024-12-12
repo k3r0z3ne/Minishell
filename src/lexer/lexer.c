@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2024/12/12 10:27:48 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:02:09 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,4 @@ t_token *lexer(char *line)
 	token_add_back(&tokens, create_token(END, NULL));
 	return tokens;
 }
+
