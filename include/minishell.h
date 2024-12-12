@@ -29,14 +29,21 @@ typedef enum e_tok_type
 	HEREDOC,
 	UNKNOWN,
 	END,
-}		t_tok_type;
+}	t_tok_type;
 
 typedef struct s_token
 {
-	t_tok_type type;
-	char	*value;
-	struct s_token *next;
-}	t_token;
+	t_tok_type		type;
+	char			*value;
+	struct s_token	*next;
+}					t_token;
+
+typedef struct s_shell
+{
+	char	**argv;
+	char	**envp;
+	t_token	*token;
+}			t_shell;
 
 // lexer and utils
 t_token	*lexer(char *line);
