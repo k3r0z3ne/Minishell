@@ -6,41 +6,43 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/11 17:04:23 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:14:42 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
+// input : "$HOME"
+
 void	expand_str(t_shell *shell, t_token *token)
 {
-	t_token	*tmp;
 	int		i;
-	char	*replace;
+	int		j;
+	char	*var;
 
-	tmp = token;
 	i = 0;
-	replace = NULL;
-	while (tmp->value[i] != '$')
+	while (token->value[i] && token->value[i] != '$')
 		i++;
-	if (tmp->value[i] == '$')
+	j = i;
+	while (token->value[i] && ft_isupper(token->value[i]))
 	{
-		replace = ft_getenv(tmp->value + i, shell->envp);
-		if (replace == NULL)
-			return ;
-		tmp->value = replace;
+		if ()
+		i++;
 	}
+}
+
+void	expand_env(t_shell *shell, t_token *token)
+{
 	
 }
 
-void	expander(t_token *token)
+void	expander(t_shell *shell, t_token *token)
 {
-	while (token && token->next)
-	{
-		if (token->type == 3)
-			expand_str(token);
-		else if (token->type == 4)
-			expand_env(&token);
-		token = token->next;
-	}
+	int	i;
+
+	i = 0;
+	if (token->type == 3)
+		expand_str(shell, token);
+	else if (token->type == 4)
+		expand_env(shell, token);
 }

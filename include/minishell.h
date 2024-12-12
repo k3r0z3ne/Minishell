@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:51:58 by witong            #+#    #+#             */
-/*   Updated: 2024/12/11 14:22:42 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:59:28 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,21 @@ typedef enum e_tok_type
 	HEREDOC,
 	UNKNOWN,
 	END,
-}		t_tok_type;
+}	t_tok_type;
 
 typedef struct s_token
 {
-	t_tok_type type;
-	char	*value;
-	struct s_token *next;
-}	t_token;
+	t_tok_type		type;
+	char			*value;
+	struct s_token	*next;
+}					t_token;
+
+typedef struct s_shell
+{
+	char	**argv;
+	char	**envp;
+	t_token	*token;
+}			t_shell;
 
 // lexer and utils
 t_token	*lexer(char *line);

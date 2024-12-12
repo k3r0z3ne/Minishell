@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/10 17:08:20 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/11 14:34:11 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/12 14:13:13 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-int	ft_isupper(int c)
-{
-	if (c > 64 && c < 91)
-		return (1);
-	return (0);
-}
+#include "../../include/minishell.h"
 
-char	*ft_getenv(const char *name, char **envp)
-{
-	size_t	len;
-	size_t	i;
+/* execution */
 
-	if (!envp || !*envp || !*name)
-		return (NULL);
-	len = ft_strlen(name);
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
-			return (envp[i] + len + 1);
-		i++;
-	}
-	return (NULL);
-}
+/* exec_utils */
+int	ft_isupper(int c);
+
+
+#endif
