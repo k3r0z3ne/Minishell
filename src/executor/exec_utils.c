@@ -6,11 +6,31 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/11 16:59:30 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:53:30 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int	is_builtin(t_shell *shell, t_cmd *cmd)
+{
+	if (!ft_strcmp(cmd->full_cmd[0], "echo"))
+		return (1);
+	else if (!ft_strcmp(cmd->full_cmd[0], "cd"))
+		return (1);
+	else if (!ft_strcmp(cmd->full_cmd[0], "pwd"))
+		return (1);
+	else if (!ft_strcmp(cmd->full_cmd[0], "export"))
+		return (1);
+	else if (!ft_strcmp(cmd->full_cmd[0], "unset"))
+		return (1);
+	else if (!ft_strcmp(cmd->full_cmd[0], "env"))
+		return (1);
+	else if (!ft_strcmp(cmd->full_cmd[0], "exit"))
+		return (1);
+	else
+		return (0);
+}
 
 int	ft_isupper(int c)
 {

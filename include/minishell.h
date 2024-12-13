@@ -36,20 +36,34 @@ typedef struct s_token
 	t_tok_type		type;
 	char			*value;
 	struct s_token	*next;
+	struct s_token	*prev;
 }					t_token;
+
+typedef struct s_cmd
+{
+	char	**full_cmd;
+	char	*infile; // OU INT * // A DETERMINER
+	char	*outfile; // OU INT * // A DETERMINER
+	int		*heredoc;
+	int		*append;
+	struct s_cmd *next;
+	struct s_cmd *prev;
+}			t_cmd;
 
 typedef struct s_shell
 {
 	char	**argv;
 	char	**envp;
 	t_token	*token;
+	t_token	**lst;
 }			t_shell;
 
 // lexer and utils
 t_token	*lexer(char *line);
 t_token	*create_token(t_tok_type type, char *value);
 void	token_add_back(t_token **list, t_token *new_token);
-void	free_token(t_token **list);
+void	free_token(t_token *token);
+void	free_lst_token(t_token **list);
 void	print_tokens(t_token *token);
 void	handle_double_ops(const char *line, int *i, t_token **tokens);
 void	handle_redirection(const char *line, int *i, t_token **tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/11 12:31:42 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/12 18:00:56 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ char	**arraydup(char **array)
 
 int	main(int ac, char **av, char **envp)
 {
+	t_token	*tokens;
+	char 	*input;
+
 	(void) ac;
 	(void) av;
 	(void) envp;
-	char *input;
-	t_token	*tokens;
-
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -95,6 +95,7 @@ int	main(int ac, char **av, char **envp)
 		if (*input != '\0')
 			add_history(input);
 		tokens = lexer(input);
+		
 		print_tokens(tokens);
 	}
 	rl_clear_history();

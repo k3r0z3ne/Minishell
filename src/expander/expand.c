@@ -6,13 +6,13 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/12 18:18:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:26:15 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-// input : "$HOME"
+// inputs : "$VAR" / $VAR / "$?" / $?
 
 void	expand_str(t_shell *shell, t_token *token)
 {
@@ -24,16 +24,22 @@ void	expand_str(t_shell *shell, t_token *token)
 	i = 0;
 	while (token->value[i] && token->value[i] != '$')
 		i++;
-	j = i;
+	j = i + 1;
+	if (token->value[j] == '?')
+	{
+		case_return(token);
+		return ;
+	}
 	while (token->value[i] != ' ' && token->value[i] != '\t')
 		i++;
 	path = ft_getenv(token->value + i - j, shell->envp);
-	if (path != NULL)
+	if (path == NULL)
 	{
-		new = create_token(0, path);
-		join_token(shell->lst, token);
+		free_token(token);
+		return ;
 	}
-	free_token(token);
+	free(token->value);
+	token->value = ft_strdup(path);
 }
 
 void	expand_env(t_shell *shell, t_token *token)
@@ -45,20 +51,24 @@ void	expand_env(t_shell *shell, t_token *token)
 	path = NULL;
 	if (!token->value || token->value[0] != '$')
 		return ;
-	path = ft_getenv(token->value, shell->envp);
-	if (path != NULL)
+	else if (token->value[1] == '?')
 	{
-		new = create_token(0, path);
-		join_token(shell->lst, token);
+		case_return(token);
+		return ;
 	}
-	free_token(token);
+	path = ft_getenv(token->value, shell->envp);
+	if (path == NULL)
+	{
+		free_token(token);
+		return ;
+	}
+	free(token->value);
+	token->value = ft_strdup(path);
+	token->type = WORD;
 }
 
 void	expander(t_shell *shell, t_token *token)
 {
-	int	i;
-
-	i = 0;
 	if (token->type == 3)
 		expand_str(shell, token);
 	else if (token->type == 4)

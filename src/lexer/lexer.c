@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2024/12/12 15:02:09 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:23:37 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token *lexer(char *line)
 {
 	t_token *tokens;
-	int i;
+	int 	i;
 
 	i = 0;
 	tokens = NULL;
@@ -35,6 +35,6 @@ t_token *lexer(char *line)
 			handle_word(line, &i, &tokens);
 	}
 	token_add_back(&tokens, create_token(END, NULL));
-	return tokens;
+	return (tokens);
 }
 
