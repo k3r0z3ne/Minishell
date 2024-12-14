@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 10:23:35 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 11:26:13 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/14 14:40:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../includes/minishell.h"
 
 int	is_word(t_tok_type type)
 {
@@ -56,7 +56,7 @@ void	print_table(t_cmd *cmds)
 		j++;
 	}
 }
-void unexpected_token(t_token **tokens)
+void	unexpected_token(t_token **tokens)
 {
 	ft_putstr_fd("parser: syntax error near unexpected token '", 2);
 	ft_putstr_fd((*tokens)->value, 2);
