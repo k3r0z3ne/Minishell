@@ -6,7 +6,7 @@
 #    By: witong <witong@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 18:05:29 by arotondo          #+#    #+#              #
-#    Updated: 2024/12/13 15:59:33 by witong           ###   ########.fr        #
+#    Updated: 2024/12/14 10:51:08 by witong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT_DIR = libft
 SRC = main.c lexer/lexer.c lexer/lexer_utils.c \
 		lexer/lexer_utils2.c lexer/lexer_utils3.c \
 		lexer/lexer_extract.c lexer/lexer_handler.c \
-		parser/parser.c parser/parser_redir.c parser/parser_utils.c
+		parser/parser.c parser/parser_redir.c parser/parser_utils.c parser/parser_error.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g
