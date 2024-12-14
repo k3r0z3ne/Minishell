@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2024/12/13 16:45:31 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:38:34 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*extract_dollar(const char *line, int *i)
 	(*i)++;
 	start = *i;
 	if (!line[*i] || ft_isspace(line[*i]))
-		return(NULL);
+		return(ft_strdup("$"));
 	while (line[*i] && !ft_isspace(line[*i]))
 		(*i)++;
 	return (ft_substr(line, start, *i - start));

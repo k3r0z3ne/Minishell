@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:52:21 by witong            #+#    #+#             */
-/*   Updated: 2024/12/13 16:45:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:39:21 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,16 @@ void handle_quotes(const char *line, int *i, t_token **tokens)
 void handle_dollar(const char *line, int *i, t_token **tokens)
 {
 	char *value;
+	t_tok_type	type;
 
 	value = extract_dollar(line, i);
-	if(!value)
+	if (!value)
 		return ;
-	token_add_back(tokens, create_token(DOLLAR, value));
+	if (ft_strcmp(value, "$") == 0)
+		type = WORD;
+	else
+		type = DOLLAR;
+	token_add_back(tokens, create_token(type, value));
 }
 
 void handle_word(const char *line, int *i, t_token **tokens)

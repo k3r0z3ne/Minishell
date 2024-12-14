@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/13 16:48:30 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:38:16 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	main(int ac, char **av, char **envp)
 		tokens = lexer(input);
 		
 		print_tokens(tokens);
+		print_table(cmds);
 	}
 	rl_clear_history();
 	return (0);
