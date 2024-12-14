@@ -6,11 +6,30 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/11 14:20:50 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:22:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../includes/builtins.h"
+
+char	*ft_getenv(const char *name, char **envp)
+{
+	size_t	len;
+	size_t	i;
+
+	if (!envp || !*envp || !*name)
+		return (NULL);
+	len = ft_strlen(name);
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
+			return (envp[i] + len + 1);
+		i++;
+	}
+	return (NULL);
+}
+
 
 int	ft_env(char **envp)
 {

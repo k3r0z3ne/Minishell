@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/13 16:45:41 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/12 16:27:31 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/13 14:24:42 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "expand.h"
 
-int	ft_isspace(char c)
+void	join_token(t_token **lst, t_token *token)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
+	t_token	*next;
+	t_token	*prev;
+
+	next = NULL;
+	prev = NULL;
+	if (!token)
+		return ;
+	if (token->next)
+		next = token->next;
+	if (token->prev)
+		prev = token->prev;
+	else
+		*lst = next;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
 }
 
-int	is_redirection(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-}
+// A FAIRE PENDANT L'EXEC
 
-int	is_special_char(char c)
-{
-	return (c == '|' || c == '<' || c == '>'
-		|| c == '$' || c == '\'' || c == '\"');
-}
+// void	case_return(t_token *token)
+// {
+	
+// }

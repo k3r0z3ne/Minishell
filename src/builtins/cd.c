@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/13 16:45:41 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/13 16:23:06 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/builtins.h"
 
-int	ft_isspace(char c)
+int	ft_cd(const char *path, char **envp)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
+	char	*go_home;
+
+	go_home = ft_getenv("HOME", envp);
+	if (go_home == NULL)
+		return (1);
+	printf("%s\n", getcwd(go_home, ft_strlen(go_home)));
+	chdir(go_home);
+	// printf("%s\n", go_home);
+	return (0);
 }
 
-int	is_redirection(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-}
-
-int	is_special_char(char c)
-{
-	return (c == '|' || c == '<' || c == '>'
-		|| c == '$' || c == '\'' || c == '\"');
-}
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	return (ft_cd(argv[1], envp));
+// }

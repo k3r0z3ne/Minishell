@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/13 16:05:07 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/14 13:38:16 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-char *ft_getenv(const char *name, char **envp)
-{
-	size_t	len;
-	size_t	i;
-
-	if (!envp || !*name)
-		return (NULL);
-	len = ft_strlen(name);
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
-		{
-			return (envp[i] + len + 1);
-		}
-		i++;
-	}
-	return (NULL);
-}
+#include "includes/minishell.h"
 
 int	count_line(char **array)
 {
@@ -81,13 +61,12 @@ char	**arraydup(char **array)
 
 int	main(int ac, char **av, char **envp)
 {
+	t_token	*tokens;
+	char 	*input;
+
 	(void) ac;
 	(void) av;
 	(void) envp;
-	char *input;
-	t_token	*tokens;
-	t_cmd	*cmds;
-
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -96,7 +75,7 @@ int	main(int ac, char **av, char **envp)
 		if (*input != '\0')
 			add_history(input);
 		tokens = lexer(input);
-		cmds = parser(tokens);
+		
 		print_tokens(tokens);
 		print_table(cmds);
 	}

@@ -6,41 +6,69 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/12 14:14:42 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:26:15 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-// input : "$HOME"
+// inputs : "$VAR" / $VAR / "$?" / $?
 
 void	expand_str(t_shell *shell, t_token *token)
 {
 	int		i;
 	int		j;
-	char	*var;
+	char	*path;
+	t_token	*new;
 
 	i = 0;
 	while (token->value[i] && token->value[i] != '$')
 		i++;
-	j = i;
-	while (token->value[i] && ft_isupper(token->value[i]))
+	j = i + 1;
+	if (token->value[j] == '?')
 	{
-		if ()
-		i++;
+		case_return(token);
+		return ;
 	}
+	while (token->value[i] != ' ' && token->value[i] != '\t')
+		i++;
+	path = ft_getenv(token->value + i - j, shell->envp);
+	if (path == NULL)
+	{
+		free_token(token);
+		return ;
+	}
+	free(token->value);
+	token->value = ft_strdup(path);
 }
 
 void	expand_env(t_shell *shell, t_token *token)
 {
-	
+	t_token	*new;
+	char	*path;
+
+	new = NULL;
+	path = NULL;
+	if (!token->value || token->value[0] != '$')
+		return ;
+	else if (token->value[1] == '?')
+	{
+		case_return(token);
+		return ;
+	}
+	path = ft_getenv(token->value, shell->envp);
+	if (path == NULL)
+	{
+		free_token(token);
+		return ;
+	}
+	free(token->value);
+	token->value = ft_strdup(path);
+	token->type = WORD;
 }
 
 void	expander(t_shell *shell, t_token *token)
 {
-	int	i;
-
-	i = 0;
 	if (token->type == 3)
 		expand_str(shell, token);
 	else if (token->type == 4)
