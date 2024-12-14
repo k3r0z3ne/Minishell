@@ -6,31 +6,11 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/12 18:00:56 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:48:30 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-char *ft_getenv(const char *name, char **envp)
-{
-	size_t	len;
-	size_t	i;
-
-	if (!envp || !*name)
-		return (NULL);
-	len = ft_strlen(name);
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
-		{
-			return (envp[i] + len + 1);
-		}
-		i++;
-	}
-	return (NULL);
-}
+#include "includes/minishell.h"
 
 int	count_line(char **array)
 {

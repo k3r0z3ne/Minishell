@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 17:55:14 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/10 18:08:52 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/11 15:51:50 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/13 16:18:33 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#ifndef EXPAND_H
+# define EXPAND_H
 
-void	ft_pwd(int argc)
-{
-	char	*curr_dir;
+#include "minishell.h"
 
-	if (argc != 1)
-	{
-		ft_putstr_fd("pwd: too many arguments\n", 2);
-		return ;
-	}
-	curr_dir = malloc(sizeof(char) * 1024);
-	if (!curr_dir)
-		return ; 
-	if (getcwd(curr_dir, 1024) == NULL)
-	{
-		free(curr_dir);
-		return ;
-	}
-	ft_putendl_fd(curr_dir, 1);
-	free(curr_dir);
-}
+/* expand */
+void	expander(t_shell *shell, t_token *token);
+void	expand_env(t_shell *shell, t_token *token);
+void	expand_str(t_shell *shell, t_token *token);
+
+/* expand_utils */
+void	join_token(t_token **lst, t_token *token);
+
+#endif

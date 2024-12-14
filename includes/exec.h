@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 15:51:50 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/12 18:12:27 by arotondo         ###   ########.fr       */
+/*   Created: 2024/12/11 14:34:11 by arotondo          #+#    #+#             */
+/*   Updated: 2024/12/13 17:07:56 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPAND_H
-# define EXPAND_H
+#ifndef EXEC_H
+# define EXEC_H
 
-#include "../../include/minishell.h"
-#include "../executor/exec.h"
+#include "minishell.h"
 
-/* expand */
-void	expander(t_shell *shell, t_token *token);
-void	expand_env(t_shell *shell, t_token *token);
-void	expand_str(t_shell *shell, t_token *token);
+/* execution */
+int		only_cmd(t_shell *shell, t_cmd *cmd);
+int		main_exec(t_shell *shell, t_cmd *cmd);
 
-/* expand_utils */
-void	join_token(t_token **lst, t_token *token);
+/* exec_utils */
+char	*check_path(char **cmd, char *env);
+char	*find_path(t_shell *shell);
+char	*set_path(char **tab, char **cmd);
+void	redirect_setup(t_shell *shell, t_cmd *cmd);
+int		is_builtin(t_shell *shell, t_cmd *cmd);
+int		ft_isupper(int c);
 
 #endif
