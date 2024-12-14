@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2024/12/13 15:58:12 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/14 11:44:49 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,10 @@ t_cmd	*init_cmd(t_token *tokens)
 
 }
 
-// void	parse_redirs(t_token **tokens, t_cmd *cmd)
-// {
-// 	if (!tokens || !(*token))
-// 		return ;
-// 	if ((*tokens)->type == REDIRIN)
-// 		parse_redirin(tokens, cmd);
-// 	else if ((*tokens)->type == REDIROUT)
-// 		parse_redirout(tokens, cmd);
-// 	else if ((*tokens)->type == APPEND)
-// 		parse_append(tokens, cmd);
-// 	else if ((*tokens)->type == HEREDOC)
-// 		parse_heredoc(tokens, cmd);
-// 	*tokens = (*tokens)->next;
-// }
-
 void	parse_command(t_token **tokens, t_cmd **cmd)
 {
 	int i;
 
-	if (!tokens || !(*tokens) || !(*tokens)->value)
-		return ;
 	i = 0;
 	while ((*cmd)->full_cmd[i])
 		i++;
@@ -69,38 +52,46 @@ void	parse_command(t_token **tokens, t_cmd **cmd)
 	(*cmd)->full_cmd[i] = NULL;
 }
 
-t_cmd	*parser(t_token *tokens)
+void	parse_pipe(t_token **tokens, t_cmd **cmd)
 {
-	t_token	*current;
-	t_cmd	*cmd;
-	t_cmd	*head;
+	(*cmd)->next = init_cmd(*tokens);
+	if (!(*cmd)->next)
+		return;
+	*cmd = (*cmd)->next;
+}
 
-	if(!tokens || !tokens->value)
-		return(NULL);
-	current = tokens;
+void parse_tokens(t_token **tokens, t_cmd **cmd)
+{
+	while (*tokens && (*tokens)->type != END)
+	{
+		if (parser_error(tokens))
+			break;
+		else if ((*tokens)->type == PIPE)
+			parse_pipe(tokens, cmd);
+		// else if (is_redirection2((*tokens)->type))
+		// 	parse_redirs(tokens, cmd);
+		else if (is_word((*tokens)->type))
+			parse_command(tokens, cmd);
+		else
+		{
+			unexpected_token(tokens);
+			break;
+		}
+		*tokens = (*tokens)->next;
+	}
+}
+
+t_cmd *parser(t_token *tokens)
+{
+	t_cmd *cmd;
+	t_cmd *head;
+
+	if (!tokens || !tokens->value)
+		return (NULL);
 	cmd = init_cmd(tokens);
 	if (!cmd)
 		return (NULL);
 	head = cmd;
-	while (current && current->type != END)
-	{
-		if (is_word(current->type))
-			parse_command(&current, &cmd);
-		// else if (is_redirection2(current->type))
-		// {
-		// 	parse_redirs(&current, cmd);
-		// 	current = current->next;
-		// }
-		else if (current->type == PIPE)
-		{
-			cmd->next = init_cmd(current);
-			if(!cmd->next)
-				return (NULL);
-			cmd = cmd->next;
-		}
-		// else
-		// 	//error
-		current = current->next;
-	}
+	parse_tokens(&tokens, &cmd);
 	return (head);
 }
