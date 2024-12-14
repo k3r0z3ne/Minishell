@@ -6,13 +6,13 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 13:39:02 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:43:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../includes/minishell.h"
 
-t_token *lexer(char *line)
+t_token	*lexer(char *line)
 {
 	t_token *tokens;
 	int 	i;

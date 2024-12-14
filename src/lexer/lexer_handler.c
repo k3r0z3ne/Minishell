@@ -6,13 +6,13 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:52:21 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 13:39:21 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:45:50 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void handle_double_ops(const char *line, int *i, t_token **tokens)
+void	handle_double_ops(const char *line, int *i, t_token **tokens)
 {
 	char *value;
 	t_tok_type type;
@@ -28,7 +28,7 @@ void handle_double_ops(const char *line, int *i, t_token **tokens)
 	}
 }
 
-void handle_redirection(const char *line, int *i, t_token **tokens)
+void	handle_redirection(const char *line, int *i, t_token **tokens)
 {
 	char *value;
 	t_tok_type type;
@@ -41,7 +41,7 @@ void handle_redirection(const char *line, int *i, t_token **tokens)
 	(*i)++;
 }
 
-void handle_quotes(const char *line, int *i, t_token **tokens)
+void	handle_quotes(const char *line, int *i, t_token **tokens)
 {
 	char *value;
 
@@ -61,7 +61,7 @@ void handle_quotes(const char *line, int *i, t_token **tokens)
 	}
 }
 
-void handle_dollar(const char *line, int *i, t_token **tokens)
+void	handle_dollar(const char *line, int *i, t_token **tokens)
 {
 	char *value;
 	t_tok_type	type;
@@ -76,7 +76,7 @@ void handle_dollar(const char *line, int *i, t_token **tokens)
 	token_add_back(tokens, create_token(type, value));
 }
 
-void handle_word(const char *line, int *i, t_token **tokens)
+void	handle_word(const char *line, int *i, t_token **tokens)
 {
 	char *value;
 

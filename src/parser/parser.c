@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 11:44:49 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/14 14:52:05 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../includes/minishell.h"
 
 t_cmd	*init_cmd(t_token *tokens)
 {
@@ -40,6 +40,22 @@ t_cmd	*init_cmd(t_token *tokens)
 
 }
 
+t_cmd *parser(t_token *tokens)
+{
+	t_cmd *cmd;
+	t_cmd *head;
+
+	if (!tokens || !tokens->value)
+		return (NULL);
+	cmd = init_cmd(tokens);
+	if (!cmd)
+		return (NULL);
+	head = cmd;
+	parse_tokens(&tokens, &cmd);
+	return (head);
+}
+
+
 void	parse_command(t_token **tokens, t_cmd **cmd)
 {
 	int i;
@@ -60,7 +76,7 @@ void	parse_pipe(t_token **tokens, t_cmd **cmd)
 	*cmd = (*cmd)->next;
 }
 
-void parse_tokens(t_token **tokens, t_cmd **cmd)
+void	parse_tokens(t_token **tokens, t_cmd **cmd)
 {
 	while (*tokens && (*tokens)->type != END)
 	{
@@ -79,19 +95,4 @@ void parse_tokens(t_token **tokens, t_cmd **cmd)
 		}
 		*tokens = (*tokens)->next;
 	}
-}
-
-t_cmd *parser(t_token *tokens)
-{
-	t_cmd *cmd;
-	t_cmd *head;
-
-	if (!tokens || !tokens->value)
-		return (NULL);
-	cmd = init_cmd(tokens);
-	if (!cmd)
-		return (NULL);
-	head = cmd;
-	parse_tokens(&tokens, &cmd);
-	return (head);
 }

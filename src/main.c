@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 13:38:16 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 15:16:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,21 @@ char	**arraydup(char **array)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_token	*tokens;
-	char 	*input;
+	t_shell	*shell;
 
-	(void) ac;
-	(void) av;
-	(void) envp;
+	shell = NULL;
+	init_shell(&shell, ac, av, envp);
 	while (1)
 	{
-		input = readline("minishell> ");
-		if (!input)
+		shell->input = readline("minishell> ");
+		if (!shell->input)
 			break ;
-		if (*input != '\0')
-			add_history(input);
-		tokens = lexer(input);
+		if (*shell->input != '\0')
+			add_history(shell->input);
+		shell->token = lexer(shell->input);
 		
-		print_tokens(tokens);
-		print_table(cmds);
+		print_tokens(shell->token);
+		print_table(shell->cmd);
 	}
 	rl_clear_history();
 	return (0);

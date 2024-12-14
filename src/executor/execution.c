@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 17:42:30 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:28:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int	only_cmd(t_shell *shell, t_cmd *cmd)
 	else
 		parent_process(shell, cmd);
 	return (ret);
+	
+}
+
+int	several_cmds(t_shell *shell, t_cmd *cmd)
+{
 	
 }
 
