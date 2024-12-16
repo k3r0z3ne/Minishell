@@ -6,11 +6,11 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:55:14 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 16:42:57 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:10:15 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "../../includes/builtins.h"
 
 void	ft_pwd(int argc)
 {

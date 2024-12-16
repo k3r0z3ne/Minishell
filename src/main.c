@@ -6,11 +6,11 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 15:16:17 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:51:28 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	count_line(char **array)
 {
@@ -64,9 +64,10 @@ int	main(int ac, char **av, char **envp)
 	t_shell	*shell;
 
 	shell = NULL;
-	init_shell(&shell, ac, av, envp);
+	init_shell(shell, ac, av, envp);
 	while (1)
 	{
+		shell->input = NULL;
 		shell->input = readline("minishell> ");
 		if (!shell->input)
 			break ;

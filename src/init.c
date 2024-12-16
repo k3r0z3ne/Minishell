@@ -6,11 +6,11 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:34:29 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/14 15:16:07 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:16:20 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	init_shell(t_shell *shell, int argc, char **argv, char **envp)
 {

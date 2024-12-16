@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/14 14:28:00 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:12:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,37 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 	free_tab(cmd);
 }
 
-int	only_cmd(t_shell *shell, t_cmd *cmd)
+int	parent_process(pid_t *pid)
 {
-	pid_t	ret;
+	int	status;
+
+	if (waitpid(*pid, &status, 0) < 0)
+		return (-1); // appel fonction de free
+	return (status);
+}
+
+pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
+{
+	int		status;
 
 	if (is_builtin(shell, cmd))
 		exec_builtin(shell, cmd);
-	ret = fork();
-	if (ret < 0)
+	cmd->pids = fork();
+	if (cmd->pids < 0)
 		return (-1);
-	else if (ret == 0)
+	else if (cmd->pids == 0)
 	{
 		redirect_setup(shell, cmd);
 		exec_cmd(shell, cmd);
 	}
 	else
-		parent_process(shell, cmd);
-	return (ret);
-	
+		status = parent_process(cmd->pids);
+	return (cmd->pids);
 }
 
 int	several_cmds(t_shell *shell, t_cmd *cmd)
 {
-	
+	cmd->pids = (pid_t *)malloc(sizeof(pid_t) * )
 }
 
 int	main_exec(t_shell *shell, t_cmd *cmd)

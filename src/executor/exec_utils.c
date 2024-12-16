@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 17:07:50 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:15:53 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,4 @@ int	is_builtin(t_shell *shell, t_cmd *cmd)
 		return (1);
 	else
 		return (0);
-}
-
-int	ft_isupper(int c)
-{
-	if (c > 64 && c < 91)
-		return (1);
-	return (0);
 }

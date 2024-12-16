@@ -6,11 +6,11 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 16:23:06 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:09:52 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "../../includes/builtins.h"
 
 int	ft_cd(const char *path, char **envp)
 {
