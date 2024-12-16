@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/16 12:35:52 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/16 16:35:55 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	main(int ac, char **av, char **envp)
 		shell->cmd = parser(shell->token);
 		print_tokens(shell->token);
 		print_table(shell->cmd);
+		print_redirs(shell->cmd);
 	}
 	rl_clear_history();
 	return (0);
