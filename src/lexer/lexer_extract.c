@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_extract.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 13:38:34 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/14 15:23:53 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*extract_single_quote(const char *line, int *i, t_token **tokens)
 	if (line[*i] != '\'')
 	{
 		ft_putstr_fd("lexer: unclosed quotes\n", 2);
-		free_token(tokens);
+		free_token(*tokens);
 		return (NULL);
 	}
 	(*i)++;
@@ -54,7 +54,7 @@ char	*extract_double_quote(const char *line, int *i, t_token **tokens)
 	if (line[*i] != '"')
 	{
 		ft_putstr_fd("lexer: unclosed quotes\n", 2);
-		free_token(tokens);
+		free_token(*tokens);
 		return (NULL);
 	}
 	(*i)++;
