@@ -43,8 +43,8 @@ typedef struct s_cmd
 /* global data structure */
 typedef struct s_shell
 {
-	int		argc;
-	char	**argv;
+	// int		argc;
+	// char	**argv;
 	char	**envp;
 	char	*input;
 	t_token	*token;
@@ -53,5 +53,7 @@ typedef struct s_shell
 
 # include "lexer.h"
 # include "parser.h"
+
+void	init_shell(t_shell *shell, char **envp);
 
 #endif

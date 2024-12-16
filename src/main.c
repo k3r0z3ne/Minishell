@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 15:16:17 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 12:35:52 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	count_line(char **array)
 {
@@ -61,10 +61,14 @@ char	**arraydup(char **array)
 
 int	main(int ac, char **av, char **envp)
 {
+	(void) ac;
+	(void) av;
 	t_shell	*shell;
 
-	shell = NULL;
-	init_shell(&shell, ac, av, envp);
+	shell = malloc(sizeof(t_shell));
+	if (!shell)
+		return (1);
+	init_shell(shell, envp);
 	while (1)
 	{
 		shell->input = readline("minishell> ");
@@ -73,7 +77,7 @@ int	main(int ac, char **av, char **envp)
 		if (*shell->input != '\0')
 			add_history(shell->input);
 		shell->token = lexer(shell->input);
-		
+		shell->cmd = parser(shell->token);
 		print_tokens(shell->token);
 		print_table(shell->cmd);
 	}
