@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/17 12:36:50 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:55:39 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 		return (-1);
 	else if (cmd->pids == 0)
 	{
-		redirect_setup(shell, cmd);
+		redirect_setup(shell, cmd, 0);
 		exec_cmd(shell, cmd);
 	}
 	else
