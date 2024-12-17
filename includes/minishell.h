@@ -30,11 +30,13 @@ typedef struct s_redir
 /* commands chained list*/
 typedef struct s_cmd
 {
-	char	**full_cmd;
-	int		*infile; // OU CHAR * // A DETERMINER
-	int		*outfile; // OU CHAR * // A DETERMINER
-	int		*heredoc;
-	int		*append;
+	char			**full_cmd;
+	int				*infile; // OU CHAR * // A DETERMINER
+	int				*outfile; // OU CHAR * // A DETERMINER
+	int				*heredoc;
+	int				*append;
+	int				*pipe;
+	pid_t			*pids;
 	struct s_redir	*redirs;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -53,5 +55,7 @@ typedef struct s_shell
 
 # include "lexer.h"
 # include "parser.h"
+
+void	init_shell(t_shell *shell, int argc, char **argv, char **envp);
 
 #endif

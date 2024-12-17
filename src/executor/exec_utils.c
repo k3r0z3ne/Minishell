@@ -6,79 +6,73 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/16 17:15:53 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:37:44 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-char	*check_path(char **cmd, char *env)
+void	prt_process(t_cmd *cmd, int i, int n)
 {
-	char	*path;
-	char	**tab;
-
-	tab = NULL;
-	if (env != NULL)
-		tab = ft_split(env + 5, ':');
-	else
-		tab = ft_split(".", '/');
-	if (!tab)
+	if (i == 0)
 	{
-		free_tab(tab);
-		return (NULL);
+		close(cmd->infile);
+		close(cmd->pipe[i][1]);
 	}
-	path = NULL;
-	path = set_path(tab, cmd);
-	free(tab);
-	return (path);
+	else if (i == n - 1)
+	{
+		close(cmd->outfile);
+		close(cmd->pipe[i - 1][1]);
+	}
+	else
+	{
+		close(cmd->pipe[i - 1][0]);
+		close(cmd->pipe[i][1]);
+	}
 }
 
-char	*find_path(t_shell *shell)
+void	redirect_setup(t_cmd *cmd, int i, int n)
+{
+	if (i == 0)
+	{
+		if (dup2(cmd->infile, STDIN_FILENO) < 0)
+			closerror(cmd, "dup2a");
+		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
+			closerror(cmd, "dup2b");
+		clear_pipe(cmd);
+	}
+	else if (i == n - 1)
+	{
+		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
+			closerror(cmd, "dup2c");
+		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
+			closerror(cmd, "dup2d");
+		clear_pipe(cmd);
+	}
+	else
+	{
+		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
+			closerror(cmd, "dup2e");
+		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
+			closerror(cmd, "dup2f");
+		clear_pipe(cmd);
+	}
+}
+
+int	wait_process(t_cmd *cmd, int n)
 {
 	int	i;
+	int	status;
 
 	i = 0;
-	if (!shell->envp || shell->envp[0] == NULL || ft_strlen(shell->envp[0]) == 0)
-		return ("");
-	if (ft_strncmp(shell->envp[i], "LD_LIBRARY_PATH=/usr/lib/debug", 31) == 0)
-		return ("");
-	while (ft_strnstr(shell->envp[i], "PATH=", 5) == NULL)
-		i++;
-	if (shell->envp[i] == NULL || shell->envp[i][0] == '\0')
-		return (NULL);
-	return (shell->envp[i]);
-}
-
-char	*set_path(char **tab, char **cmd)
-{
-	int		i;
-	char	*tmp;
-	char	*path;
-
-	i = 0;
-	while (tab[i])
+	while (i < n)
 	{
-		tmp = ft_strjoin(tab[i], "/");
-		if (!tmp)
-			return (free(tab), NULL);
-		path = ft_strjoin(tmp, cmd[0]);
-		if (!path)
-			return (free(tmp), NULL);
-		if (access(path, F_OK) == 0)
-			break ;
-		free (path);
-		path = "";
+		if (waitpid(cmd->pids[i], &status, 0) < 0)
+			return ;
 		i++;
 	}
-	return (path);
-}
-
-void	redirect_setup(t_shell *shell, t_cmd *cmd)
-{
-	if (dup2(cmd->infile, STDIN_FILENO) < 0)
-		return ;
-	if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
-		return ;
+	// free(cmd->pids);
+	return (status);
 }
 
 int	is_builtin(t_shell *shell, t_cmd *cmd)

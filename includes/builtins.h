@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:20:04 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 16:43:01 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:12:52 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILTINS_H
 
 #include "minishell.h"
+#include "exec.h"
 
 /* cd */
 int		ft_cd(const char *path, char **envp);

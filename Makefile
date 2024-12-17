@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: witong <witong@student.42.fr>              +#+  +:+       +#+         #
+#    By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 18:05:29 by arotondo          #+#    #+#              #
-#    Updated: 2024/12/14 10:51:08 by witong           ###   ########.fr        #
+#    Updated: 2024/12/14 16:14:28 by arotondo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@ NAME = minishell
 
 SRC_DIR = src
 OBJ_DIR = obj
-INC_DIR = include
+INC_DIR = includes
 LIBFT_DIR = libft
 
-SRC = main.c lexer/lexer.c lexer/lexer_utils.c \
+SRC = main.c init.c lexer/lexer.c lexer/lexer_utils.c \
 		lexer/lexer_utils2.c lexer/lexer_utils3.c \
 		lexer/lexer_extract.c lexer/lexer_handler.c \
 		parser/parser.c parser/parser_redir.c parser/parser_utils.c parser/parser_error.c

@@ -57,6 +57,17 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
 "C_Cpp_Runner.msvcSecureNoWarnings": false,
 "files.associations": {
-	"minishell.h": "c"
+	"minishell.h": "c",
+	"exec.h": "c",
+	"*.tcc": "c",
+	"system_error": "c",
+	"random": "c",
+	"limits": "c",
+	"new": "c",
+	"ostream": "c",
+	"stdexcept": "c",
+	"streambuf": "c",
+	"functional": "c",
+	"libft.h": "c"
 }
 }
