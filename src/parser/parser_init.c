@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2024/12/16 15:28:49 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/17 12:17:46 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@ char **malloc_full_cmd(int size)
 		full_cmd[i++] = NULL;
 	return (full_cmd);
 }
-
-// t_redir *malloc_redirs(int size)
-// {
-// 	t_redir	*redirs;
-
-// 	redirs = (t_redir *)ft_calloc(sizeof(t_redir), size);
-// 	if (!redirs)
-// 		return (NULL);
-// 	return (redirs);
-// }
 
 t_cmd	*init_cmd(t_token *tokens)
 {

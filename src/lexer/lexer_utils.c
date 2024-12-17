@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2024/12/13 16:45:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:05:36 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,22 @@ t_token	*create_token(t_tok_type type, char *value)
 		return (NULL);
 	new_token->type = type;
 	if (value)
+	{
 		new_token->value = ft_strdup(value);
+		if (!new_token->value)
+		{
+			free(new_token);
+			return (NULL);
+		}
+	}
 	else
 		new_token->value = NULL;
 	new_token->next = NULL;
+	new_token->prev = NULL;
 	return (new_token);
 }
 
-void token_add_back(t_token **list, t_token *new_token)
+void	token_add_back(t_token **list, t_token *new_token)
 {
 	t_token *tmp;
 
@@ -43,6 +51,7 @@ void token_add_back(t_token **list, t_token *new_token)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new_token;
+	new_token->prev = tmp;
 }
 
 

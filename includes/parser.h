@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:17:19 by witong            #+#    #+#             */
-/*   Updated: 2024/12/16 15:09:31 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/17 11:51:05 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ int		token_len(t_token *tokens);
 void 	unexpected_token(t_token **tokens);
 
 /* parser_utils2 */
-void	print_table(t_cmd *cmds);
+t_redir	*create_redir(t_token *tokens);
+void	redir_add_back(t_redir **redirs, t_redir *new_redir);
 void	print_redirs(t_cmd *cmd);
+void	print_table(t_cmd *cmds);
 
 /* parser_error */
 bool	parser_error(t_token **tokens);
