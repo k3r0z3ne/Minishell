@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/17 15:57:52 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/17 16:42:22 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	expand_str(t_shell *shell, t_token *token)
 	// 	case_return(token);
 	// 	return ;
 	// }
-	while (token->value[i] && ft_isspace(token->value[i]))
+	while (token->value[i] && !ft_isspace(token->value[i]))
 		i++;
-	path = ft_getenv(&token->value[i] + j, shell->envp);
+	path = ft_getenv(token->value + i - j, shell->envp);
 	if (path == NULL)
 	{
 		free_token(token);
