@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: witong <witong@student.42.fr>              +#+  +:+       +#+         #
+#    By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 18:05:29 by arotondo          #+#    #+#              #
-#    Updated: 2024/12/17 14:32:33 by witong           ###   ########.fr        #
+#    Updated: 2024/12/17 16:31:30 by arotondo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 
 SRC_DIR = src
 OBJ_DIR = obj
+INC_DIR = includes
 INC_DIR = includes
 LIBFT_DIR = libft
 

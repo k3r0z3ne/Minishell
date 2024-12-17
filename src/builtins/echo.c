@@ -6,13 +6,14 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 16:23:21 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:31:33 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "../../includes/builtins.h"
 
 // en suspens : test avec append void test_echo.sh
+// gerer le cas ./my_echo - aaa		-->	doit ecrire a partir de a
 
 void	apply_flag(int flag)
 {
@@ -27,7 +28,7 @@ int	check_flag(char **flag, int *idx)
 	i = 1;
 	if (flag[i] == NULL)
 		return (0);
-	while (flag[i] && ft_strncmp(flag[i], "-n", 3) == 0)
+	while (flag[i] && !ft_strncmp(flag[i], "-n", 3))
 	{
 		(*idx)++;
 		i++;
@@ -64,4 +65,9 @@ int	ft_echo(int nb, char **arg, char **envp)
 	}
 	apply_flag(flag);
 	return (0);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	return (ft_echo(argc, argv, envp));
 }

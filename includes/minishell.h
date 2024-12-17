@@ -35,14 +35,16 @@ typedef struct s_redir
 	struct s_redir	*prev;
 }			t_redir;
 
-/* commands chained list*/
+/* commands chained list */
 typedef struct s_cmd
 {
-	char	**full_cmd;
-	int		*infile; // OU CHAR * // A DETERMINER
-	int		*outfile; // OU CHAR * // A DETERMINER
-	int		*heredoc;
-	int		*append;
+	char			**full_cmd;
+	int				*infile; // OU CHAR * // A DETERMINER
+	int				*outfile; // OU CHAR * // A DETERMINER
+	int				*heredoc;
+	int				*append;
+	int				*pipe;
+	pid_t			*pids;
 	struct s_redir	*redirs;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -52,7 +54,7 @@ typedef struct s_cmd
 typedef struct s_shell
 {
 	// int		argc;
-	// char	**argv;
+	char	**argv;
 	char	**envp;
 	char	*input;
 	t_token	*token;
