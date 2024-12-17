@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:27:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 14:24:42 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:29:21 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expand.h"
+#include "minishell.h"
 
 void	join_token(t_token **lst, t_token *token)
 {
@@ -37,5 +37,5 @@ void	join_token(t_token **lst, t_token *token)
 
 // void	case_return(t_token *token)
 // {
-	
+
 // }

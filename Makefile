@@ -6,7 +6,7 @@
 #    By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 18:05:29 by arotondo          #+#    #+#              #
-#    Updated: 2024/12/17 16:18:09 by arotondo         ###   ########.fr        #
+#    Updated: 2024/12/17 16:21:19 by arotondo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,10 @@ LIBFT_DIR = libft
 SRC = main.c init.c lexer/lexer.c lexer/lexer_utils.c \
 		lexer/lexer_utils2.c lexer/lexer_utils3.c \
 		lexer/lexer_extract.c lexer/lexer_handler.c \
-		parser/parser.c parser/parser_init.c parser/parser_utils.c parser/parser_utils2.c parser/parser_error.c
+		parser/parser.c parser/parser_init.c \
+		parser/parser_utils.c parser/parser_utils2.c parser/parser_error.c \
+		expander/expand.c expander/expand_utils.c \
+		builtins/env.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g

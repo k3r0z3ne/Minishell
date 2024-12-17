@@ -6,16 +6,12 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/16 17:10:03 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:21:53 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
-
-// void	get_empty_env()
-// {
-	
-// }
+#include "minishell.h"
+#include "../includes/builtins.h"
 
 char	*ft_getenv(const char *name, char **envp)
 {
