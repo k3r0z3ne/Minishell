@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 10:23:35 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 14:40:00 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:09:25 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,6 @@ int	token_len(t_token *tokens)
 	return (i);
 }
 
-void	print_table(t_cmd *cmds)
-{
-	int	i;
-	int	j;
-	t_cmd	*current;
-
-	j = 0;
-	current = cmds;
-	while (current)
-	{
-		i = 0;
-		printf("Command[%d]:\n", j);
-		while (current->full_cmd[i])
-		{
-			printf("  Arg[%d]: %s\n", i, current->full_cmd[i]);
-			i++;
-		}
-		printf("  Arg[%d]: %s\n", i, current->full_cmd[i]);
-		current = current->next;
-		j++;
-	}
-}
 void	unexpected_token(t_token **tokens)
 {
 	ft_putstr_fd("parser: syntax error near unexpected token '", 2);

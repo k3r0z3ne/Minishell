@@ -25,6 +25,7 @@ typedef struct s_redir
 	t_tok_type		type;
 	char			*file;
 	struct s_redir	*next;
+	struct s_redir	*prev;
 }			t_redir;
 
 /* commands chained list*/
