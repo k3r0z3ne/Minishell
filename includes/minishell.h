@@ -25,6 +25,7 @@ typedef struct s_redir
 	t_tok_type		type;
 	char			*file;
 	struct s_redir	*next;
+	struct s_redir	*prev;
 }			t_redir;
 
 /* commands chained list*/
@@ -45,8 +46,8 @@ typedef struct s_cmd
 /* global data structure */
 typedef struct s_shell
 {
-	int		argc;
-	char	**argv;
+	// int		argc;
+	// char	**argv;
 	char	**envp;
 	char	*input;
 	t_token	*token;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:15:57 by witong            #+#    #+#             */
-/*   Updated: 2024/12/14 14:46:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:26:44 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ void	free_lst_token(t_token **list);
 int	ft_isspace(char c);
 int	is_redirection(char c);
 int	is_special_char(char c);
+int is_illegal(char c1, char c2);
 
 /* lexer_utils3 */
 t_tok_type	check_redirection(char c);
 t_tok_type	check_double_ops(const char *line, int i);
+void illegal_token(char c);
+
 
 /* lexer_handler */
 void	handle_double_ops(const char *line, int *i, t_token **tokens);
