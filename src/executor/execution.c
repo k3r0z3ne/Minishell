@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/17 13:55:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:52:03 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ int	several_cmds(t_shell *shell, t_cmd *cmd)
 	cmd->pids = (pid_t *)malloc(sizeof(pid_t) * n_cmds);
 	if (!cmd->pids)
 		return (-1);
-	
 	while (i < n_cmds)
 	{
 		cmd->pipe = (int *)malloc(sizeof(int) * 2);
 		if (!cmd->pipe)
 			return ;
 		cmd->pids[i] = process(shell, cmd, i);
+		free(cmd->pipe);
 		i++;
 	}
 	status = wait_process(cmd, n_cmds);

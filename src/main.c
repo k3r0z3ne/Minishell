@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 13:59:35 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:17:49 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ char	**arraydup(char **array)
 
 int	main(int ac, char **av, char **envp)
 {
-	(void) ac;
-	(void) av;
 	t_shell	*shell;
 
+	(void) ac;
+	(void) av;
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);

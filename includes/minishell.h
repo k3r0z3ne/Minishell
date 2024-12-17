@@ -28,7 +28,7 @@ typedef struct s_redir
 	struct s_redir	*prev;
 }			t_redir;
 
-/* commands chained list*/
+/* commands chained list */
 typedef struct s_cmd
 {
 	char			**full_cmd;
@@ -47,7 +47,7 @@ typedef struct s_cmd
 typedef struct s_shell
 {
 	// int		argc;
-	// char	**argv;
+	char	**argv;
 	char	**envp;
 	char	*input;
 	t_token	*token;
@@ -57,6 +57,6 @@ typedef struct s_shell
 # include "lexer.h"
 # include "parser.h"
 
-void	init_shell(t_shell *shell, int argc, char **argv, char **envp);
+void	init_shell(t_shell *shell, char **envp);
 
 #endif

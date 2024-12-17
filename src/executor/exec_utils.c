@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/17 13:55:12 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:02:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	prt_process(t_cmd *cmd, int i, int n)
 
 void	redirect_setup(t_cmd *cmd, int i, int n)
 {
+	
 	if (i == 0)
 	{
 		if (dup2(cmd->infile, STDIN_FILENO) < 0)
@@ -71,7 +72,7 @@ int	wait_process(t_cmd *cmd, int n)
 			return ;
 		i++;
 	}
-	// free(cmd->pids);
+	free(cmd->pids);
 	return (status);
 }
 
