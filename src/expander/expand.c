@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 14:26:15 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:57:52 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expand.h"
+#include "minishell.h"
 
 // inputs : "$VAR" / $VAR / "$?" / $?
 
@@ -19,20 +19,21 @@ void	expand_str(t_shell *shell, t_token *token)
 	int		i;
 	int		j;
 	char	*path;
-	t_token	*new;
 
+	if(!token->value)
+		return ;
 	i = 0;
 	while (token->value[i] && token->value[i] != '$')
 		i++;
 	j = i + 1;
-	if (token->value[j] == '?')
-	{
-		case_return(token);
-		return ;
-	}
-	while (token->value[i] != ' ' && token->value[i] != '\t')
+	// if (token->value[j] == '?')
+	// {
+	// 	case_return(token);
+	// 	return ;
+	// }
+	while (token->value[i] && ft_isspace(token->value[i]))
 		i++;
-	path = ft_getenv(token->value + i - j, shell->envp);
+	path = ft_getenv(&token->value[i] + j, shell->envp);
 	if (path == NULL)
 	{
 		free_token(token);
@@ -44,18 +45,16 @@ void	expand_str(t_shell *shell, t_token *token)
 
 void	expand_env(t_shell *shell, t_token *token)
 {
-	t_token	*new;
 	char	*path;
 
-	new = NULL;
 	path = NULL;
-	if (!token->value || token->value[0] != '$')
+	if (!token->value)
 		return ;
-	else if (token->value[1] == '?')
-	{
-		case_return(token);
-		return ;
-	}
+	// else if (token->value[1] == '?')
+	// {
+	// 	case_return(token);
+	// 	return ;
+	// }
 	path = ft_getenv(token->value, shell->envp);
 	if (path == NULL)
 	{
@@ -69,8 +68,8 @@ void	expand_env(t_shell *shell, t_token *token)
 
 void	expander(t_shell *shell, t_token *token)
 {
-	if (token->type == 3)
+	if (token->type == DOUBLEQ)
 		expand_str(shell, token);
-	else if (token->type == 4)
+	else if (token->type == DOLLAR)
 		expand_env(shell, token);
 }

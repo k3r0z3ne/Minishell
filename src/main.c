@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/16 16:35:55 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/17 14:51:50 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int ac, char **av, char **envp)
 		if (*shell->input != '\0')
 			add_history(shell->input);
 		shell->token = lexer(shell->input);
-		shell->cmd = parser(shell->token);
+		shell->cmd = parser(shell, shell->token);
 		print_tokens(shell->token);
 		print_table(shell->cmd);
 		print_redirs(shell->cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:50 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 16:18:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:17:03 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define EXPAND_H
 
 #include "minishell.h"
+
+typedef struct s_shell t_shell;
 
 /* expand */
 void	expander(t_shell *shell, t_token *token);

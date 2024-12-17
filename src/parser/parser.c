@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 12:13:07 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/17 16:09:32 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,16 @@ void	parse_pipe(t_token **tokens, t_cmd **cmd)
 	*cmd = (*cmd)->next;
 }
 
-void	parse_tokens(t_token **tokens, t_cmd **cmd)
+void	parse_tokens(t_shell *shell, t_token **tokens, t_cmd **cmd)
 {
+	(void) shell;
+
 	while (*tokens && (*tokens)->type != END)
 	{
 		if (parser_error(tokens))
 			break;
+		if ((*tokens)->type == DOUBLEQ || (*tokens)->type == DOLLAR)
+			expander(shell, *tokens);
 		else if ((*tokens)->type == PIPE)
 			parse_pipe(tokens, cmd);
 		else if (is_redirection2((*tokens)->type) && (*tokens)->next
@@ -66,7 +70,7 @@ void	parse_tokens(t_token **tokens, t_cmd **cmd)
 	}
 }
 
-t_cmd *parser(t_token *tokens)
+t_cmd *parser(t_shell *shell, t_token *tokens)
 {
 	t_cmd *cmd;
 	t_cmd *head;
@@ -77,6 +81,6 @@ t_cmd *parser(t_token *tokens)
 	if (!cmd)
 		return (NULL);
 	head = cmd;
-	parse_tokens(&tokens, &cmd);
+	parse_tokens(shell, &tokens, &cmd);
 	return (head);
 }
