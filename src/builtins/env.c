@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/13 16:22:17 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:28:45 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "../includes/builtins.h"
 
 char	*ft_getenv(const char *name, char **envp)

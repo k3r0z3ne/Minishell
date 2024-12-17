@@ -6,13 +6,14 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:17:19 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 11:51:05 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/17 14:51:30 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+typedef struct s_shell t_shell;
 typedef struct s_cmd t_cmd;
 typedef struct s_redir t_redir;
 
@@ -21,8 +22,8 @@ typedef struct s_redir t_redir;
 /* parser */
 void	parse_command(t_token **tokens, t_cmd **cmd);
 void	parse_pipe(t_token **tokens, t_cmd **cmd);
-void	parse_tokens(t_token **tokens, t_cmd **cmd);
-t_cmd	*parser(t_token *tokens);
+void	parse_tokens(t_shell *shell, t_token **tokens, t_cmd **cmd);
+t_cmd	*parser(t_shell *shell, t_token *tokens);
 
 /* parser_init */
 char **malloc_full_cmd(int size);

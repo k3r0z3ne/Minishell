@@ -16,8 +16,15 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 
-#include "lexer.h"
-#include "parser.h"
+# include "lexer.h"
+# include "parser.h"
+# include "expand.h"
+# include "exec.h"
+# include "builtins.h"
+
+typedef struct s_shell t_shell;
+typedef struct s_token t_token;
+typedef enum e_tok_type t_tok_type;
 
 /* redirections structure */
 typedef struct s_redir
@@ -51,9 +58,6 @@ typedef struct s_shell
 	t_token	*token;
 	t_cmd	*cmd;
 }			t_shell;
-
-# include "lexer.h"
-# include "parser.h"
 
 void	init_shell(t_shell *shell, char **envp);
 
