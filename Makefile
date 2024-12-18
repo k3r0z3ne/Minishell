@@ -1,30 +1,23 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/06 18:05:29 by arotondo          #+#    #+#              #
-#    Updated: 2024/12/17 16:31:30 by arotondo         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell
 
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = includes
-INC_DIR = includes
 LIBFT_DIR = libft
 
-SRC = main.c init.c lexer/lexer.c lexer/lexer_utils.c \
+SRC =	main.c utils/init.c \
+		lexer/lexer.c lexer/lexer_utils.c \
 		lexer/lexer_utils2.c lexer/lexer_utils3.c \
 		lexer/lexer_extract.c lexer/lexer_handler.c \
+		executor/execution.c executor/path.c executor/exec_utils.c \
+		executor/exec_init.c executor/redirection.c\
+		builtins/cd.c builtins/echo.c builtins/env.c \
+		builtins/exit.c builtins/export.c builtins/pwd.c \
+		builtins/unset.c \
 		parser/parser.c parser/parser_init.c \
 		parser/parser_utils.c parser/parser_utils2.c parser/parser_error.c \
 		expander/expand.c expander/expand_utils.c \
-		builtins/env.c
+		utils/clean_up.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g

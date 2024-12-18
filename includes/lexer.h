@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 16:15:57 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 12:26:44 by witong           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LEXER_H
 # define LEXER_H
 
@@ -34,8 +22,8 @@ typedef enum e_tok_type
 // Token chained list
 typedef struct s_token
 {
-	t_tok_type type;
-	char	*value;
+	t_tok_type		type;
+	char			*value;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;

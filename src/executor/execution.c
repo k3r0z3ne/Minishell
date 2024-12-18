@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/17 14:52:03 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:41:13 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,49 +29,50 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 	}
 	if (!path)
 		return ;
-	if (execve(path, cmd, shell->envp) < 0)
+	if (execve(path, cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);
 		return ;
 	}
 	free(path);
-	free_tab(cmd);
+	free_array(cmd->full_cmd);
 }
 
 pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 {
 	int	status;
 
-	if (is_builtin(shell, cmd))
-		exec_builtin(shell, cmd);
-	cmd->pids = fork();
+	is_builtin(shell, cmd);
+	*cmd->pids = fork();
 	if (cmd->pids < 0)
 		return (-1);
 	else if (cmd->pids == 0)
 	{
-		redirect_setup(shell, cmd, 0);
+		if (dup2(*cmd->infile, STDIN_FILENO) < 0)
+			return (-1);
+		if (dup2(*cmd->outfile, STDOUT_FILENO) < 0)
+			return (-1);
 		exec_cmd(shell, cmd);
 	}
 	else
-		status = wait_process(cmd->pids, 1);
-	return (cmd->pids);
+		status = wait_process(cmd, 1);
+	return (*cmd->pids);
 }
 
-pid_t	process(t_shell *shell, t_cmd *cmd, int i)
+pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 {
-	if (is_builtin(shell, cmd))
-		exec_builtin(shell, cmd);
-	cmd->pids = fork();
-	if (cmd->pids < 0)
+	is_builtin(shell, cmd);
+	*cmd->pids = fork();
+	if (*cmd->pids < 0)
 		return (-1);
-	else if (cmd->pids == 0)
+	else if (*cmd->pids == 0)
 	{
-		redirect_setup(shell, cmd, i);
+		redirect_setup(cmd, i, n);
 		exec_cmd(shell, cmd);
 	}
 	else
-		parent_process();
-	return (cmd->pids);
+		parent_process(cmd, i, n);
+	return (*cmd->pids);
 }
 
 int	several_cmds(t_shell *shell, t_cmd *cmd)
@@ -81,17 +82,18 @@ int	several_cmds(t_shell *shell, t_cmd *cmd)
 	int	status;
 
 	i = 0;
-	n_cmds = ft_lstsize(cmd);
+	n_cmds = ft_lstsize((t_list *)cmd);
 	cmd->pids = (pid_t *)malloc(sizeof(pid_t) * n_cmds);
 	if (!cmd->pids)
 		return (-1);
-	while (i < n_cmds)
+	while (cmd && i < n_cmds)
 	{
 		cmd->pipe = (int *)malloc(sizeof(int) * 2);
 		if (!cmd->pipe)
-			return ;
-		cmd->pids[i] = process(shell, cmd, i);
+			return (-1);
+		cmd->pids[i] = process(shell, cmd, i, n_cmds);
 		free(cmd->pipe);
+		cmd = cmd->next;
 		i++;
 	}
 	status = wait_process(cmd, n_cmds);
@@ -102,10 +104,11 @@ int	main_exec(t_shell *shell, t_cmd *cmd)
 {
 	int	ret;
 
-	redirection_check(shell, cmd);
+	redirection_check(cmd, cmd->redirs);
 	if (cmd->next)
 		ret = several_cmds(shell, cmd);
 	else
 		ret = only_cmd(shell, cmd);
+	unlink(".tmp");
 	return (ret);
 }

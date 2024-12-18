@@ -6,7 +6,7 @@
 #    By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/22 16:35:56 by arotondo          #+#    #+#              #
-#    Updated: 2024/10/30 15:25:48 by arotondo         ###   ########.fr        #
+#    Updated: 2024/12/18 17:44:20 by arotondo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ OBJ_BONUS = $(BONUS:.c=.o)
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLAGS) -I $(SRC_HEADER) -c $(SRC_FILES) $(FILES_2)
-	ar -rcs $(NAME) $(OBJ_FILES)
+	$(CC) $(CFLAGS) -I $(SRC_HEADER) -c $(SRC_FILES) $(FILES_2) $(BONUS)
+	ar -rcs $(NAME) $(OBJ_FILES) $(OBJ_BONUS)
 
 bonus:
 	$(CC) $(CFLAGS) -I $(SRC_HEADER) -c $(BONUS)
@@ -42,7 +42,7 @@ clean:
 	rm -rf *.o
 
 fclean: clean
-	rm -f $(NAME) $(OBJ_BONUS)
+	rm -f $(NAME) $(OBJ_FILES) $(OBJ_BONUS)
 
 re: fclean all
 

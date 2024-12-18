@@ -6,58 +6,11 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 16:21:43 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:34:14 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	count_line(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		i++;
-	return (i);
-}
-
-void	free_array(char **array, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
-
-char	**arraydup(char **array)
-{
-	char	**dup;
-	int		lc;
-
-	lc = count_line(array);
-	dup = (char **)malloc(sizeof(char *) * (lc + 1));
-	if (!dup)
-		return (NULL);
-	dup[lc] = NULL;
-	lc = 0;
-	while (array[lc])
-	{
-		dup[lc] = ft_strdup(array[lc]);
-		if (!dup[lc])
-		{
-			free_array(dup, lc);
-			return (NULL);
-		}
-		lc++;
-	}
-	return (dup);
-}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -79,6 +32,7 @@ int	main(int ac, char **av, char **envp)
 			add_history(shell->input);
 		shell->token = lexer(shell->input);
 		shell->cmd = parser(shell, shell->token);
+		shell->exit_status = main_exec(shell, shell->cmd);
 		print_tokens(shell->token);
 		print_table(shell->cmd);
 		print_redirs(shell->cmd);

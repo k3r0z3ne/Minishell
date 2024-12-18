@@ -21,6 +21,7 @@
 # include "expand.h"
 # include "exec.h"
 # include "builtins.h"
+# include "utils.h"
 
 typedef struct s_shell t_shell;
 typedef struct s_token t_token;
@@ -53,14 +54,13 @@ typedef struct s_cmd
 /* global data structure */
 typedef struct s_shell
 {
-	// int		argc;
+	int		argc;
+	int		exit_status;
 	char	**argv;
 	char	**envp;
 	char	*input;
 	t_token	*token;
 	t_cmd	*cmd;
 }			t_shell;
-
-void	init_shell(t_shell *shell, char **envp);
 
 #endif
