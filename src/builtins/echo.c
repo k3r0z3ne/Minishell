@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/16 17:31:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/18 15:40:55 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_echo(int nb, char **arg, char **envp)
 	return (0);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	return (ft_echo(argc, argv, envp));
-}
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	return (ft_echo(argc, argv, envp));
+// }

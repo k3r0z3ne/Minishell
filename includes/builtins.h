@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 16:20:04 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/16 17:12:52 by arotondo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
@@ -29,12 +17,12 @@ char	*ft_getenv(const char *name, char **envp);
 int		ft_env(char **envp);
 
 /* exit */
-void	ft_exit(int status);
+int		ft_exit(int status);
 
 /* export */
 
 /* pwd */
-void	ft_pwd(int argc);
+int		ft_pwd(int argc);
 
 /* unset */
 
