@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:25:07 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 12:19:45 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/19 18:47:03 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,16 @@ void	redir_add_back(t_redir **redirs, t_redir *new_redir)
 
 void	print_redirs(t_cmd *cmd)
 {
-	int	j;
 	t_cmd	*current;
 	t_redir	*redir;
+	int		j;
 
 	j = 0;
-	current = cmd;
+	current = NULL;
+	redir = NULL;
 	while (current)
 	{
+		current = cmd->next;
 		printf("Command[%d] Redirections:\n", j);
 		redir = current->redirs;
 		while (redir)
@@ -73,14 +75,15 @@ void	print_redirs(t_cmd *cmd)
 
 void	print_table(t_cmd *cmd)
 {
-	int	i;
-	int	j;
 	t_cmd	*current;
+	int		i;
+	int		j;
 
 	j = 0;
-	current = cmd;
+	current = NULL;
 	while (current)
 	{
+		current = cmd->next;
 		i = 0;
 		printf("Command[%d]:\n", j);
 		while (current->full_cmd[i])

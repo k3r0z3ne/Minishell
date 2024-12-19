@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/19 17:51:07 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:57:05 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 		return (-1);
 	else if (cmd->pids == 0)
 	{
-		if (dup2(*cmd->infile, STDIN_FILENO) < 0)
+		if (dup2(cmd->infile, STDIN_FILENO) < 0)
 			return (-1);
-		if (dup2(*cmd->outfile, STDOUT_FILENO) < 0)
+		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
 			return (-1);
 		exec_cmd(shell, cmd);
 	}
@@ -105,7 +105,7 @@ int	main_exec(t_shell *shell, t_cmd *cmd)
 	int	ret;
 
 	redirection_check(cmd, cmd->redirs);
-	if (cmd->next)
+	if (count_cmd(cmd) != 0)
 		ret = several_cmds(shell, cmd);
 	else
 		ret = only_cmd(shell, cmd);

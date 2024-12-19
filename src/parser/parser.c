@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 17:59:02 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:13:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parse_redirs(t_token **tokens, t_cmd **cmd)
 
 void	parse_pipe(t_token **tokens, t_cmd **cmd)
 {
-	(*cmd)->next = init_cmd(*tokens);
+	(*cmd)->next = init_cmd(*cmd, *tokens);
 	if (!(*cmd)->next)
 		return;
 	*cmd = (*cmd)->next;
@@ -69,14 +69,14 @@ void	parse_tokens(t_shell *shell, t_token **tokens, t_cmd **cmd)
 
 t_cmd	*parser(t_shell *shell, t_token *tokens)
 {
-	t_cmd *cmd;
-	t_cmd *head;
+	t_cmd	*head;
+	t_cmd	*cmd;
 
+	head = NULL;
+	cmd = NULL;
 	if (!tokens || !tokens->value)
 		return (NULL);
-	cmd = init_cmd(tokens);
-	if (!cmd)
-		return (NULL);
+	cmd = init_cmd(cmd, tokens);
 	head = cmd;
 	parse_tokens(shell, &tokens, &cmd);
 	return (head);

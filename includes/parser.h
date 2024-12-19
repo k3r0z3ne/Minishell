@@ -16,7 +16,7 @@ t_cmd	*parser(t_shell *shell, t_token *tokens);
 /* parser_init */
 char **malloc_full_cmd(int size);
 t_redir *malloc_redirs(int size);
-t_cmd	*init_cmd(t_token *tokens);
+t_cmd	*init_cmd(t_cmd *cmd, t_token *tokens);
 
 /* parser_utils */
 int		is_word(t_tok_type type);

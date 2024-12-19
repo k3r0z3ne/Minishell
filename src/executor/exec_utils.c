@@ -6,27 +6,22 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/18 17:34:01 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:10:14 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-// void	exec_builtin(shell, cmd)
-// {
-	
-// }
-
 void	parent_process(t_cmd *cmd, int i, int n)
 {
 	if (i == 0)
 	{
-		close(*cmd->infile);
+		close(cmd->infile);
 		close(cmd->pipe[i]);
 	}
 	else if (i == n - 1)
 	{
-		close(*cmd->outfile);
+		close(cmd->outfile);
 		close(cmd->pipe[i - 1]);
 	}
 	else
@@ -72,4 +67,19 @@ int	is_builtin(t_shell *shell, t_cmd *cmd)
 	else
 		return (0);
 	return (shell->exit_status);
+}
+
+int	count_cmd(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd)
+		return (0);
+	while (cmd)
+	{
+		cmd = cmd->next;
+		i++;
+	}
+	return (i);
 }

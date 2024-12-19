@@ -6,16 +6,16 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 17:51:36 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:31:58 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char **malloc_full_cmd(int size)
+char	**malloc_full_cmd(int size)
 {
 	char	**full_cmd;
-	int	i;
+	int		i;
 
 	full_cmd = (char **)malloc(sizeof(char *) * size);
 	if (!full_cmd)
@@ -26,23 +26,20 @@ char **malloc_full_cmd(int size)
 	return (full_cmd);
 }
 
-t_cmd	*init_cmd(t_token *tokens)
+t_cmd	*init_cmd(t_cmd *cmd, t_token *tokens)
 {
-	t_cmd	*cmd;
 	int		size;
 
-	if (!tokens)
-		return (NULL);
-	cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
 	size = token_len(tokens);
 	cmd->full_cmd = malloc_full_cmd(size);
-	cmd->infile[0] = -1;
-	cmd->outfile[0] = -1;
-	cmd->heredoc[0] = -1;
-	cmd->append[0] = -1;
-	cmd->pipe[0] = -1;
+	cmd->infile = -1;
+	cmd->outfile = -1;
+	cmd->heredoc = -1;
+	cmd->append = -1;
+	// *cmd->pipe = -1;
 	cmd->redirs = NULL;
 	return (cmd);
 }

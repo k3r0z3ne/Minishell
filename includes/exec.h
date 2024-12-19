@@ -23,6 +23,6 @@ void	redirection_check(t_cmd *cmd, t_redir *redirs);
 void	parent_process(t_cmd *cmd, int i, int n);
 int		wait_process(t_cmd *cmd, int n);
 int		is_builtin(t_shell *shell, t_cmd *cmd);
-int		ft_isupper(int c);
+int		count_cmd(t_cmd *cmd);
 
 #endif
