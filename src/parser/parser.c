@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 16:33:12 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:01:47 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	parse_pipe(t_token **tokens, t_cmd **cmd)
 
 void	parse_tokens(t_shell *shell, t_token **tokens, t_cmd **cmd)
 {
-	(void) shell;
-
 	while (*tokens && (*tokens)->type != END)
 	{
 		if (parser_error(tokens))

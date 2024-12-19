@@ -1,7 +1,7 @@
 Tests pour minishell :
 
-- ""
-- " --> doit renvoyer "command not found"
+OK- ""
+OK- " --> doit renvoyer "command not found"
 - echo - aaa
 - ./minishell dans ./minishell
 attention au nb de signaux necessaires pour sortir des deux programmes
@@ -10,35 +10,35 @@ attention au nb de signaux necessaires pour sortir des deux programmes
 - mkdir a/b; cd a/b' rm -r ../../a
 - echo "'$USER'" should print the value of the USER variable. // bonus pour 101/100
 - echo '"$USER"' should print "$USER". // bonus pour 101/100
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
