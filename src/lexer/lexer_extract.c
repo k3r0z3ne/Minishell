@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 17:43:07 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/19 17:00:10 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*extract_single_quote(const char *line, int *i, t_token **tokens)
 
 	(*i)++;
 	start = *i;
-	if (line[*i] == '\'')
+	if (line[*i] == '\'' && !(*tokens))
 	{
 		ft_putstr_fd("lexer: command not found\n", 2);
 		(*i)++;
@@ -35,13 +35,14 @@ char	*extract_single_quote(const char *line, int *i, t_token **tokens)
 	}
 	while (line[*i] && line[*i] != '\'')
 		(*i)++;
-	if (line[*i] != '\'')
+	if (!line[*i] || line[*i] != '\'')
 	{
 		if (start == 1)
 			ft_putstr_fd("lexer: command not found\n", 2);
 		else
 			ft_putstr_fd("lexer: unclosed quotes\n", 2);
 		free_token(*tokens);
+		*tokens = NULL;
 		return (NULL);
 	}
 	(*i)++;
@@ -54,7 +55,7 @@ char	*extract_double_quote(const char *line, int *i, t_token **tokens)
 
 	(*i)++;
 	start = *i;
-	if (line[*i] == '"')
+	if (line[*i] == '"' && !(*tokens))
 	{
 		ft_putstr_fd("lexer: command not found\n", 2);
 		(*i)++;
@@ -62,13 +63,14 @@ char	*extract_double_quote(const char *line, int *i, t_token **tokens)
 	}
 	while (line[*i] && line[*i] != '"')
 		(*i)++;
-	if (line[*i] != '"')
+	if (!line[*i] || line[*i] != '"')
 	{
 		if (start == 1)
 			ft_putstr_fd("lexer: command not found\n", 2);
 		else
 			ft_putstr_fd("lexer: unclosed quotes\n", 2);
 		free_token(*tokens);
+		*tokens = NULL;
 		return (NULL);
 	}
 	(*i)++;
