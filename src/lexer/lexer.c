@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 17:28:06 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:58:46 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_token	*lexer(char *line)
 		else
 			handle_word(line, &i, &tokens);
 	}
+	if (!tokens)
+		return (NULL);
 	token_add_back(&tokens, create_token(END, NULL));
 	return (tokens);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_extract.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 13:59:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:00:10 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,22 @@ char	*extract_single_quote(const char *line, int *i, t_token **tokens)
 
 	(*i)++;
 	start = *i;
-	if (line[(*i)++] == '\'')
+	if (line[*i] == '\'' && !(*tokens))
+	{
+		ft_putstr_fd("lexer: command not found\n", 2);
+		(*i)++;
 		return (NULL);
+	}
 	while (line[*i] && line[*i] != '\'')
 		(*i)++;
-	if (line[*i] != '\'')
+	if (!line[*i] || line[*i] != '\'')
 	{
-		ft_putstr_fd("lexer: unclosed quotes\n", 2);
+		if (start == 1)
+			ft_putstr_fd("lexer: command not found\n", 2);
+		else
+			ft_putstr_fd("lexer: unclosed quotes\n", 2);
 		free_token(*tokens);
+		*tokens = NULL;
 		return (NULL);
 	}
 	(*i)++;
@@ -47,14 +55,22 @@ char	*extract_double_quote(const char *line, int *i, t_token **tokens)
 
 	(*i)++;
 	start = *i;
-	if (line[(*i)++] == '"')
+	if (line[*i] == '"' && !(*tokens))
+	{
+		ft_putstr_fd("lexer: command not found\n", 2);
+		(*i)++;
 		return (NULL);
+	}
 	while (line[*i] && line[*i] != '"')
 		(*i)++;
-	if (line[*i] != '"')
+	if (!line[*i] || line[*i] != '"')
 	{
-		ft_putstr_fd("lexer: unclosed quotes\n", 2);
+		if (start == 1)
+			ft_putstr_fd("lexer: command not found\n", 2);
+		else
+			ft_putstr_fd("lexer: unclosed quotes\n", 2);
 		free_token(*tokens);
+		*tokens = NULL;
 		return (NULL);
 	}
 	(*i)++;

@@ -3,45 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/17 16:42:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:49:21 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// inputs : "$VAR" / $VAR / "$?" / $?
-
-void	expand_str(t_shell *shell, t_token *token)
-{
-	int		i;
-	int		j;
-	char	*path;
-
-	if(!token->value)
-		return ;
-	i = 0;
-	while (token->value[i] && token->value[i] != '$')
-		i++;
-	j = i + 1;
-	// if (token->value[j] == '?')
-	// {
-	// 	case_return(token);
-	// 	return ;
-	// }
-	while (token->value[i] && !ft_isspace(token->value[i]))
-		i++;
-	path = ft_getenv(token->value + i - j, shell->envp);
-	if (path == NULL)
-	{
-		free_token(token);
-		return ;
-	}
-	free(token->value);
-	token->value = ft_strdup(path);
-}
 
 void	expand_env(t_shell *shell, t_token *token)
 {
@@ -50,11 +19,12 @@ void	expand_env(t_shell *shell, t_token *token)
 	path = NULL;
 	if (!token->value)
 		return ;
-	// else if (token->value[1] == '?')
-	// {
-	// 	case_return(token);
-	// 	return ;
-	// }
+	if (token->value[0] == '?')
+	{
+		printf("$?");
+		// case_return(token);
+		return ;
+	}
 	path = ft_getenv(token->value, shell->envp);
 	if (path == NULL)
 	{
