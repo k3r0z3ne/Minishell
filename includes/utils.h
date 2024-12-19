@@ -10,6 +10,6 @@ void	free_array(char **array);
 char	**arraydup(char **array);
 
 /* init */
-void	init_shell(t_shell *shell, char **envp);
+void	init_shell(t_shell *shell, int argc, char **argv, char **envp);
 
 #endif

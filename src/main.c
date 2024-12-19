@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/18 16:34:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:26:53 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell	*shell;
 
-	(void) ac;
-	(void) av;
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);
-	init_shell(shell, envp);
+	init_shell(shell, ac, av, envp);
 	while (1)
 	{
 		shell->input = NULL;

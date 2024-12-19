@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 12:17:46 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/19 17:51:36 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char **malloc_full_cmd(int size)
 t_cmd	*init_cmd(t_token *tokens)
 {
 	t_cmd	*cmd;
-	int	size;
+	int		size;
 
 	if (!tokens)
 		return (NULL);
@@ -38,8 +38,11 @@ t_cmd	*init_cmd(t_token *tokens)
 		return (NULL);
 	size = token_len(tokens);
 	cmd->full_cmd = malloc_full_cmd(size);
+	cmd->infile[0] = -1;
+	cmd->outfile[0] = -1;
+	cmd->heredoc[0] = -1;
+	cmd->append[0] = -1;
+	cmd->pipe[0] = -1;
 	cmd->redirs = NULL;
-	cmd->prev = NULL;
-	cmd->next = NULL;
 	return (cmd);
 }

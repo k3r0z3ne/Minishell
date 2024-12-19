@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/18 17:41:13 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:51:07 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 	int	status;
 
 	is_builtin(shell, cmd);
-	*cmd->pids = fork();
+	cmd->pids[0] = fork();
 	if (cmd->pids < 0)
 		return (-1);
 	else if (cmd->pids == 0)
@@ -62,7 +62,7 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 {
 	is_builtin(shell, cmd);
-	*cmd->pids = fork();
+	cmd->pids[0] = fork();
 	if (*cmd->pids < 0)
 		return (-1);
 	else if (*cmd->pids == 0)
