@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 12:44:58 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/20 16:12:27 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ static int expand_var(t_shell *shell, char **result, char *str, int i)
 	char	*path;
 	char	*tmp;
 
-	i++;
 	start = i;
-	while (str[i] && !ft_isspace(str[i]) && str[i] != '$')
+	while (str[i] && !ft_isspace(str[i]) && str[i] != '$' && str[i] != '\'')
 		i++;
 	s1 = ft_substr(str, start, i - start);
 	if (!s1)
@@ -70,6 +69,7 @@ static void	process_expand_str(t_shell *shell, char **result, char *value)
 	{
 		if (value[i] == '$')
 		{
+			i++;
 			pos = expand_var(shell, result, value, i);
 			if (pos == -1)
 				break ;

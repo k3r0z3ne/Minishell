@@ -1,51 +1,28 @@
 Tests pour minishell :
 
-OK- ""
-OK- " --> doit renvoyer "command not found"
+OK ' -> command not found
+OK " -> command not found
+OK "" -> command not found
+OK " -> command not found
+KO $$ -> print error
+KO "$$" -> print error
+KO <<<<
+KO >>>> ->
+OK space -> prompt
+OK enter -> prompt
+OK echo "'$USER' $USER" no more single quotes
+OK echo "'$USER'" should print the value of the USER variable. // bonus pour 101/100 (expander not expanding)
+OK echo '"$USER"' should print "$USER". // bonus pour 101/100
+OK echo $USER$USER
+OK echo $USER"$USER"
+OK echo $USER'$USER'
+
+
+bash-5.1$ echo -nnnnnnnnnnnnnnnnnnnnnnnnnn asdasdasdas
+asdasdasdasbash-5.1$ echo -nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas
+-nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas
 - echo - aaa
 - ./minishell dans ./minishell
 attention au nb de signaux necessaires pour sortir des deux programmes
 - env -i ./minishell --> unset $PATH
-- echo "'$USER' $USER"
 - mkdir a/b; cd a/b' rm -r ../../a
-- echo "'$USER'" should print the value of the USER variable. // bonus pour 101/100
-- echo '"$USER"' should print "$USER". // bonus pour 101/100
--
-
-$$
-"$$"
-<<<<
->>>>
-space
-enter
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
