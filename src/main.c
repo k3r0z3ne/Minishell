@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 18:48:28 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:23:05 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	main(int ac, char **av, char **envp)
 		if (*shell->input != '\0')
 			add_history(shell->input);
 		shell->token = lexer(shell->input);
+		// printf("shell->cmd before : %p\n", shell->cmd);
 		shell->cmd = parser(shell, shell->token);
+		printf("shell->cmd after : %p\n", shell->cmd);
 		shell->exit_status = main_exec(shell, shell->cmd);
 		print_tokens(shell->token);
 		print_table(shell->cmd);

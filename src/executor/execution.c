@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/19 18:57:05 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:22:48 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,13 @@ int	main_exec(t_shell *shell, t_cmd *cmd)
 	int	ret;
 
 	redirection_check(cmd, cmd->redirs);
-	if (count_cmd(cmd) != 0)
+	printf("cmd in main_exec : %p\n", cmd);
+	if (count_cmd(cmd) > 1)
 		ret = several_cmds(shell, cmd);
-	else
+	else if (count_cmd(cmd) == 1)
 		ret = only_cmd(shell, cmd);
+	else
+		return (-1);
 	unlink(".tmp");
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 18:13:00 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:42:43 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,24 @@ t_cmd	*parser(t_shell *shell, t_token *tokens)
 {
 	t_cmd	*head;
 	t_cmd	*cmd;
+	int		count;
 
 	head = NULL;
 	cmd = NULL;
+	count = 1;
 	if (!tokens || !tokens->value)
 		return (NULL);
+	printf("cmd in parser before : %p\n", cmd);
 	cmd = init_cmd(cmd, tokens);
+	printf("cmd in parser after : %p\n", cmd);
 	head = cmd;
 	parse_tokens(shell, &tokens, &cmd);
+	printf("head in parser : %p\n", head);
+	if (count < 1)
+	{
+		if (count == 2)
+			cmd->prev = head;
+		cmd = cmd->next;
+	}
 	return (head);
 }

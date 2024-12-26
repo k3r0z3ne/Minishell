@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/19 19:10:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:22:40 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,18 @@ int	is_builtin(t_shell *shell, t_cmd *cmd)
 
 int	count_cmd(t_cmd *cmd)
 {
-	int	i;
+	t_cmd	*tmp;
+	int		i;
 
-	i = 0;
-	if (!cmd)
+	// printf("cmd->next in count_cmd : %p\n", cmd->next);
+	tmp = cmd;
+	printf("cmd in count_cmd : %p\n", cmd);
+	if (!tmp)
 		return (0);
-	while (cmd)
+	i = 1;
+	while (tmp->next != NULL)
 	{
-		cmd = cmd->next;
+		tmp = tmp->next;
 		i++;
 	}
 	return (i);
