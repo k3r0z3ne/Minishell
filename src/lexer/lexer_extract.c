@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 17:00:10 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/20 14:45:29 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*extract_dollar(const char *line, int *i)
 	start = *i;
 	if (!line[*i] || ft_isspace(line[*i]))
 		return(ft_strdup("$"));
-	while (line[*i] && !ft_isspace(line[*i]))
+	while (line[*i] && !is_special_char(line[*i]) && !ft_isspace(line[*i]))
 		(*i)++;
 	return (ft_substr(line, start, *i - start));
 }
