@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2024/12/26 16:47:34 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:54:33 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_cmd	*init_cmd(t_cmd *cmd, t_token *tokens)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	printf("cmd in init_cmd : %p\n", cmd);
+	// printf("cmd in init_cmd : %p\n", cmd);
 	size = token_len(tokens);
 	cmd->full_cmd = malloc_full_cmd(size);
 	cmd->infile = -1;
@@ -41,7 +41,9 @@ t_cmd	*init_cmd(t_cmd *cmd, t_token *tokens)
 	cmd->heredoc = -1;
 	cmd->append = -1;
 	// *cmd->pipe = -1;
-	// *cmd->pids = -1;
+	cmd->pids = malloc(sizeof(pid_t) * size);
+	if (!cmd->pids)
+		return (NULL);
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;

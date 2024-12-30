@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/30 14:47:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:54:54 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 
 	is_builtin(shell, cmd);
 	// printf("pid[0] : %d\n", cmd->pids[0]);
-	cmd->pids[0] = -1;
+	// cmd->pids[0] = -1;
 	cmd->pids[0] = fork();
 	if (*cmd->pids < 0)
 		return (-1);
@@ -56,8 +56,8 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 			return (-1);
 		exec_cmd(shell, cmd);
 	}
-	else
-		status = wait_process(cmd, 1);
+	// else
+	// 	status = wait_process(cmd, 1);
 	return (*cmd->pids);
 }
 
@@ -107,7 +107,7 @@ int	main_exec(t_shell *shell, t_cmd *cmd)
 	int	ret;
 
 	redirection_check(cmd, cmd->redirs);
-	printf("cmd in main_exec : %p\n", cmd);
+	// printf("cmd in main_exec : %p\n", cmd);
 	if (count_cmd(cmd) > 1)
 		ret = several_cmds(shell, cmd);
 	else if (count_cmd(cmd) == 1)

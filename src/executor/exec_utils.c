@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/26 10:22:40 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:02:43 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	count_cmd(t_cmd *cmd)
 
 	// printf("cmd->next in count_cmd : %p\n", cmd->next);
 	tmp = cmd;
-	printf("cmd in count_cmd : %p\n", cmd);
+	// printf("cmd in count_cmd : %p\n", cmd);
 	if (!tmp)
 		return (0);
 	i = 1;
