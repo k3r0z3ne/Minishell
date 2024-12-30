@@ -28,6 +28,13 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_lexer_state
+{
+	t_token	*tokens;
+	int		i;
+	int		error;
+} t_lexer_state;
+
 /* lexer */
 t_token	*lexer(char *line);
 
@@ -42,25 +49,26 @@ void	free_lst_token(t_token **list);
 int	ft_isspace(char c);
 int	is_redirection(char c);
 int	is_special_char(char c);
-int is_illegal(char c1, char c2);
+int	is_illegal_single(char c);
+int	is_illegal_double(char c1, char c2);
 
 /* lexer_utils3 */
 t_tok_type	check_redirection(char c);
-t_tok_type	check_double_ops(const char *line, int i);
-void illegal_token(char c);
-
+t_tok_type	check_double_ops(char *line, int i);
+void handle_illegal_single(char c, t_lexer_state *state);
+void handle_illegal_double(char c1, char c2, t_lexer_state *state);
 
 /* lexer_handler */
-void	handle_double_ops(const char *line, int *i, t_token **tokens);
-void	handle_redirection(const char *line, int *i, t_token **tokens);
-void	handle_quotes(const char *line, int *i, t_token **tokens);
-void	handle_dollar(const char *line, int *i, t_token **tokens);
-void	handle_word(const char *line, int *i, t_token **tokens);
+void	handle_double_ops(char *line, t_lexer_state *state);
+void	handle_redirection(char *line, t_lexer_state *state);
+void	handle_quotes(char *line, t_lexer_state *state);
+void	handle_dollar(char *line, t_lexer_state *state);
+void	handle_word(char *line, t_lexer_state *state);
 
 /* lexer_extract */
-char	*extract_word(const char *line, int *i);
-char	*extract_single_quote(const char *line, int *i, t_token **tokens);
-char	*extract_double_quote(const char *line, int *i, t_token **tokens);
-char	*extract_dollar(const char *line, int *i);
+char	*extract_word(char *line, t_lexer_state *state);
+char	*extract_single_quote(char *line, t_lexer_state *state);
+char	*extract_double_quote(char *line, t_lexer_state *state);
+char	*extract_dollar(char *line, t_lexer_state *state);
 
 #endif
