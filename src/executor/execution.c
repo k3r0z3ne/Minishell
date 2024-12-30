@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/26 15:52:46 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/26 16:48:36 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 
 pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 {
-	//int	status;
+	int	status;
 
 	is_builtin(shell, cmd);
-	*cmd->pids = fork();
+	// printf("pid[0] : %d\n", cmd->pids[0]);
+	cmd->pids[0] = -1;
+	cmd->pids[0] = fork();
 	if (*cmd->pids < 0)
 		return (-1);
 	else if (*cmd->pids == 0)
@@ -54,8 +56,8 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 			return (-1);
 		exec_cmd(shell, cmd);
 	}
-	//else
-	//	status = wait_process(cmd, 1);
+	else
+		status = wait_process(cmd, 1);
 	return (*cmd->pids);
 }
 
@@ -63,7 +65,7 @@ pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 {
 	is_builtin(shell, cmd);
 	cmd->pids[0] = fork();
-	if (*cmd->pids < 0)
+	if (cmd->pids[0] < 0)
 		return (-1);
 	else if (*cmd->pids == 0)
 	{

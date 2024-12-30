@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2024/12/26 10:31:52 by arotondo         ###   ########.fr       */
+/*   Updated: 2024/12/26 16:47:34 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_cmd	*init_cmd(t_cmd *cmd, t_token *tokens)
 	cmd->heredoc = -1;
 	cmd->append = -1;
 	// *cmd->pipe = -1;
+	// *cmd->pids = -1;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;
