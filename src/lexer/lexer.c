@@ -6,41 +6,47 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 17:01:12 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/28 12:50:41 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*lexer(char *line)
+void process_token(char *line, t_lexer_state *state)
 {
-	t_token *tokens;
-	int 	i;
+	if (ft_isspace(line[state->i]))
+		state->i++;
+	else if (line[state->i + 1] && is_illegal_double(line[state->i], line[state->i + 1]))
+		handle_illegal_double(line[state->i], line[state->i + 1], state);
+	else if (is_illegal_single(line[state->i]))
+		handle_illegal_single(line[state->i], state);
+	else if (check_double_ops(line, state->i) != UNKNOWN)
+		handle_double_ops(line, state);
+	else if (is_redirection(line[state->i]))
+		handle_redirection(line, state);
+	else if (line[state->i] == '\'' || line[state->i] == '\"')
+		handle_quotes(line, state);
+	else if (line[state->i] == '$')
+		handle_dollar(line, state);
+	else
+		handle_word(line, state);
+}
 
-	i = 0;
-	tokens = NULL;
-	while (line[i])
+t_token *lexer(char *line)
+{
+	t_lexer_state state;
+
+	state.i = 0;
+	state.error = 0;
+	state.tokens = NULL;
+	while (line[state.i])
 	{
-		if (ft_isspace(line[i]))
-			i++;
-		else if (line[i + 1] && is_illegal(line[i], line[i + 1]))
-		{
-			illegal_token(line[i]);
+		process_token(line, &state);
+		if (state.error)
 			break;
-		}
-		else if (check_double_ops(line, i) != UNKNOWN)
-			handle_double_ops(line, &i, &tokens);
-		else if (is_redirection(line[i]))
-			handle_redirection(line, &i, &tokens);
-		else if (line[i] == '\'' || line[i] == '\"')
-			handle_quotes(line, &i, &tokens);
-		else if (line[i] == '$')
-			handle_dollar(line, &i, &tokens);
-		else
-			handle_word(line, &i, &tokens);
 	}
-	if (!tokens)
+	if (state.error || !state.tokens)
 		return (NULL);
-	token_add_back(&tokens, create_token(END, NULL));
-	return (tokens);
+	token_add_back(&state.tokens, create_token(END, NULL));
+	return (state.tokens);
 }

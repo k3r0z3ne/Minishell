@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/26 14:18:13 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/26 16:07:36 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 
 pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 {
-	//int	status;
+	// int	status;
 
 	is_builtin(shell, cmd);
 	*cmd->pids = fork();
