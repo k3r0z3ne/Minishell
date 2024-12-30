@@ -4,10 +4,11 @@ OK ' -> command not found
 OK " -> command not found
 OK "" -> command not found
 OK " -> command not found
-KO $$ -> print error
+KO "echo hello" -> command not found
+OK $$ -> print error
 KO "$$" -> print error
-KO <<<<
-KO >>>> ->
+OK <<<< -> print error
+OK >>>> -> print error
 OK space -> prompt
 OK enter -> prompt
 OK echo "'$USER' $USER" no more single quotes
@@ -18,9 +19,8 @@ OK echo $USER"$USER"
 OK echo $USER'$USER'
 
 
-bash-5.1$ echo -nnnnnnnnnnnnnnnnnnnnnnnnnn asdasdasdas
-asdasdasdasbash-5.1$ echo -nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas
--nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas
+echo -nnnnnnnnnnnnnnnnnnnnnnnnnn asdasdasdas --> asdasdasdas
+echo -nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas --> -nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas
 - echo - aaa
 - ./minishell dans ./minishell
 attention au nb de signaux necessaires pour sortir des deux programmes
