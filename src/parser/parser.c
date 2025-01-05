@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/05 11:37:09 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/05 13:06:45 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	parse_tokens(t_shell *shell)
 	{
 		if (parser_error(&shell->token))
 		{
+			unexpected_token(&shell->token);
 			free_cmd(&shell->cmd);
 			shell->cmd = NULL;
 			break;
