@@ -42,7 +42,7 @@ t_token	*lexer(char *line);
 t_token	*create_token(t_tok_type type, char *value);
 void	token_add_back(t_token **list, t_token *new_token);
 void	print_tokens(t_token *head);
-void	free_token(t_token *token);
+void	free_token(t_token **token);
 void	free_lst_token(t_token **list);
 
 /* lexer_utils2 */
@@ -67,8 +67,7 @@ void	handle_word(char *line, t_lexer_state *state);
 
 /* lexer_extract */
 char	*extract_word(char *line, t_lexer_state *state);
-char	*extract_single_quote(char *line, t_lexer_state *state);
-char	*extract_double_quote(char *line, t_lexer_state *state);
+char	*extract_quote(char *line, t_lexer_state *state);
 char	*extract_dollar(char *line, t_lexer_state *state);
 
 #endif

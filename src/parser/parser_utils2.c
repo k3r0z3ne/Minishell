@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:25:07 by witong            #+#    #+#             */
-/*   Updated: 2024/12/17 12:19:45 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/05 03:24:25 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_redir	*create_redir(t_token *tokens)
 {
 	t_redir	*new_redir;
 
+	if (!tokens || !tokens->next || !tokens->next->value)
+		return (NULL);
 	new_redir = malloc(sizeof(t_redir));
 	if (!new_redir)
 		return (NULL);

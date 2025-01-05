@@ -4,9 +4,8 @@ OK ' -> command not found
 OK " -> command not found
 OK "" -> command not found
 OK " -> command not found
-KO "echo hello" -> command not found
 OK $$ -> print error
-KO "$$" -> print error
+OK "$$" -> print error
 OK <<<< -> print error
 OK >>>> -> print error
 OK space -> prompt
@@ -18,7 +17,7 @@ OK echo $USER$USER
 OK echo $USER"$USER"
 OK echo $USER'$USER'
 
-
+"echo hello" -> command not found
 echo -nnnnnnnnnnnnnnnnnnnnnnnnnn asdasdasdas --> asdasdasdas
 echo -nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas --> -nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas
 - echo - aaa
