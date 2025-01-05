@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/05 13:06:45 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/05 16:00:46 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,17 @@ static void	parse_tokens(t_shell *shell)
 			unexpected_token(&shell->token);
 			free_cmd(&shell->cmd);
 			shell->cmd = NULL;
-			break;
+			break ;
 		}
 		if (shell->token->type == DOUBLEQ || shell->token->type == DOLLAR)
 			expander(shell, shell->token);
 		if (shell->token->type == PIPE)
 			parse_pipe(shell);
-		else if (is_redirection2(shell->token->type) && shell->token->next
+		if (is_redirection2(shell->token->type) && shell->token->next
 				&& is_word(shell->token->next->type))
 			parse_redirs(shell);
-		else if (is_word(shell->token->type))
+		if (is_word(shell->token->type))
 			parse_command(shell);
-		else
-			break;
 		shell->token = shell->token->next;
 	}
 }
