@@ -17,7 +17,7 @@ SRC =	main.c utils/init.c \
 		parser/parser.c parser/parser_init.c \
 		parser/parser_utils.c parser/parser_utils2.c parser/parser_error.c \
 		expander/expand.c expander/expand_str.c expander/expand_utils.c \
-		utils/clean_up.c
+		utils/clean_up.c utils/global_utils.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g
@@ -44,12 +44,12 @@ $(OBJ_DIR):
 clean:
 	@make -C $(LIBFT_DIR) clean
 	@rm -rf $(OBJ_DIR) $(BONUS_OBJ_DIR)
-	@echo "${GREEN}Files clean up done.{DEF_COLOR}"
+	@echo "${GREEN}Files clean up done.${DEF_COLOR}"
 
 fclean: clean
 	@make -C $(LIBFT_DIR) fclean
 	@rm -rf $(NAME) $(NAME_BONUS)
-	@echo "${GREEN}Clean up done.{DEF_COLOR}"
+	@echo "${GREEN}Clean up done.${DEF_COLOR}"
 
 re: fclean all
 

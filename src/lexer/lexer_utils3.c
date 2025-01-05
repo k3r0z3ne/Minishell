@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:02:33 by witong            #+#    #+#             */
-/*   Updated: 2024/12/28 12:46:32 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/05 11:21:05 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,28 @@ t_tok_type	check_double_ops(char *line, int i)
 		return (HEREDOC);
 	if (line[i] == '>' && line[i + 1] == '>')
 		return (APPEND);
+	if (line[i] == '&' && line[i + 1] == '&')
+		return (UNKNOWN);
+	if (line[i] == '|' && line[i + 1] == '|')
+		return (UNKNOWN);
 	return (UNKNOWN);
 }
-void handle_illegal_single(char c, t_lexer_state *state)
+
+void	handle_illegal_single(char c, t_lexer_state *state)
 {
 	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c, 2);
 	ft_putstr_fd("'\n", 2);
 	state->error = 1;
+	state->i++;
 }
 
-void handle_illegal_double(char c1, char c2, t_lexer_state *state)
+void	handle_illegal_double(char c1, char c2, t_lexer_state *state)
 {
 	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c1, 2);
 	ft_putchar_fd(c2, 2);
 	ft_putstr_fd("'\n", 2);
 	state->error = 1;
+	state->i += 2;
 }

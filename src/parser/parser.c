@@ -6,78 +6,80 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2024/12/19 12:01:47 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/05 11:37:09 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	parse_command(t_token **tokens, t_cmd **cmd)
+static void	parse_command(t_shell *shell)
 {
-	int i;
+	int		i;
 
 	i = 0;
-	while ((*cmd)->full_cmd[i])
+	while (shell->cmd->full_cmd[i])
 		i++;
-	(*cmd)->full_cmd[i] = ft_strdup((*tokens)->value);
+	shell->cmd->full_cmd[i] = ft_strdup(shell->token->value);
 	i++;
-	(*cmd)->full_cmd[i] = NULL;
+	shell->cmd->full_cmd[i] = NULL;
 }
 
-void	parse_redirs(t_token **tokens, t_cmd **cmd)
+static void	parse_redirs(t_shell *shell)
 {
 	t_redir	*new_redir;
 
-	new_redir = create_redir(*tokens);
+	new_redir = create_redir(shell->token);
 	if (!new_redir)
-		return;
-	redir_add_back(&(*cmd)->redirs, new_redir);
-	(*tokens) = (*tokens)->next;
+		return ;
+	redir_add_back(&shell->cmd->redirs, new_redir);
+	shell->token = shell->token->next;
 }
 
-void	parse_pipe(t_token **tokens, t_cmd **cmd)
+static void	parse_pipe(t_shell *shell)
 {
-	(*cmd)->next = init_cmd(*tokens);
-	if (!(*cmd)->next)
-		return;
-	*cmd = (*cmd)->next;
+	shell->cmd->next = init_cmd(shell->token);
+	if (!shell->cmd->next)
+		return ;
+	shell->cmd = shell->cmd->next;
 }
 
-void	parse_tokens(t_shell *shell, t_token **tokens, t_cmd **cmd)
+static void	parse_tokens(t_shell *shell)
 {
-	while (*tokens && (*tokens)->type != END)
+	while (shell->token && shell->token->type != END)
 	{
-		if (parser_error(tokens))
-			break;
-		if ((*tokens)->type == DOUBLEQ || (*tokens)->type == DOLLAR)
-			expander(shell, *tokens);
-		else if ((*tokens)->type == PIPE)
-			parse_pipe(tokens, cmd);
-		else if (is_redirection2((*tokens)->type) && (*tokens)->next
-				&& is_word((*tokens)->next->type))
-			parse_redirs(tokens, cmd);
-		else if (is_word((*tokens)->type))
-			parse_command(tokens, cmd);
-		else
+		if (parser_error(&shell->token))
 		{
-			unexpected_token(tokens);
+			free_cmd(&shell->cmd);
+			shell->cmd = NULL;
 			break;
 		}
-		(*tokens) = (*tokens)->next;
+		if (shell->token->type == DOUBLEQ || shell->token->type == DOLLAR)
+			expander(shell, shell->token);
+		if (shell->token->type == PIPE)
+			parse_pipe(shell);
+		else if (is_redirection2(shell->token->type) && shell->token->next
+				&& is_word(shell->token->next->type))
+			parse_redirs(shell);
+		else if (is_word(shell->token->type))
+			parse_command(shell);
+		else
+			break;
+		shell->token = shell->token->next;
 	}
 }
 
-t_cmd *parser(t_shell *shell, t_token *tokens)
+void	parser(t_shell *shell)
 {
-	t_cmd *cmd;
-	t_cmd *head;
-
-	if (!tokens || !tokens->value)
-		return (NULL);
-	cmd = init_cmd(tokens);
-	if (!cmd)
-		return (NULL);
-	head = cmd;
-	parse_tokens(shell, &tokens, &cmd);
-	return (head);
+	if (!shell || !shell->token || !shell->token->value)
+		return ;
+	shell->cmd = init_cmd(shell->token);
+	if (!shell->cmd)
+		return ;
+	parse_tokens(shell);
+	if (!validate_command(shell))
+	{
+		free_cmd(&shell->cmd);
+		shell->cmd = NULL;
+		return ;
+	}
 }

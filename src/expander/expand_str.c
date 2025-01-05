@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2024/12/20 16:12:27 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/05 03:55:24 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int expand_var(t_shell *shell, char **result, char *str, int i)
 	char	*tmp;
 
 	start = i;
-	while (str[i] && !ft_isspace(str[i]) && str[i] != '$' && str[i] != '\'')
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'|| str[i] == '?'))
 		i++;
 	s1 = ft_substr(str, start, i - start);
 	if (!s1)
@@ -87,18 +87,21 @@ static void	process_expand_str(t_shell *shell, char **result, char *value)
 
 void	expand_str(t_shell *shell, t_token *token)
 {
-		char	*result;
+	char	*result;
+	char	*tmp;
 
-		result = ft_strdup("");
-		if (!token->value || !result)
-			return ;
-		if (token->value[0] == '$' && token->value[1] == '?')
-		{
-			printf("$?");
-			// case_return(token);
-			return ;
-		}
-		process_expand_str(shell, &result, token->value);
-		free(token->value);
-		token->value = result;
+	result = ft_strdup("");
+	if (!token->value || !result)
+		return ;
+	if (token->value[0] == '$' && token->value[1] == '?')
+	{
+		printf("$?");
+		// case_return(token);
+		return ;
+	}
+	process_expand_str(shell, &result, token->value);
+	tmp = token->value;
+	token->value = result;
+	token->type = WORD;
+	free(tmp);
 }
