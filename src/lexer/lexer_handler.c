@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:52:21 by witong            #+#    #+#             */
-/*   Updated: 2024/12/27 18:41:13 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/05 11:44:55 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handle_double_ops(char *line, t_lexer_state *state)
 			return ;
 		token_add_back(&state->tokens, create_token(type, value));
 		state->i += 2;
+		free(value);
 	}
 }
 
@@ -38,27 +39,23 @@ void	handle_redirection(char *line, t_lexer_state *state)
 	if(!value)
 		return ;
 	token_add_back(&state->tokens, create_token(type, value));
-	(state->i)++;
+	state->i++;
+	free(value);
 }
 
 void	handle_quotes(char *line, t_lexer_state *state)
 {
-	char *value;
+	char		*value;
+	t_tok_type	type;
 
-	if (line[state->i] == '\'')
-	{
-		value = extract_single_quote(line, state);
-		if (!value)
-			return ;
-		token_add_back(&state->tokens, create_token(SINGLEQ, value));
-	}
-	else if (line[state->i] == '\"')
-	{
-		value = extract_double_quote(line, state);
-		if (!value)
-			return ;
-		token_add_back(&state->tokens, create_token(DOUBLEQ, value));
-	}
+	type = SINGLEQ;
+	if (line[state->i] == '\"')
+		type = DOUBLEQ;
+	value = extract_quote(line, state);
+	if (!value)
+		return ;
+	token_add_back(&state->tokens, create_token(type, value));
+	free(value);
 }
 
 void	handle_dollar(char *line, t_lexer_state *state)
@@ -74,6 +71,7 @@ void	handle_dollar(char *line, t_lexer_state *state)
 	else
 		type = DOLLAR;
 	token_add_back(&state->tokens, create_token(type, value));
+	free(value);
 }
 
 void	handle_word(char *line, t_lexer_state *state)
@@ -84,4 +82,5 @@ void	handle_word(char *line, t_lexer_state *state)
 	if(!value)
 		return ;
 	token_add_back(&state->tokens, create_token(WORD, value));
+	free(value);
 }

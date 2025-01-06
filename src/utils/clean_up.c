@@ -3,37 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 17:15:56 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/18 16:55:44 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:21:54 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	ft_isupper(int c)
-{
-	if (c > 64 && c < 91)
-		return (1);
-	return (0);
-}
-
-int	count_line(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		i++;
-	return (i);
-}
 
 void	free_array(char **array)
 {
 	int	i;
 	int	size;
 
+	if (!array || !*array)
+		return ;
 	i = 0;
 	size = count_line(array);
 	while (i < size)
@@ -44,26 +29,51 @@ void	free_array(char **array)
 	free(array);
 }
 
-char	**arraydup(char **array)
+void	free_redir(t_redir **redir)
 {
-	char	**dup;
-	int		lc;
+	if (!redir || !*redir)
+		return ;
+	if ((*redir)->file)
+		free((*redir)->file);
+	if ((*redir))
+		free(*redir);
+	*redir = NULL;
+}
 
-	lc = count_line(array);
-	dup = (char **)malloc(sizeof(char *) * (lc + 1));
-	if (!dup)
-		return (NULL);
-	dup[lc] = NULL;
-	lc = 0;
-	while (array[lc])
+void	free_redirs(t_redir **redirs)
+{
+	t_redir	*current;
+	t_redir	*next;
+
+	if (!redirs || !*redirs)
+		return ;
+	current = *redirs;
+	while (current)
 	{
-		dup[lc] = ft_strdup(array[lc]);
-		if (!dup[lc])
-		{
-			free_array(dup);
-			return (NULL);
-		}
-		lc++;
+		next = current->next;
+		free_redir(&current);
+		current = next;
 	}
-	return (dup);
+	*redirs = NULL;
+}
+
+void	free_cmd(t_cmd **cmd)
+{
+	t_cmd	*current;
+	t_cmd	*next;
+
+	if (!cmd || !*cmd)
+		return ;
+	current = *cmd;
+	while (current)
+	{
+		next = current->next;
+		if (current->full_cmd)
+			free_array(current->full_cmd);
+		if (current->redirs)
+			free_redirs(&current->redirs);
+		free(current);
+		current = next;
+	}
+	*cmd = NULL;
 }
