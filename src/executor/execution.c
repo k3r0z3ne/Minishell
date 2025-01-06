@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/26 16:07:36 by witong           ###   ########.fr       */
+/*   Updated: 2024/12/30 16:54:54 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	exec_cmd(t_shell *shell, t_cmd *cmd)
 {
-	char	*path;
-	char	*tmp;
+	char *path;
+	char *tmp;
 
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
-		return ;
+		return;
 	path = check_path(cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
 	{
@@ -28,11 +28,11 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 		path = ft_strdup(cmd->full_cmd[0]);
 	}
 	if (!path)
-		return ;
+		return;
 	if (execve(path, cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);
-		return ;
+		return;
 	}
 	free(path);
 	free_array(cmd->full_cmd);
@@ -40,30 +40,32 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 
 pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 {
-	// int	status;
+	int	status;
 
-	is_builtin(shell, cmd);
-	*cmd->pids = fork();
+	status = is_builtin(shell, cmd);
+	if (status != 0)
+		return (status);
+	cmd->pids[0] = fork();
 	if (*cmd->pids < 0)
 		return (-1);
 	else if (*cmd->pids == 0)
 	{
-		if (dup2(*cmd->infile, STDIN_FILENO) < 0)
+		if (dup2(cmd->infile, STDIN_FILENO) < 0)
 			return (-1);
-		if (dup2(*cmd->outfile, STDOUT_FILENO) < 0)
+		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
 			return (-1);
 		exec_cmd(shell, cmd);
 	}
-	//else
-	//	status = wait_process(cmd, 1);
+	// else
+	// 	status = wait_process(cmd, 1);
 	return (*cmd->pids);
 }
 
 pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 {
 	is_builtin(shell, cmd);
-	*cmd->pids = fork();
-	if (*cmd->pids < 0)
+	cmd->pids[0] = fork();
+	if (cmd->pids[0] < 0)
 		return (-1);
 	else if (*cmd->pids == 0)
 	{
@@ -75,11 +77,11 @@ pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 	return (*cmd->pids);
 }
 
-int	several_cmds(t_shell *shell, t_cmd *cmd)
+int several_cmds(t_shell *shell, t_cmd *cmd)
 {
-	int	i;
-	int	n_cmds;
-	int	status;
+	int i;
+	int n_cmds;
+	int status;
 
 	i = 0;
 	n_cmds = ft_lstsize((t_list *)cmd);
@@ -100,15 +102,17 @@ int	several_cmds(t_shell *shell, t_cmd *cmd)
 	return (status);
 }
 
-int	main_exec(t_shell *shell, t_cmd *cmd)
+int main_exec(t_shell *shell, t_cmd *cmd)
 {
-	int	ret;
+	int ret;
 
 	redirection_check(cmd, cmd->redirs);
-	if (cmd->next)
+	if (count_cmd(cmd) > 1)
 		ret = several_cmds(shell, cmd);
-	else
+	else if (count_cmd(cmd) == 1)
 		ret = only_cmd(shell, cmd);
+	else
+		return (-1);
 	unlink(".tmp");
 	return (ret);
 }

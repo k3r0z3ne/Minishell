@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
 /*   Updated: 2025/01/05 06:41:05 by witong           ###   ########.fr       */
@@ -16,12 +16,10 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell	*shell;
 
-	(void) ac;
-	(void) av;
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);
-	init_shell(shell, envp);
+	init_shell(shell, ac, av, envp);
 	while (1)
 	{
 		shell->input = NULL;
@@ -37,7 +35,7 @@ int	main(int ac, char **av, char **envp)
 			parser(shell);
 			print_table(shell->cmd);
 			print_redirs(shell->cmd);
-			// shell->exit_status = main_exec(shell, shell->cmd);
+			shell->exit_status = main_exec(shell, shell->cmd);
 		}
 		free_token(&shell->token);
 		free_cmd(&shell->cmd);
