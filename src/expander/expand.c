@@ -6,37 +6,37 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/05 03:52:00 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/06 13:30:52 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_env(t_shell *shell, t_token *token)
+void	expand_env(t_shell *shell)
 {
 	char	*path;
 
-	path = NULL;
-	if (!token->value)
+	if (!shell->token || !shell->token->value)
 		return ;
-	if (token->value[0] == '?')
+	if (shell->token->value[0] == '?')
 	{
 		printf("$?");
 		// case_return(token);
 		return ;
 	}
-	path = ft_getenv(token->value, shell->envp);
+	path = NULL;
+	path = ft_getenv(shell->token->value, shell->envp);
 	if (!path)
 		path = ft_strdup("");
-	free(token->value);
-	token->value = ft_strdup(path);
-	token->type = WORD;
+	free(shell->token->value);
+	shell->token->value = ft_strdup(path);
+	shell->token->type = WORD;
 }
 
-void	expander(t_shell *shell, t_token *token)
+void	expander(t_shell *shell)
 {
-	if (token->type == DOUBLEQ)
-		expand_str(shell, token);
-	else if (token->type == DOLLAR)
-		expand_env(shell, token);
+	if (shell->token->type == DOUBLEQ)
+		expand_str(shell);
+	else if (shell->token->type == DOLLAR)
+		expand_env(shell);
 }
