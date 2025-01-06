@@ -14,13 +14,13 @@
 
 void	exec_cmd(t_shell *shell, t_cmd *cmd)
 {
-	char	*path;
-	char	*tmp;
+	char *path;
+	char *tmp;
 
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
-		return ;
+		return;
 	path = check_path(cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
 	{
@@ -28,11 +28,11 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 		path = ft_strdup(cmd->full_cmd[0]);
 	}
 	if (!path)
-		return ;
+		return;
 	if (execve(path, cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);
-		return ;
+		return;
 	}
 	free(path);
 	free_array(cmd->full_cmd);
@@ -40,11 +40,11 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 
 pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 {
-	// int	status;
+	int	status;
 
-	is_builtin(shell, cmd);
-	// printf("pid[0] : %d\n", cmd->pids[0]);
-	// cmd->pids[0] = -1;
+	status = is_builtin(shell, cmd);
+	if (status != 0)
+		return (status);
 	cmd->pids[0] = fork();
 	if (*cmd->pids < 0)
 		return (-1);
@@ -77,11 +77,11 @@ pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 	return (*cmd->pids);
 }
 
-int	several_cmds(t_shell *shell, t_cmd *cmd)
+int several_cmds(t_shell *shell, t_cmd *cmd)
 {
-	int	i;
-	int	n_cmds;
-	int	status;
+	int i;
+	int n_cmds;
+	int status;
 
 	i = 0;
 	n_cmds = ft_lstsize((t_list *)cmd);
@@ -102,12 +102,11 @@ int	several_cmds(t_shell *shell, t_cmd *cmd)
 	return (status);
 }
 
-int	main_exec(t_shell *shell, t_cmd *cmd)
+int main_exec(t_shell *shell, t_cmd *cmd)
 {
-	int	ret;
+	int ret;
 
 	redirection_check(cmd, cmd->redirs);
-	// printf("cmd in main_exec : %p\n", cmd);
 	if (count_cmd(cmd) > 1)
 		ret = several_cmds(shell, cmd);
 	else if (count_cmd(cmd) == 1)

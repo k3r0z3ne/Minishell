@@ -26,8 +26,9 @@ char	**malloc_full_cmd(int size)
 	return (full_cmd);
 }
 
-t_cmd	*init_cmd(t_cmd *cmd, t_token *tokens)
+t_cmd	*init_cmd(t_token *tokens)
 {
+	t_cmd	*cmd;
 	int		size;
 
 	cmd = malloc(sizeof(t_cmd));

@@ -74,9 +74,7 @@ int	count_cmd(t_cmd *cmd)
 	t_cmd	*tmp;
 	int		i;
 
-	// printf("cmd->next in count_cmd : %p\n", cmd->next);
 	tmp = cmd;
-	// printf("cmd in count_cmd : %p\n", cmd);
 	if (!tmp)
 		return (0);
 	i = 1;
