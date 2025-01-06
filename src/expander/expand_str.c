@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/05 03:55:24 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/06 13:28:02 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,23 +85,25 @@ static void	process_expand_str(t_shell *shell, char **result, char *value)
 	}
 }
 
-void	expand_str(t_shell *shell, t_token *token)
+void	expand_str(t_shell *shell)
 {
 	char	*result;
 	char	*tmp;
 
-	result = ft_strdup("");
-	if (!token->value || !result)
+	if (!shell || !shell->token || !shell->token->value)
 		return ;
-	if (token->value[0] == '$' && token->value[1] == '?')
+	if (shell->token->value[0] == '$' && shell->token->value[1] == '?')
 	{
 		printf("$?");
 		// case_return(token);
 		return ;
 	}
-	process_expand_str(shell, &result, token->value);
-	tmp = token->value;
-	token->value = result;
-	token->type = WORD;
+	result = ft_strdup("");
+	if (!result)
+		return ;
+	process_expand_str(shell, &result, shell->token->value);
+	tmp = shell->token->value;
+	shell->token->value = result;
+	shell->token->type = WORD;
 	free(tmp);
 }
