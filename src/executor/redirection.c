@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/30 17:54:53 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:31:47 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,34 @@ void	redirection_check(t_cmd *cmd, t_redir *redirs)
 		return ;
 	while (redirs)
 	{
-		printf("HERE\n");
 		if (redirs->type == 5)
-		{
 			cmd->infile = open(redirs->file, O_RDONLY, 0664);
-			printf("redirection_check %s\n", redirs->file);
-		}
 		else if (redirs->type == 6)
 			cmd->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 		else if (redirs->type == 7)
 			cmd->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
 		else if (redirs->type == 8)
-			cmd->infile = open(".tmp", O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			cmd->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
+		else
+		{
+			cmd->infile = -1;
+			cmd->outfile = -1;
+		}
 		redirs = redirs->next;
+	}
+}
+
+void	is_redir(t_cmd *cmd)
+{
+	if (cmd->infile != -1)
+	{
+		if (dup2(cmd->infile, STDIN_FILENO) < 0)
+			return ;
+	}
+	if (cmd->outfile != -1)
+	{
+		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
+			return ;
 	}
 }
 

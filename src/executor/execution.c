@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/30 16:54:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:36:24 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,37 +43,33 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 
 pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 {
-	int	status;
+	int	exit_status;
 
-	status = is_builtin(shell, cmd);
-	if (status != -1)
-		return (status);
+	exit_status = is_builtin(shell, cmd);
+	if (exit_status != -1)
+		return (exit_status);
 	cmd->pids[0] = fork();
 	printf("pids[0] = %d\n", cmd->pids[0]);
 	if (cmd->pids[0] < 0)
 		return (-1);
 	else if (cmd->pids[0] == 0)
 	{
-		// if (dup2(cmd->infile, STDIN_FILENO) < 0)
-		// 	return (-1);
-		printf("only_cmd_1 = OK!\n");
-		// if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
-		// 	return (-1);
+		is_redir(cmd);
 		exec_cmd(shell, cmd);
 		printf("only_cmd_2 = OK!\n");
 	}
 	else
-		status = wait_process(cmd, 1);
+		exit_status = wait_process(cmd, 1);
 	return (cmd->pids[0]);
 }
 
 pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 {
-	int	ret;
+	int	exit_status;
 
-	ret = is_builtin(shell, cmd);
+	exit_status = is_builtin(shell, cmd);
 	if (is_builtin(shell, cmd))
-		return (ret);
+		return (exit_status);
 	cmd->pids[i] = fork();
 	if (cmd->pids[i] < 0)
 		return (-1);
@@ -91,7 +87,7 @@ int	several_cmds(t_shell *shell, t_cmd *cmd)
 {
 	int	i;
 	int	n_cmds;
-	int	status;
+	int	exit_status;
 
 	n_cmds = ft_lstsize((t_list *)cmd);
 	i = 0;
@@ -105,22 +101,22 @@ int	several_cmds(t_shell *shell, t_cmd *cmd)
 		cmd = cmd->next;
 		i++;
 	}
-	status = wait_process(cmd, n_cmds);
-	return (status);
+	exit_status = wait_process(cmd, n_cmds);
+	return (exit_status);
 }
 
 int	main_exec(t_shell *shell, t_cmd *cmd)
 {
-	int ret;
+	int exit_status;
 
 	printf("main_exec = OK!\n");
 	redirection_check(cmd, cmd->redirs);
 	if (count_cmd(cmd) > 1)
-		ret = several_cmds(shell, cmd);
+		exit_status = several_cmds(shell, cmd);
 	else if (count_cmd(cmd) == 1)
-		ret = only_cmd(shell, cmd);
+		exit_status = only_cmd(shell, cmd);
 	else
 		return (-1);
-	unlink(".tmp");
-	return (ret);
+	unlink(".tmp.txt");
+	return (exit_status);
 }

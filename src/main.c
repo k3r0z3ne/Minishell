@@ -37,7 +37,7 @@ int	main(int ac, char **av, char **envp)
 			{
 				print_table(shell->cmd);
 				print_redirs(shell->cmd);
-			//	shell->exit_status = main_exec(shell, shell->cmd);
+				shell->exit_status = main_exec(shell, shell->cmd);
 			}
 		}
 		free_token(&shell->token);
