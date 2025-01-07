@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 01:40:53 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 16:29:09 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	parse_command(t_shell *shell)
 	i = 0;
 	while (shell->cmd->full_cmd[i])
 		i++;
-	shell->cmd->full_cmd[i] = ft_strdup(shell->token->value);
+	shell->cmd->full_cmd[i] = ft_strdup_track(shell, shell->token->value);
 	i++;
 	shell->cmd->full_cmd[i] = NULL;
 	shell->token = shell->token->next;
@@ -29,7 +29,7 @@ static void	parse_redirs(t_shell *shell)
 {
 	t_redir	*new_redir;
 
-	new_redir = create_redir(shell->token);
+	new_redir = create_redir(shell, shell->token);
 	if (!new_redir)
 		return ;
 	redir_add_back(&shell->cmd->redirs, new_redir);
@@ -41,7 +41,7 @@ static void	parse_pipe(t_shell *shell)
 {
 	t_cmd *new_cmd;
 
-	new_cmd = init_cmd(shell->token);
+	new_cmd = init_cmd(shell, shell->token);
 	if (!new_cmd)
 		return ;
 	new_cmd->prev = shell->cmd;
@@ -80,7 +80,7 @@ void	parser(t_shell *shell)
 
 	if (!shell || !shell->token || !shell->token->value)
 		return ;
-	head = init_cmd(shell->token);
+	head = init_cmd(shell, shell->token);
 	if (!head)
 		return ;
 	shell->cmd = head;
