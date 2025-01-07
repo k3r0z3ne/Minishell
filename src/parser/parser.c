@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/06 13:23:04 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 01:40:53 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	parse_command(t_shell *shell)
 	shell->cmd->full_cmd[i] = ft_strdup(shell->token->value);
 	i++;
 	shell->cmd->full_cmd[i] = NULL;
+	shell->token = shell->token->next;
 }
 
 static void	parse_redirs(t_shell *shell)
@@ -33,14 +34,20 @@ static void	parse_redirs(t_shell *shell)
 		return ;
 	redir_add_back(&shell->cmd->redirs, new_redir);
 	shell->token = shell->token->next;
+	shell->token = shell->token->next;
 }
 
 static void	parse_pipe(t_shell *shell)
 {
-	shell->cmd->next = init_cmd(shell->token);
-	if (!shell->cmd->next)
+	t_cmd *new_cmd;
+
+	new_cmd = init_cmd(shell->token);
+	if (!new_cmd)
 		return ;
-	shell->cmd = shell->cmd->next;
+	new_cmd->prev = shell->cmd;
+	shell->cmd->next = new_cmd;
+	shell->cmd = new_cmd;
+	shell->token = shell->token->next;
 }
 
 static void	parse_tokens(t_shell *shell)
@@ -51,7 +58,6 @@ static void	parse_tokens(t_shell *shell)
 		{
 			unexpected_token(&shell->token);
 			free_cmd(&shell->cmd);
-			shell->cmd = NULL;
 			break ;
 		}
 		if (shell->token->type == DOUBLEQ || shell->token->type == DOLLAR)
@@ -61,24 +67,29 @@ static void	parse_tokens(t_shell *shell)
 		if (is_redirection2(shell->token->type) && shell->token->next
 				&& is_word(shell->token->next->type))
 			parse_redirs(shell);
-		if (is_word(shell->token->type))
+		else if (is_word(shell->token->type))
 			parse_command(shell);
-		shell->token = shell->token->next;
+		else
+			shell->token = shell->token->next;
 	}
 }
 
 void	parser(t_shell *shell)
 {
+	t_cmd *head;
+
 	if (!shell || !shell->token || !shell->token->value)
 		return ;
-	shell->cmd = init_cmd(shell->token);
-	if (!shell->cmd)
+	head = init_cmd(shell->token);
+	if (!head)
 		return ;
+	shell->cmd = head;
 	parse_tokens(shell);
+	if (shell->cmd)
+		shell->cmd = head;
 	if (!validate_command(shell))
 	{
 		free_cmd(&shell->cmd);
-		shell->cmd = NULL;
 		return ;
 	}
 }

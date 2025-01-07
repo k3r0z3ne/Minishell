@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:25:07 by witong            #+#    #+#             */
-/*   Updated: 2025/01/05 03:24:25 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 00:17:46 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,9 @@ void	print_redirs(t_cmd *cmd)
 	int		j;
 
 	j = 0;
-	current = NULL;
-	redir = NULL;
+	current = cmd;
 	while (current)
 	{
-		current = cmd->next;
 		printf("Command[%d] Redirections:\n", j);
 		redir = current->redirs;
 		while (redir)
@@ -82,10 +80,9 @@ void	print_table(t_cmd *cmd)
 	int		j;
 
 	j = 0;
-	current = NULL;
+	current = cmd;
 	while (current)
 	{
-		current = cmd->next;
 		i = 0;
 		printf("Command[%d]:\n", j);
 		while (current->full_cmd[i])
