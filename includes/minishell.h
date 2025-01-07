@@ -43,8 +43,8 @@ typedef struct s_cmd
 	char			**full_cmd;
 	int				infile; // OU CHAR * // A DETERMINER
 	int				outfile; // OU CHAR * // A DETERMINER
-	bool			isquote;
-	char			*delimiter;
+	bool			is_quote;
+	char			*limiter;
 	int				*pipe;
 	pid_t			*pids;
 	struct s_redir	*redirs;
