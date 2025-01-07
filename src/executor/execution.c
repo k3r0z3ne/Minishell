@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/30 16:54:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:35:41 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 			return (-1);
 		exec_cmd(shell, cmd);
 	}
-	// else
-	// 	status = wait_process(cmd, 1);
+	else
+		status = wait_process(cmd, 1);
 	return (*cmd->pids);
 }
 

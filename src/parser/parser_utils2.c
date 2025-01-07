@@ -6,23 +6,23 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:25:07 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 00:17:46 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 16:30:21 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_redir	*create_redir(t_token *tokens)
+t_redir	*create_redir(t_shell *shell, t_token *tokens)
 {
 	t_redir	*new_redir;
 
 	if (!tokens || !tokens->next || !tokens->next->value)
 		return (NULL);
-	new_redir = malloc(sizeof(t_redir));
+	new_redir = tracked_malloc(shell, sizeof(t_redir));
 	if (!new_redir)
 		return (NULL);
 	new_redir->type = tokens->type;
-	new_redir->file = ft_strdup(tokens->next->value);
+	new_redir->file = ft_strdup_track(shell, tokens->next->value);
 	if (!new_redir->file)
 	{
 		free(new_redir);

@@ -6,23 +6,23 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2025/01/05 11:43:29 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 17:29:56 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*create_token(t_tok_type type, char *value)
+t_token	*create_token(t_shell *shell, t_tok_type type, char *value)
 {
 	t_token	*new_token;
 
-	new_token = malloc(sizeof(t_token));
+	new_token = (t_token *)tracked_malloc(shell, sizeof(t_token));
 	if (!new_token)
 		return (NULL);
 	new_token->type = type;
 	if (value)
 	{
-		new_token->value = ft_strdup(value);
+		new_token->value = ft_strdup_track(shell, value);
 		if (!new_token->value)
 		{
 			free(new_token);

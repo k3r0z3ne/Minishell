@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 17:15:56 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/07 01:36:15 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 17:38:22 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,50 @@ void	free_cmd(t_cmd **cmd)
 		current = next;
 	}
 	*cmd = NULL;
+}
+
+void	*tracked_malloc(t_shell *shell, size_t size)
+{
+	void	*ptr;
+	t_clean	*node;
+
+	if (!shell || !size)
+		return (NULL);
+	ptr = malloc(size);
+	if (!ptr)
+	{
+		perror("Memory allocation failed");
+		exit(EXIT_FAILURE);
+	}
+	node = (t_clean *)malloc(sizeof(t_clean));
+	if (!node)
+	{
+		perror("Cleanup node creation failed");
+		free(ptr);
+		exit(EXIT_FAILURE);
+	}
+	node->ptr = ptr;
+	node->next = shell->clean;
+	shell->clean = node;
+	return (ptr);
+}
+
+void	cleanup_all(t_shell *shell)
+{
+	t_clean	*current;
+	t_clean	*next;
+
+	current = shell->clean;
+	while (current)
+	{
+		next = current->next;
+		if (current->ptr)
+		{
+			free(current->ptr);
+			current->ptr = NULL;
+		}
+		free(current);
+		current = next;
+	}
+	shell->clean = NULL;
 }

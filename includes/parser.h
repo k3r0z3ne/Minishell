@@ -11,9 +11,9 @@ typedef struct s_redir t_redir;
 void	parser(t_shell *shell);
 
 /* parser_init */
-char **malloc_full_cmd(int size);
+char **malloc_full_cmd(t_shell *shell, int size);
 t_redir *malloc_redirs(int size);
-t_cmd	*init_cmd(t_token *tokens);
+t_cmd	*init_cmd(t_shell *shell, t_token *tokens);
 
 /* parser_utils */
 int		is_word(t_tok_type type);
@@ -23,7 +23,7 @@ void 	unexpected_token(t_token **tokens);
 bool	validate_command(t_shell *shell);
 
 /* parser_utils2 */
-t_redir	*create_redir(t_token *tokens);
+t_redir	*create_redir(t_shell *shell, t_token *tokens);
 void	redir_add_back(t_redir **redirs, t_redir *new_redir);
 void	print_redirs(t_cmd *cmd);
 void	print_table(t_cmd *cmd);

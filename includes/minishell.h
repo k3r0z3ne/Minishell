@@ -26,6 +26,7 @@
 typedef struct s_shell t_shell;
 typedef struct s_token t_token;
 typedef enum e_tok_type t_tok_type;
+typedef struct s_clean t_clean;
 
 /* redirections structure */
 typedef struct s_redir
@@ -42,8 +43,8 @@ typedef struct s_cmd
 	char			**full_cmd;
 	int				infile; // OU CHAR * // A DETERMINER
 	int				outfile; // OU CHAR * // A DETERMINER
-	int				heredoc;
-	int				append;
+	bool			isquote;
+	char			*delimiter;
 	int				*pipe;
 	pid_t			*pids;
 	struct s_redir	*redirs;
@@ -61,6 +62,7 @@ typedef struct s_shell
 	char	*input;
 	t_token	*token;
 	t_cmd	*cmd;
+	t_clean	*clean;
 }			t_shell;
 
 #endif
