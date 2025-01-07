@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 17:36:03 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 17:58:42 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 	cmd->full_cmd = malloc_full_cmd(shell, size);
 	cmd->infile = -1;
 	cmd->outfile = -1;
-	cmd->isquote = false;
-	cmd->delimiter = NULL;
+	cmd->is_quote = false;
+	cmd->limiter = NULL;
 	// *cmd->pipe = -1;
 	cmd->pids = malloc(sizeof(pid_t) * size);
 	if (!cmd->pids)

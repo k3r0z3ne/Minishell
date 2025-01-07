@@ -6,22 +6,22 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/07 17:39:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:54:42 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	manage_here_doc(t_shell *shell, t_cmd *cmd)
+void	manage_here_doc(t_cmd *cmd)
 {
 	int	i;
 
 	if (cmd->limiter == NULL || ft_strlen(cmd->limiter) == 0)
 		return ;
-	handle_here_doc(shell, cmd);
+	handle_here_doc(cmd);
 }
 
-void	handle_here_doc(t_shell *shell, t_cmd *cmd)
+void	handle_here_doc(t_cmd *cmd)
 {
 	char	*line;
 
@@ -39,7 +39,7 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 			break ;
 		}
 		if (cmd->is_quote == false)
-			expand_str(shell);
+			line = expand_heredoc(line);
 		ft_putendl_fd(line, cmd->infile);
 		free(line);
 	}
