@@ -29,6 +29,7 @@ char	*check_path(char **cmd, char *env)
 	}
 	path = NULL;
 	path = set_path(tab, cmd);
+	printf("check_path path : %s\n", path);
 	free(tab);
 	return (path);
 }
@@ -70,5 +71,6 @@ char	*set_path(char **tab, char **cmd)
 		path = "";
 		i++;
 	}
+	printf("set_path path : %s\n", path);
 	return (path);
 }

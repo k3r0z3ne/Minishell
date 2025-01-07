@@ -18,8 +18,12 @@ void	redirection_check(t_cmd *cmd, t_redir *redirs)
 		return ;
 	while (redirs)
 	{
+		printf("HERE\n");
 		if (redirs->type == 5)
+		{
 			cmd->infile = open(redirs->file, O_RDONLY, 0664);
+			printf("redirection_check %s\n", redirs->file);
+		}
 		else if (redirs->type == 6)
 			cmd->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 		else if (redirs->type == 7)

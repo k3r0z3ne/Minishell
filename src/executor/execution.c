@@ -29,13 +29,16 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 	}
 	if (!path)
 		return;
+	printf("path : %s\n", path);
+	printf("exec_cmd = OK!\n");
+	printf("cmd : %s\n", *cmd->full_cmd);
 	if (execve(path, cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);
 		return;
 	}
-	free(path);
-	free_array(cmd->full_cmd);
+	// free(path);
+	// free_array(cmd->full_cmd);
 }
 
 pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
@@ -43,52 +46,56 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 	int	status;
 
 	status = is_builtin(shell, cmd);
-	if (status != 0)
+	if (status != -1)
 		return (status);
 	cmd->pids[0] = fork();
-	if (*cmd->pids < 0)
+	printf("pids[0] = %d\n", cmd->pids[0]);
+	if (cmd->pids[0] < 0)
 		return (-1);
-	else if (*cmd->pids == 0)
+	else if (cmd->pids[0] == 0)
 	{
-		if (dup2(cmd->infile, STDIN_FILENO) < 0)
-			return (-1);
-		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
-			return (-1);
+		// if (dup2(cmd->infile, STDIN_FILENO) < 0)
+		// 	return (-1);
+		printf("only_cmd_1 = OK!\n");
+		// if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
+		// 	return (-1);
 		exec_cmd(shell, cmd);
+		printf("only_cmd_2 = OK!\n");
 	}
-	// else
-	// 	status = wait_process(cmd, 1);
-	return (*cmd->pids);
+	else
+		status = wait_process(cmd, 1);
+	return (cmd->pids[0]);
 }
 
 pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 {
-	is_builtin(shell, cmd);
-	cmd->pids[0] = fork();
-	if (cmd->pids[0] < 0)
+	int	ret;
+
+	ret = is_builtin(shell, cmd);
+	if (is_builtin(shell, cmd))
+		return (ret);
+	cmd->pids[i] = fork();
+	if (cmd->pids[i] < 0)
 		return (-1);
-	else if (*cmd->pids == 0)
+	else if (cmd->pids[i] == 0)
 	{
 		redirect_setup(cmd, i, n);
 		exec_cmd(shell, cmd);
 	}
 	else
 		parent_process(cmd, i, n);
-	return (*cmd->pids);
+	return (cmd->pids[i]);
 }
 
-int several_cmds(t_shell *shell, t_cmd *cmd)
+int	several_cmds(t_shell *shell, t_cmd *cmd)
 {
-	int i;
-	int n_cmds;
-	int status;
+	int	i;
+	int	n_cmds;
+	int	status;
 
-	i = 0;
 	n_cmds = ft_lstsize((t_list *)cmd);
-	cmd->pids = (pid_t *)malloc(sizeof(pid_t) * n_cmds);
-	if (!cmd->pids)
-		return (-1);
-	while (cmd && i < n_cmds)
+	i = 0;
+	while (cmd && i < n_cmds - 1)
 	{
 		cmd->pipe = (int *)malloc(sizeof(int) * 2);
 		if (!cmd->pipe)
@@ -102,10 +109,11 @@ int several_cmds(t_shell *shell, t_cmd *cmd)
 	return (status);
 }
 
-int main_exec(t_shell *shell, t_cmd *cmd)
+int	main_exec(t_shell *shell, t_cmd *cmd)
 {
 	int ret;
 
+	printf("main_exec = OK!\n");
 	redirection_check(cmd, cmd->redirs);
 	if (count_cmd(cmd) > 1)
 		ret = several_cmds(shell, cmd);
