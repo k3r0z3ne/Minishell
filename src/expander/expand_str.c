@@ -6,13 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/06 13:28:02 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 16:40:45 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int append_until_var(char **result, char *str, int i)
+static int append_until_var(t_shell *shell, char **result, char *str, int i)
 {
 	int		start;
 	char	*s1;
@@ -23,7 +23,7 @@ static int append_until_var(char **result, char *str, int i)
 		i++;
 	if (start < i)
 	{
-		s1 = ft_substr(str, start, i - start);
+		s1 = ft_substr_track(shell, str, start, i - start);
 		if (!s1)
 			return (-1);
 		tmp = ft_strjoin(*result, s1);
@@ -45,13 +45,13 @@ static int expand_var(t_shell *shell, char **result, char *str, int i)
 	start = i;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'|| str[i] == '?'))
 		i++;
-	s1 = ft_substr(str, start, i - start);
+	s1 = ft_substr_track(shell, str, start, i - start);
 	if (!s1)
 		return (-1);
 	path = ft_getenv(s1, shell->envp);
 	free(s1);
 	if (!path)
-		path = ft_strdup("");
+		path = ft_strdup_track(shell, "");
 	tmp = ft_strjoin(*result, path);
 	if (!tmp)
 		return (-1);
@@ -77,7 +77,7 @@ static void	process_expand_str(t_shell *shell, char **result, char *value)
 		}
 		else
 		{
-			pos = append_until_var(result, value, i);
+			pos = append_until_var(shell, result, value, i);
 			if (pos == -1)
 				break ;
 			i = pos;
@@ -98,7 +98,7 @@ void	expand_str(t_shell *shell)
 		// case_return(token);
 		return ;
 	}
-	result = ft_strdup("");
+	result = ft_strdup_track(shell, "");
 	if (!result)
 		return ;
 	process_expand_str(shell, &result, shell->token->value);

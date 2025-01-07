@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2024/12/30 16:54:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:36:03 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**malloc_full_cmd(int size)
+char	**malloc_full_cmd(t_shell *shell, int size)
 {
 	char	**full_cmd;
 	int		i;
 
-	full_cmd = (char **)malloc(sizeof(char *) * size);
+	full_cmd = (char **)tracked_malloc(shell, sizeof(char *) * size);
 	if (!full_cmd)
 		return (NULL);
 	i = 0;
@@ -26,21 +26,21 @@ char	**malloc_full_cmd(int size)
 	return (full_cmd);
 }
 
-t_cmd	*init_cmd(t_token *tokens)
+t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 {
 	t_cmd	*cmd;
 	int		size;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = tracked_malloc(shell, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
 	// printf("cmd in init_cmd : %p\n", cmd);
 	size = token_len(tokens);
-	cmd->full_cmd = malloc_full_cmd(size);
+	cmd->full_cmd = malloc_full_cmd(shell, size);
 	cmd->infile = -1;
 	cmd->outfile = -1;
-	cmd->heredoc = -1;
-	cmd->append = -1;
+	cmd->isquote = false;
+	cmd->delimiter = NULL;
 	// *cmd->pipe = -1;
 	cmd->pids = malloc(sizeof(pid_t) * size);
 	if (!cmd->pids)

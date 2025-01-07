@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/01/05 06:32:57 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 17:33:54 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,23 @@ static void	check_illegal(char *line, t_lexer_state *state)
 	state->i = 0;
 }
 
-static void	process_token(char *line, t_lexer_state *state)
+static void	process_token(char *line, t_shell *shell, t_lexer_state *state)
 {
 	if (ft_isspace(line[state->i]))
 		state->i++;
 	else if (check_double_ops(line, state->i) != UNKNOWN)
-		handle_double_ops(line, state);
+		handle_double_ops(line, shell, state);
 	else if (is_redirection(line[state->i]))
-		handle_redirection(line, state);
+		handle_redirection(line, shell, state);
 	else if (line[state->i] == '\'' || line[state->i] == '\"')
-		handle_quotes(line, state);
+		handle_quotes(line, shell, state);
 	else if (line[state->i] == '$')
-		handle_dollar(line, state);
+		handle_dollar(line, shell, state);
 	else
-		handle_word(line, state);
+		handle_word(line, shell, state);
 }
 
-t_token *lexer(char *line)
+t_token *lexer(char *line, t_shell *shell)
 {
 	t_lexer_state state;
 
@@ -59,7 +59,7 @@ t_token *lexer(char *line)
 	check_illegal(line, &state);
 	while (line[state.i])
 	{
-		process_token(line, &state);
+		process_token(line, shell, &state);
 		if (state.error)
 			break;
 	}
@@ -68,6 +68,6 @@ t_token *lexer(char *line)
 		free_lst_token(&state.tokens);
 		return (NULL);
 	}
-	token_add_back(&state.tokens, create_token(END, NULL));
+	token_add_back(&state.tokens, create_token(shell, END, NULL));
 	return (state.tokens);
 }

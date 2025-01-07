@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/06 13:30:52 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 16:38:36 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	expand_env(t_shell *shell)
 	path = NULL;
 	path = ft_getenv(shell->token->value, shell->envp);
 	if (!path)
-		path = ft_strdup("");
+		path = ft_strdup_track(shell, "");
 	free(shell->token->value);
-	shell->token->value = ft_strdup(path);
+	shell->token->value = ft_strdup_track(shell, path);
 	shell->token->type = WORD;
 }
 
