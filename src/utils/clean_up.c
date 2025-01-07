@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 17:15:56 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/05 11:21:54 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/07 01:36:15 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ void	free_cmd(t_cmd **cmd)
 
 	if (!cmd || !*cmd)
 		return ;
+
 	current = *cmd;
+	while (current->prev)
+		current = current->prev;
 	while (current)
 	{
 		next = current->next;
