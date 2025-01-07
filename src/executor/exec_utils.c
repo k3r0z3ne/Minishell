@@ -65,7 +65,7 @@ int	is_builtin(t_shell *shell, t_cmd *cmd)
 	// else if (!ft_strcmp(cmd->full_cmd[0], "exit"))
 	// 	shell->exit_status = ft_exit(shell->exit_status);
 	else
-		return (0);
+		return (-1);
 	return (shell->exit_status);
 }
 
