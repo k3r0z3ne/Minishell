@@ -6,13 +6,13 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/18 15:51:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:07:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-// int	ft_exit(int status)
-// {
+void	ft_exit(int status)
+{
 	
-// }
+}
