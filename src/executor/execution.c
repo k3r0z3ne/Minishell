@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:18:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:31:22 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main_exec(t_shell *shell, t_cmd *cmd)
 {
 	int	exit_status;
 
-	printf("main_exec = OK!\n");
+	// printf("main_exec = OK!\n");
 	redirection_check(shell, cmd, cmd->redirs);
 	if (count_cmd(cmd) > 1)
 		exit_status = several_cmds(shell, cmd);
