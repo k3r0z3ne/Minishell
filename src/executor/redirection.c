@@ -6,13 +6,13 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/07 17:31:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:14:47 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	redirection_check(t_cmd *cmd, t_redir *redirs)
+void	redirection_check(t_shell *shell, t_cmd *cmd, t_redir *redirs)
 {
 	if (!redirs)
 		return ;
@@ -25,7 +25,10 @@ void	redirection_check(t_cmd *cmd, t_redir *redirs)
 		else if (redirs->type == 7)
 			cmd->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
 		else if (redirs->type == 8)
+		{
 			cmd->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			handle_here_doc(shell, cmd);
+		}
 		else
 		{
 			cmd->infile = -1;

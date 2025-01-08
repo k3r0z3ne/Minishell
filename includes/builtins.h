@@ -17,7 +17,7 @@ char	*ft_getenv(const char *name, char **envp);
 int		ft_env(char **envp);
 
 /* exit */
-int		ft_exit(int status);
+void	ft_exit(char **cmd, int status);
 
 /* export */
 
