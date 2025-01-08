@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 16:29:09 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/08 12:36:45 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ static void	parse_redirs(t_shell *shell)
 {
 	t_redir	*new_redir;
 
+	if (shell->token->type == HEREDOC)
+	{
+		shell->cmd->limiter = shell->token->next->value;
+		if (shell->token->next->type == SINGLEQ
+				|| shell->token->next->type == DOUBLEQ)
+			shell->cmd->is_quote = true;
+	}
 	new_redir = create_redir(shell, shell->token);
 	if (!new_redir)
 		return ;
@@ -57,7 +64,7 @@ static void	parse_tokens(t_shell *shell)
 		if (parser_error(&shell->token))
 		{
 			unexpected_token(&shell->token);
-			free_cmd(&shell->cmd);
+			// free_cmd(&shell->cmd);
 			break ;
 		}
 		if (shell->token->type == DOUBLEQ || shell->token->type == DOLLAR)

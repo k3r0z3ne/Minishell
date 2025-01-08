@@ -3,19 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:20:28 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:46:44 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
+char	*expand_heredoc(t_shell *shell, char *line)
+{
+	char	*result;
+
+	if (!line)
+		return (NULL);
+	result = ft_strdup_track(shell, "");
+	if (!result)
+		return (NULL);
+	process_expand_str(shell, &result, line);
+	return (result);
+}
+
 void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 {
 	char	*line;
-	(void)shell;
 
 	while (1)
 	{
@@ -23,6 +35,8 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 		line = get_next_line(0);
 		if (!line)
 			break ;
+		if (cmd->is_quote == false)
+			line = expand_heredoc(shell, line);
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strcmp(line, cmd->limiter) == 0)
@@ -30,8 +44,6 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 			free(line);
 			break ;
 		}
-		// if (cmd->is_quote == false)
-		// 	line = expand_heredoc(line);
 		ft_putendl_fd(line, cmd->infile);
 		free(line);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 17:51:01 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:38:11 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	expand_var(t_shell *shell, char **result, char *str, int i)
 	return (i);
 }
 
-static void	process_expand_str(t_shell *shell, char **result, char *value)
+void	process_expand_str(t_shell *shell, char **result, char *value)
 {
 	int	i;
 	int	pos;
