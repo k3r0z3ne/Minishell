@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:31:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 15:27:44 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 	}
 	if (!path)
 		return;
-	printf("path : %s\n", path);
-	printf("exec_cmd = OK!\n");
-	printf("cmd : %s\n", *cmd->full_cmd);
+	// printf("path : %s\n", path);
+	// printf("exec_cmd = OK!\n");
+	// printf("cmd : %s\n", *cmd->full_cmd);
 	if (execve(path, cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);
@@ -49,18 +49,17 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 	if (exit_status != -1)
 		return (exit_status);
 	cmd->pids[0] = fork();
-	printf("pids[0] = %d\n", cmd->pids[0]);
+	// printf("pids[0] = %d\n", cmd->pids[0]);
 	if (cmd->pids[0] < 0)
 		return (-1);
 	else if (cmd->pids[0] == 0)
 	{
 		is_redir(cmd);
 		exec_cmd(shell, cmd);
-		printf("only_cmd_2 = OK!\n");
 	}
-	else
+	else if (cmd->pids[0] > 0 && cmd->flag_hd == false)
 		exit_status = wait_process(cmd, 1);
-	return (cmd->pids[0]);
+	return (exit_status);
 }
 
 pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:46:44 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/08 16:16:35 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 {
 	char	*line;
 
+	cmd->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (!cmd->infile)
+		return ;
 	while (1)
 	{
 		write(0, "> ", 3);
@@ -48,5 +51,5 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 		free(line);
 	}
 	get_next_line(-1);
-	close (cmd->infile);
+	// close (cmd->infile);
 }

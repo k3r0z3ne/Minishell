@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:14:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:46:15 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	redirection_check(t_shell *shell, t_cmd *cmd, t_redir *redirs)
 			cmd->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
 		else if (redirs->type == 8)
 		{
-			cmd->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			cmd->flag_hd = true;
 			handle_here_doc(shell, cmd);
 		}
 		else
@@ -40,15 +40,23 @@ void	redirection_check(t_shell *shell, t_cmd *cmd, t_redir *redirs)
 
 void	is_redir(t_cmd *cmd)
 {
-	if (cmd->infile != -1)
+	// printf("is redir -> infile : %d\n", cmd->infile);
+	// printf("is redir -> outfile : %d\n", cmd->outfile);
+	if (cmd->infile != -1 && cmd->flag_hd == false)
 	{
 		if (dup2(cmd->infile, STDIN_FILENO) < 0)
+		{
+			printf("INFILE\n");
 			return ;
+		}
 	}
 	if (cmd->outfile != -1)
 	{
 		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
+		{
+			printf("OUTFILE\n");
 			return ;
+		}
 	}
 }
 

@@ -1,0 +1,5 @@
+set_path path : /usr/bin/cat
+check_path path : /usr/bin/cat
+path : /usr/bin/cat
+exec_cmd = OK!
+cmd : cat

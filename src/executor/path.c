@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/18 17:30:13 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:40:52 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*check_path(char **cmd, char *env)
 	}
 	path = NULL;
 	path = set_path(tab, cmd);
-	printf("check_path path : %s\n", path);
+	// printf("check_path path : %s\n", path);
 	free(tab);
 	return (path);
 }
@@ -71,6 +71,6 @@ char	*set_path(char **tab, char **cmd)
 		path = "";
 		i++;
 	}
-	printf("set_path path : %s\n", path);
+	// printf("set_path path : %s\n", path);
 	return (path);
 }

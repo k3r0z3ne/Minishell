@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/17 16:21:53 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 15:08:34 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	*ft_getenv(const char *name, char **envp)
 	}
 	return (NULL);
 }
-
 
 int	ft_env(char **envp)
 {
