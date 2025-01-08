@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/30 17:02:43 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:19:14 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,14 @@ int	is_builtin(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->full_cmd[0], "env"))
 		shell->exit_status = ft_env(shell->envp);
 	// else if (!ft_strcmp(cmd->full_cmd[0], "exit"))
-	// 	shell->exit_status = ft_exit(shell->exit_status);
+	// {
+	// 	shell->exit_status = 0;
+	// 	ft_exit(cmd->full_cmd, shell->exit_status);
+	// }
 	else
 		return (-1);
 	return (shell->exit_status);
 }
-
 int	count_cmd(t_cmd *cmd)
 {
 	t_cmd	*tmp;
