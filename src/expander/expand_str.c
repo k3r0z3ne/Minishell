@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/08 12:38:11 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/08 13:42:19 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int append_until_var(t_shell *shell, char **result, char *str, int i)
 		if (!s1)
 			return (-1);
 		tmp = ft_strjoin(*result, s1);
-		free(s1);
+		// free(s1);
 		if (!tmp)
 			return (-1);
 		*result = tmp;
@@ -49,7 +49,7 @@ static int	expand_var(t_shell *shell, char **result, char *str, int i)
 	if (!s1)
 		return (-1);
 	path = ft_getenv(s1, shell->envp);
-	free(s1);
+	// free(s1);
 	if (!path)
 		path = ft_strdup_track(shell, "");
 	tmp = ft_strjoin(*result, path);

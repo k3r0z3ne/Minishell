@@ -20,10 +20,12 @@ int		ft_env(char **envp);
 void	ft_exit(char **cmd, int status);
 
 /* export */
+int		ft_export(t_shell *shell);
 
 /* pwd */
 int		ft_pwd(int argc);
 
 /* unset */
+int		ft_unset(t_shell *shell);
 
 #endif
