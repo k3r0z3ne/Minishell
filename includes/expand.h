@@ -10,7 +10,7 @@ void	expander(t_shell *shell);
 void	expand_env(t_shell *shell);
 void	expand_str(t_shell *shell);
 
-/* expand_utils */
-void	join_token(t_token **lst, t_token *token);
+/* expand_str */
+void	process_expand_str(t_shell *shell, char **result, char *value);
 
 #endif

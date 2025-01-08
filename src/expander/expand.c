@@ -6,11 +6,17 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:51:35 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/07 16:38:36 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/08 11:56:36 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// A FAIRE PENDANT L'EXEC
+// void	case_return(t_token *token)
+// {
+
+// }
 
 void	expand_env(t_shell *shell)
 {
