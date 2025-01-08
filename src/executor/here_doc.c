@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:46:44 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/08 14:28:07 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 		free(line);
 	}
 	get_next_line(-1);
-	close (cmd->infile);
+	// close (cmd->infile);
 }

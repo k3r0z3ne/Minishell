@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:19:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:24:02 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	is_builtin(t_shell *shell, t_cmd *cmd)
 	// 	shell->exit_status = ft_cd(cmd->full_cmd[1], shell->envp);
 	else if (!ft_strcmp(cmd->full_cmd[0], "pwd"))
 		shell->exit_status = ft_pwd(shell->argc);
-	// else if (!ft_strcmp(cmd->full_cmd[0], "export"))
-	// 	shell->exit_status = ft_export();
-	// else if (!ft_strcmp(cmd->full_cmd[0], "unset"))
-	// 	shell->exit_status = ft_unset();
+	else if (!ft_strcmp(cmd->full_cmd[0], "export"))
+		shell->exit_status = ft_export(shell);
+	else if (!ft_strcmp(cmd->full_cmd[0], "unset"))
+		shell->exit_status = ft_unset(shell);
 	else if (!ft_strcmp(cmd->full_cmd[0], "env"))
 		shell->exit_status = ft_env(shell->envp);
 	// else if (!ft_strcmp(cmd->full_cmd[0], "exit"))
