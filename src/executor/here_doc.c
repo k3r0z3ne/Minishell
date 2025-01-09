@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 16:16:35 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:05:46 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 		free(line);
 	}
 	get_next_line(-1);
+	// close (cmd->infile);
 	// close (cmd->infile);
 }
