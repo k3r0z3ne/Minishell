@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 17:33:54 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/09 13:38:58 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_token *lexer(char *line, t_shell *shell)
 	}
 	if (state.error || !state.tokens)
 	{
-		free_lst_token(&state.tokens);
+		// free_lst_token(&state.tokens);
 		return (NULL);
 	}
 	token_add_back(&state.tokens, create_token(shell, END, NULL));

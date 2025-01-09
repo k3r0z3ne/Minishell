@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:23:57 by arotondo          #+#    #+#             */
-/*   Updated: 2024/08/27 19:26:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:08:24 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	srclen;
-	size_t	i;	
+	size_t	i;
 	char	*ret;
 
 	srclen = ft_strlen(s1);
