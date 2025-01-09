@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 15:27:44 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:47:02 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,22 @@ pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 int	several_cmds(t_shell *shell, t_cmd *cmd)
 {
 	int	i;
-	int	n_cmds;
 	int	exit_status;
 
-	n_cmds = ft_lstsize((t_list *)cmd);
 	i = 0;
-	while (cmd && i < n_cmds - 1)
+	while (cmd && i < shell->cmd_count)
 	{
 		cmd->pipe = (int *)malloc(sizeof(int) * 2);
 		if (!cmd->pipe)
 			return (-1);
-		cmd->pids[i] = process(shell, cmd, i, n_cmds);
+		if (pipe(cmd->pipe) < 0)
+			return (-1);
+		cmd->pids[i] = process(shell, cmd, i, shell->cmd_count);
 		free(cmd->pipe);
 		cmd = cmd->next;
 		i++;
 	}
-	exit_status = wait_process(cmd, n_cmds);
+	exit_status = wait_process(cmd, shell->cmd_count);
 	return (exit_status);
 }
 

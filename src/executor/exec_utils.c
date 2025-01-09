@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/09 15:05:21 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:45:58 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ int	wait_process(t_cmd *cmd, int n)
 	int	status;
 
 	i = 0;
+	// if (cmd->pids[i] == 0)
+	// 	printf("HERE\n");
+	// printf("pid : %p\n", &cmd->pids[i]);
 	while (i < n)
 	{
-		printf("pid : %d\n", cmd->pids[i]);
 		if (waitpid(cmd->pids[i], &status, 0) < 0)
 			return (-1);
 		i++;

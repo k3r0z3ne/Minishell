@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/09 13:32:35 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/09 15:58:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	parse_pipe(t_shell *shell)
 	new_cmd->prev = shell->cmd;
 	shell->cmd->next = new_cmd;
 	shell->cmd = new_cmd;
+	shell->cmd_count++;
 	shell->token = shell->token->next;
 }
 

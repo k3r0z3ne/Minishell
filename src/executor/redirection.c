@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 16:46:15 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:08:37 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	is_redir(t_cmd *cmd)
 
 void	redirect_setup(t_cmd *cmd, int i, int n)
 {
-	
 	if (i == 0)
 	{
 		if (dup2(cmd->infile, STDIN_FILENO) < 0)

@@ -11,8 +11,8 @@ typedef struct s_redir t_redir;
 void	parser(t_shell *shell);
 
 /* parser_init */
-char **malloc_full_cmd(t_shell *shell, int size);
-t_redir *malloc_redirs(int size);
+char	**malloc_full_cmd(t_shell *shell, int size);
+t_redir	*malloc_redirs(int size);
 t_cmd	*init_cmd(t_shell *shell, t_token *tokens);
 
 /* parser_utils */

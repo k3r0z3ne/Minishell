@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/08 16:07:51 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:37:22 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 	cmd->flag_hd = false;
 	cmd->limiter = NULL;
 	// *cmd->pipe = -1;
-	cmd->pids = malloc(sizeof(pid_t) * size);
+	cmd->pids = malloc(sizeof(pid_t) * shell->cmd_count);
 	if (!cmd->pids)
 		return (NULL);
 	cmd->redirs = NULL;

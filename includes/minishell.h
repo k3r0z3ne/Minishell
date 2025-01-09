@@ -57,6 +57,7 @@ typedef struct s_cmd
 typedef struct s_shell
 {
 	int		argc;
+	int		cmd_count;
 	int		exit_status;
 	char	**argv;
 	char	**envp;
