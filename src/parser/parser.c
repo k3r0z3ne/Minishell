@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/08 12:36:45 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/09 13:32:35 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	parse_tokens(t_shell *shell)
 		if (parser_error(&shell->token))
 		{
 			unexpected_token(&shell->token);
+			shell->cmd = NULL;
 			// free_cmd(&shell->cmd);
 			break ;
 		}
@@ -96,7 +97,7 @@ void	parser(t_shell *shell)
 		shell->cmd = head;
 	if (!validate_command(shell))
 	{
-		free_cmd(&shell->cmd);
+		// free_cmd(&shell->cmd);
 		return ;
 	}
 }

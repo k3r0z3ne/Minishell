@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:52:21 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 17:39:39 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/09 13:19:53 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handle_double_ops(char *line, t_shell *shell, t_lexer_state *state)
 			return ;
 		token_add_back(&state->tokens, create_token(shell, type, value));
 		state->i += 2;
+		// free(value);
 	}
 }
 
@@ -39,6 +40,7 @@ void	handle_redirection(char *line, t_shell *shell, t_lexer_state *state)
 		return ;
 	token_add_back(&state->tokens, create_token(shell, type, value));
 	state->i++;
+	// free(value);
 }
 
 void	handle_quotes(char *line, t_shell *shell, t_lexer_state *state)
@@ -53,6 +55,7 @@ void	handle_quotes(char *line, t_shell *shell, t_lexer_state *state)
 	if (!value)
 		return ;
 	token_add_back(&state->tokens, create_token(shell, type, value));
+	// free(value);
 }
 
 void	handle_dollar(char *line, t_shell *shell, t_lexer_state *state)
@@ -68,6 +71,7 @@ void	handle_dollar(char *line, t_shell *shell, t_lexer_state *state)
 	else
 		type = DOLLAR;
 	token_add_back(&state->tokens, create_token(shell, type, value));
+	// free(value);
 }
 
 void	handle_word(char *line, t_shell *shell, t_lexer_state *state)
@@ -78,4 +82,5 @@ void	handle_word(char *line, t_shell *shell, t_lexer_state *state)
 	if(!value)
 		return ;
 	token_add_back(&state->tokens, create_token(shell, WORD, value));
+	// free(value);
 }

@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 11:14:49 by witong            #+#    #+#             */
-/*   Updated: 2025/01/08 11:21:31 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/09 13:11:04 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,47 +51,4 @@ char	**arraydup(char **array)
 		lc++;
 	}
 	return (dup);
-}
-
-char	*ft_strdup_track(t_shell *shell, char *src)
-{
-	int		srclen;
-	char	*dup;
-	int		i;
-
-	if (!src)
-		return (NULL);
-	srclen = ft_strlen(src);
-	dup = tracked_malloc(shell, sizeof(char) * (srclen + 1));
-	if (dup == NULL)
-		return (NULL);
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dup[i] = src[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
-
-char	*ft_substr_track(t_shell *shell, char const *s, unsigned int start, size_t len)
-{
-	size_t i;
-	char *str;
-
-	if (s == NULL)
-		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup_track(shell, ""));
-	if (len >= ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	str = tracked_malloc(shell, sizeof(char) * (len + 1));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len)
-		str[i++] = s[start++];
-	str[len] = '\0';
-	return (str);
 }
