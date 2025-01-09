@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/18 15:40:55 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:16:40 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,24 @@ void	apply_flag(int flag)
 int	check_flag(char **flag, int *idx)
 {
 	int	i;
+	int	j;
 
 	i = 1;
 	if (flag[i] == NULL)
 		return (0);
-	while (flag[i] && !ft_strncmp(flag[i], "-n", 3))
+	while (flag[i] && flag[i][0] == '-')
 	{
+		j = 1;
+		while (flag[i][j] == 'n')
+			j++;
+		if (flag[i][j] == '\0')
+		{
+			(*idx)++;
+			return (1);
+		}
 		(*idx)++;
 		i++;
 	}
-	if (i > 1)
-		return (1);
 	return (0);
 }
 

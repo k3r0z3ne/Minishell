@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/09 15:11:10 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:20:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int append_until_var(t_shell *shell, char **result, char *str, int i)
 		s1 = ft_substr_track(shell, str, start, i - start);
 		if (!s1)
 			return (-1);
-		tmp = ft_strjoin(*result, s1);
+		tmp = ft_strjoin_track(shell, *result, s1);
 		// free(s1);
 		if (!tmp)
 			return (-1);
@@ -52,7 +52,7 @@ static int	expand_var(t_shell *shell, char **result, char *str, int i)
 	// free(s1);
 	if (!path)
 		path = ft_strdup_track(shell, "");
-	tmp = ft_strjoin(*result, path);
+	tmp = ft_strjoin_track(shell, *result, path);
 	if (!tmp)
 		return (-1);
 	*result = tmp;
@@ -105,5 +105,5 @@ void	expand_str(t_shell *shell)
 	tmp = shell->token->value;
 	shell->token->value = result;
 	shell->token->type = WORD;
-	free(tmp);
+	// free(tmp);
 }

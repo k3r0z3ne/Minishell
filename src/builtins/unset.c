@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:43:06 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/09 15:08:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:20:35 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ int	ft_unset(t_shell *shell)
 		unset = unset_word(shell, shell->cmd->full_cmd[i], j);
 		i++;
 	}
-	if (unset)
-		return (0);
-	else
+	if (!unset)
 		return (1);
+	return (0);
 }
