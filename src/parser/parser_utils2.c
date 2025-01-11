@@ -61,12 +61,15 @@ void	print_redirs(t_cmd *cmd)
 	current = cmd;
 	while (current)
 	{
-		printf("Command[%d] Redirections:\n", j);
-		redir = current->redirs;
-		while (redir)
+		if (current->redirs)
 		{
-			printf("  Redir Type: %d, File: %s\n", redir->type, redir->file);
-			redir = redir->next;
+			printf("Command[%d] Redirections:\n", j);
+			redir = current->redirs;
+			while (redir)
+			{
+				printf("  Redir Type: %d, File: %s\n", redir->type, redir->file);
+				redir = redir->next;
+			}
 		}
 		current = current->next;
 		j++;
@@ -90,7 +93,6 @@ void	print_table(t_cmd *cmd)
 			printf("  Arg[%d]: %s\n", i, current->full_cmd[i]);
 			i++;
 		}
-		printf("  Arg[%d]: %s\n", i, current->full_cmd[i]);
 		current = current->next;
 		j++;
 	}

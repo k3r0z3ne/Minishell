@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 14:28:07 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/11 07:07:03 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ char	*expand_heredoc(t_shell *shell, char *line)
 
 	if (!line)
 		return (NULL);
-	result = ft_strdup_track(shell, "");
+	result = expand_string(shell, line);
 	if (!result)
 		return (NULL);
-	process_expand_str(shell, &result, line);
 	return (result);
 }
 

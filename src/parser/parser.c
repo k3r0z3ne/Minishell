@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/09 13:32:35 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/11 15:57:02 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	parse_redirs(t_shell *shell)
 {
 	t_redir	*new_redir;
 
+	if (!shell->token || !shell->token->next)
+		return;
 	if (shell->token->type == HEREDOC)
 	{
 		shell->cmd->limiter = shell->token->next->value;
@@ -41,7 +43,8 @@ static void	parse_redirs(t_shell *shell)
 		return ;
 	redir_add_back(&shell->cmd->redirs, new_redir);
 	shell->token = shell->token->next;
-	shell->token = shell->token->next;
+	if (shell->token)
+		shell->token = shell->token->next;
 }
 
 static void	parse_pipe(t_shell *shell)
@@ -68,8 +71,6 @@ static void	parse_tokens(t_shell *shell)
 			// free_cmd(&shell->cmd);
 			break ;
 		}
-		if (shell->token->type == DOUBLEQ || shell->token->type == DOLLAR)
-			expander(shell);
 		if (shell->token->type == PIPE)
 			parse_pipe(shell);
 		if (is_redirection2(shell->token->type) && shell->token->next
@@ -96,8 +97,5 @@ void	parser(t_shell *shell)
 	if (shell->cmd)
 		shell->cmd = head;
 	if (!validate_command(shell))
-	{
-		// free_cmd(&shell->cmd);
 		return ;
-	}
 }

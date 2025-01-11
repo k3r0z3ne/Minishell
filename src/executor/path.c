@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/18 17:30:13 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:55:47 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*check_path(char **cmd, char *env)
 		tab = ft_split(".", '/');
 	if (!tab)
 	{
-		free_array(tab);
+		// free_array(tab);
 		return (NULL);
 	}
 	path = NULL;

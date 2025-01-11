@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   lexer_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 15:53:31 by witong           ###   ########.fr       */
+/*   Created: 2025/01/11 14:18:10 by witong            #+#    #+#             */
+/*   Updated: 2025/01/11 14:48:39 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,7 @@ t_token	*create_token(t_shell *shell, t_type type, char *value)
 	if (!new_token)
 		return (NULL);
 	new_token->type = type;
-	if (value)
-	{
-		new_token->value = ft_strdup_track(shell, value);
-		if (!new_token->value)
-			return (NULL);
-	}
-	else
-		new_token->value = NULL;
+	new_token->value = value;
 	new_token->next = NULL;
 	new_token->prev = NULL;
 	return (new_token);
@@ -66,33 +59,30 @@ void	print_tokens(t_token *head)
 	printf("END\n");
 }
 
-void	free_lst_token(t_token **list)
+t_type	get_token_type(char *str)
 {
-	t_token *tmp;
-
-	if (!list || !(*list))
-		return ;
-	while (*list)
-	{
-		tmp = (*list)->next;
-		free((*list)->value);
-		free(*list);
-		*list = tmp;
-	}
-	*list = NULL;
+	if (!str || !*str)
+		return (UNKNOWN);
+	if (!ft_strncmp(str, "<<", 2))
+		return (HEREDOC);
+	if (!ft_strncmp(str, ">>", 2))
+		return (APPEND);
+	if (!ft_strncmp(str, "<", 1))
+		return (REDIRIN);
+	if (!ft_strncmp(str, ">", 1))
+		return (REDIROUT);
+	if (!ft_strncmp(str, "|", 1))
+		return (PIPE);
+	return (WORD);
 }
-void	append_chars(t_shell *shell, t_state *state, char *line, char **output)
-{
-	char	*tmp;
 
-	if (line[state->i] == '\'' || line[state->i] == '\"')
-	{
-		if (state->quote == '\0')
-			state->quote = line[state->i];
-		else if (line[state->i] == state->quote)
-			state->quote = '\0';
-	}
-	tmp = ft_substr_track(shell, line, state->i, 1);
-	*output = ft_strjoin_track(shell, *output, tmp);
-	state->i++;
+int	handle_token(t_shell *shell, char *word, t_token **token)
+{
+	t_type	type;
+
+	if (!word)
+		return (0);
+	type = get_token_type(word);
+	token_add_back(token, create_token(shell, type, word));
+	return (1);
 }

@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-char	*extract_word(char *line, t_shell *shell, t_state *state)
+char	*extract_word(char *line, t_shell *shell, t_lexer_state *state)
 {
 	int	start;
 
@@ -22,7 +22,7 @@ char	*extract_word(char *line, t_shell *shell, t_state *state)
 	return (ft_substr_track(shell, line, start, state->i - start));
 }
 
-char	*extract_quote(char *line, t_shell *shell, t_state *state)
+char	*extract_quote(char *line, t_shell *shell, t_lexer_state *state)
 {
 	int		start;
 	char	quote;
@@ -50,7 +50,7 @@ char	*extract_quote(char *line, t_shell *shell, t_state *state)
 	return (ft_substr_track(shell, line, start, state->i - start - 1));
 }
 
-char	*extract_dollar(char *line, t_shell *shell, t_state *state)
+char	*extract_dollar(char *line, t_shell *shell, t_lexer_state *state)
 {
 	int		start;
 
