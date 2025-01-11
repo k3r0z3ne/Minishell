@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-t_type	check_redirection(char c)
+t_tok_type	check_redirection(char c)
 {
 	if (c == '|')
 		return (PIPE);
@@ -23,7 +23,7 @@ t_type	check_redirection(char c)
 	return (UNKNOWN);
 }
 
-t_type	check_double_ops(char *line, int i)
+t_tok_type	check_double_ops(char *line, int i)
 {
 	if (line[i] == '<' && line[i + 1] == '<')
 		return (HEREDOC);
@@ -36,7 +36,7 @@ t_type	check_double_ops(char *line, int i)
 	return (UNKNOWN);
 }
 
-void	handle_illegal_single(char c, t_state *state)
+void	handle_illegal_single(char c, t_lexer_state *state)
 {
 	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c, 2);
@@ -45,7 +45,7 @@ void	handle_illegal_single(char c, t_state *state)
 	state->i++;
 }
 
-void	handle_illegal_double(char c1, char c2, t_state *state)
+void	handle_illegal_double(char c1, char c2, t_lexer_state *state)
 {
 	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c1, 2);

@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils3.c                                     :+:      :+:    :+:   */
+/*   lexer_illegal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 16:02:33 by witong            #+#    #+#             */
-/*   Updated: 2025/01/05 11:21:05 by witong           ###   ########.fr       */
+/*   Created: 2025/01/11 01:23:10 by witong            #+#    #+#             */
+/*   Updated: 2025/01/11 03:39:37 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_type	check_redirection(char c)
+int	is_illegal_single(char c)
 {
-	if (c == '|')
-		return (PIPE);
-	else if (c == '<')
-		return (REDIRIN);
-	else if (c == '>')
-		return (REDIROUT);
-	return (UNKNOWN);
+	return (c == '\\' || c == ';' || c == '(' || c == ')' ||
+		c == '&' || c == '#' || c == '*' || c == '`' ||
+		c == '[' || c == ']' || c == '{' || c == '}');
 }
 
-t_type	check_double_ops(char *line, int i)
+int	is_illegal_double(char c1, char c2)
 {
-	if (line[i] == '<' && line[i + 1] == '<')
-		return (HEREDOC);
-	if (line[i] == '>' && line[i + 1] == '>')
-		return (APPEND);
-	if (line[i] == '&' && line[i + 1] == '&')
-		return (UNKNOWN);
-	if (line[i] == '|' && line[i + 1] == '|')
-		return (UNKNOWN);
-	return (UNKNOWN);
+	return ((c1 == '&' && c2 == '&') || (c1 == '|' && c2 == '|') || (c1 == '$' && c2 == '$'));
 }
 
 void	handle_illegal_single(char c, t_state *state)
@@ -53,4 +41,24 @@ void	handle_illegal_double(char c1, char c2, t_state *state)
 	ft_putstr_fd("'\n", 2);
 	state->error = 1;
 	state->i += 2;
+}
+void	check_illegal(char *line, t_state *state)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i + 1] && is_illegal_double(line[i], line[i + 1]))
+		{
+			handle_illegal_double(line[i], line[i + 1], state);
+			break ;
+		}
+		else if (is_illegal_single(line[i]))
+		{
+			handle_illegal_single(line[i], state);
+			break ;
+		}
+		i++;
+	}
 }
