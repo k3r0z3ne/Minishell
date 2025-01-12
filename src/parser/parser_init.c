@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/09 16:37:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/12 16:13:56 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 	cmd = tracked_malloc(shell, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	// printf("cmd in init_cmd : %p\n", cmd);
 	size = token_len(tokens);
 	cmd->full_cmd = malloc_full_cmd(shell, size);
 	cmd->infile = -1;
@@ -42,7 +41,7 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 	cmd->is_quote = false;
 	cmd->flag_hd = false;
 	cmd->limiter = NULL;
-	// *cmd->pipe = -1;
+	// *cmd->pipe = NULL;
 	cmd->pids = malloc(sizeof(pid_t) * shell->cmd_count);
 	if (!cmd->pids)
 		return (NULL);

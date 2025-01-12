@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/09 17:08:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/12 18:07:01 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,18 @@ void	is_redir(t_cmd *cmd)
 	}
 }
 
-void	redirect_setup(t_cmd *cmd, int i, int n)
+void	redirect_setup(t_cmd *cmd, int i, int count)
 {
 	if (i == 0)
 	{
 		if (dup2(cmd->infile, STDIN_FILENO) < 0)
 			return ;
-			// closerror(cmd, "dup2a");
 		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
 			return ;
 			// closerror(cmd, "dup2b");
 		// clear_pipe(cmd);
 	}
-	else if (i == n - 1)
+	else if (i == count - 1)
 	{
 		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
 			return ;
@@ -92,4 +91,24 @@ void	redirect_setup(t_cmd *cmd, int i, int n)
 			// closerror(cmd, "dup2f");
 		// clear_pipe(cmd);
 	}
+}
+
+void	clear_pipe(t_cmd *cmd, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count - 1)
+	{
+		if (cmd->pipe[i])
+		{
+			close(cmd->pipe[0]);
+			close(cmd->pipe[1]);
+		}
+		i++;
+	}
+	if (cmd->infile)
+		close(cmd->infile);
+	if (cmd->outfile)
+		close(cmd->outfile);
 }
