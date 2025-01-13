@@ -6,16 +6,16 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/12 18:07:01 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:04:54 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	redirection_check(t_shell *shell, t_cmd *cmd, t_redir *redirs)
+int	redirection_check(t_shell *shell, t_cmd *cmd, t_redir *redirs)
 {
 	if (!redirs)
-		return ;
+		return (-1);
 	while (redirs)
 	{
 		if (redirs->type == 5)
@@ -25,17 +25,12 @@ void	redirection_check(t_shell *shell, t_cmd *cmd, t_redir *redirs)
 		else if (redirs->type == 7)
 			cmd->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
 		else if (redirs->type == 8)
-		{
-			cmd->flag_hd = true;
 			handle_here_doc(shell, cmd);
-		}
-		else
-		{
-			cmd->infile = -1;
-			cmd->outfile = -1;
-		}
+		if (cmd->infile < 0 || cmd->outfile < 0)
+			return (-1);
 		redirs = redirs->next;
 	}
+	return (0);
 }
 
 void	is_redir(t_cmd *cmd)
@@ -68,27 +63,22 @@ void	redirect_setup(t_cmd *cmd, int i, int count)
 			return ;
 		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
 			return ;
-			// closerror(cmd, "dup2b");
 		// clear_pipe(cmd);
 	}
 	else if (i == count - 1)
 	{
 		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
 			return ;
-			// closerror(cmd, "dup2c");
 		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
 			return ;
-			// closerror(cmd, "dup2d");
 		// clear_pipe(cmd);
 	}
 	else
 	{
 		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
 			return ;
-			// closerror(cmd, "dup2e");
 		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
 			return ;
-			// closerror(cmd, "dup2f");
 		// clear_pipe(cmd);
 	}
 }

@@ -44,6 +44,7 @@ typedef struct s_cmd
 	int				infile; // OU CHAR * // A DETERMINER
 	int				outfile; // OU CHAR * // A DETERMINER
 	bool			is_quote;
+	bool			is_pipe;
 	bool			flag_hd;
 	char			*limiter;
 	int				*pipe;

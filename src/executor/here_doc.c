@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/09 15:45:23 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/13 13:52:40 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 {
 	char	*line;
 
+	cmd->flag_hd = true;
 	cmd->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (!cmd->infile)
+	if (cmd->infile < 0)
 		return ;
 	while (1)
 	{

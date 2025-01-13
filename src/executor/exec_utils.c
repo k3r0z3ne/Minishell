@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/12 18:01:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:37:45 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,20 @@ void	parent_process(t_cmd *cmd, int i, int n)
 int	make_pipes(t_shell *shell, int i)
 {
 	if (i < shell->cmd_count - 1)
-	{	
+	{
 		shell->cmd->pipe = (int *)malloc(sizeof(int) * 2);
 		if (!shell->cmd->pipe)
 			return (-1);
 		if (pipe(shell->cmd->pipe) < 0)
 			return (-1);
+		shell->cmd->is_pipe = true;
+		return (0);
 	}
-	return (0);
+	else
+	{
+		shell->cmd->is_pipe = false;
+		return (0);
+	}
 }
 
 int	wait_process(t_cmd *cmd, int n)
@@ -50,11 +56,11 @@ int	wait_process(t_cmd *cmd, int n)
 	int	status;
 
 	i = 0;
-	// if (cmd->pids[i] == 0)
-	// 	printf("HERE\n");
-	// printf("pid : %p\n", &cmd->pids[i]);
+	printf("max iter = %d\n", n);
 	while (i < n)
 	{
+		printf("iter in wait_process : %d\n", i + 1);
+		printf("pids[%d] = %d\n", i, cmd->pids[i]);
 		if (waitpid(cmd->pids[i], &status, 0) < 0)
 			return (-1);
 		i++;
@@ -84,7 +90,7 @@ int	is_builtin(t_shell *shell, t_cmd *cmd)
 	// 	ft_exit(cmd->full_cmd, shell->exit_status);
 	// }
 	else
-		return (-2);
+		return (-1);
 	return (shell->exit_status);
 }
 int	count_cmd(t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/12 16:13:56 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:40:50 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ char	**malloc_full_cmd(t_shell *shell, int size)
 	return (full_cmd);
 }
 
+int	how_much_cmd(t_shell *shell)
+{
+	t_shell	tmp;
+	int		builtins;
+	int		ret;
+
+	builtins = 0;
+	tmp = *shell;
+	while ((&tmp)->cmd)
+	{
+		if (is_builtin(&tmp, (&tmp)->cmd) != -1)
+			builtins++;
+		(&tmp)->cmd = (&tmp)->cmd->next;
+	}
+	printf("cmd->count = %d\n", shell->cmd_count);
+	printf("nb builtins = %d\n", builtins);
+	ret = shell->cmd_count - builtins;
+	printf("ret = %d\n", ret);
+	return (ret);
+}
+
 t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 {
 	t_cmd	*cmd;
@@ -36,15 +57,13 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 		return (NULL);
 	size = token_len(tokens);
 	cmd->full_cmd = malloc_full_cmd(shell, size);
-	cmd->infile = -1;
-	cmd->outfile = -1;
+	cmd->infile = 0;
+	cmd->outfile = 0;
 	cmd->is_quote = false;
 	cmd->flag_hd = false;
+	cmd->is_pipe = false;
 	cmd->limiter = NULL;
 	// *cmd->pipe = NULL;
-	cmd->pids = malloc(sizeof(pid_t) * shell->cmd_count);
-	if (!cmd->pids)
-		return (NULL);
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;

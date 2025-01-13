@@ -12,7 +12,7 @@ void	parser(t_shell *shell);
 
 /* parser_init */
 char	**malloc_full_cmd(t_shell *shell, int size);
-t_redir	*malloc_redirs(int size);
+int		how_much_cmd(t_shell *shell);
 t_cmd	*init_cmd(t_shell *shell, t_token *tokens);
 
 /* parser_utils */
