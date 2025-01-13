@@ -6,13 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 15:49:27 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 15:01:52 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	check_illegal(char *line, t_state *state)
+static void	check_illegal(char *line, t_lexer *state)
 {
 	while (line[state->i])
 	{
@@ -31,40 +31,41 @@ static void	check_illegal(char *line, t_state *state)
 	state->i = 0;
 }
 
-static void	process_token(char *line, t_shell *shell, t_state *state)
-{
-	if (ft_isspace(line[state->i]))
-		state->i++;
-	else if (check_double_ops(line, state->i) != UNKNOWN)
-		handle_double_ops(line, shell, state);
-	else if (is_redirection(line[state->i]))
-		handle_redirection(line, shell, state);
-	else if (line[state->i] == '\'' || line[state->i] == '\"')
-		handle_quotes(line, shell, state);
-	else if (line[state->i] == '$')
-		handle_dollar_lexer(line, shell, state);
-	else
-		handle_word(line, shell, state);
-}
+// static void	process_token(char *line, t_shell *shell, t_lexer *state)
+// {
+// 	if (ft_isspace(line[state->i]))
+// 		state->i++;
+// 	else if (check_double_ops(line, state->i) != UNKNOWN)
+// 		handle_double_ops(line, shell, state);
+// 	else if (is_redirection(line[state->i]))
+// 		handle_redirection(line, shell, state);
+// 	// else if (line[state->i] == '\'' || line[state->i] == '\"')
+// 	// 	handle_quotes(line, shell, state);
+// 	// else if (line[state->i] == '$')
+// 	// 	handle_dollar_lexer(line, shell, state);
+// 	else
+// 		handle_word(line, shell, state);
+// }
 
 t_token *lexer(char *line, t_shell *shell)
 {
-	t_state state;
+	t_lexer state;
 
-	if (!line)
+	if (!line || !*line)
 		return (NULL);
-	state.tokens = NULL;
-	state.error = 0;
-	state.i = 0;
+	init_state(&state);
 	check_illegal(line, &state);
-	while (line[state.i])
-	{
-		process_token(line, shell, &state);
-		if (state.error)
-			break;
-	}
-	if (state.error || !state.tokens)
-		return (NULL);
-	token_add_back(&state.tokens, create_token(shell, END, NULL));
+	printf("input: %s\n", line);
+	add_spaces(shell, &state, line);
+	printf("output: %s\n", state.expand_input);
+	// while (line[state.i])
+	// {
+	// 	process_token(line, shell, &state);
+	// 	if (state.error)
+	// 		break;
+	// }
+	// if (state.error || !state.tokens)
+	// 	return (NULL);
+	// token_add_back(&state.tokens, create_token(shell, END, NULL));
 	return (state.tokens);
 }

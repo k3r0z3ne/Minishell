@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 01:23:10 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 03:39:37 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:03:49 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_illegal_double(char c1, char c2)
 	return ((c1 == '&' && c2 == '&') || (c1 == '|' && c2 == '|') || (c1 == '$' && c2 == '$'));
 }
 
-void	handle_illegal_single(char c, t_state *state)
+void	handle_illegal_single(char c, t_lexer *state)
 {
 	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c, 2);
@@ -33,7 +33,7 @@ void	handle_illegal_single(char c, t_state *state)
 	state->i++;
 }
 
-void	handle_illegal_double(char c1, char c2, t_state *state)
+void	handle_illegal_double(char c1, char c2, t_lexer *state)
 {
 	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c1, 2);
@@ -42,7 +42,7 @@ void	handle_illegal_double(char c1, char c2, t_state *state)
 	state->error = 1;
 	state->i += 2;
 }
-void	check_illegal(char *line, t_state *state)
+void	check_illegal(char *line, t_lexer *state)
 {
 	int	i;
 

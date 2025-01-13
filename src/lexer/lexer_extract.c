@@ -6,23 +6,36 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 17:25:15 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:01:26 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*extract_word(char *line, t_shell *shell, t_state *state)
+char	*extract_word(char *line, t_shell *shell, t_lexer *state)
 {
 	int	start;
+	char *ret;
+	char *tmp;
 
 	start = state->i;
+	ret = ft_strdup_track(shell, "");
 	while (line[state->i] && !ft_isspace(line[state->i]) && !is_special_char(line[(state->i)]))
+	{
+		if (line[state->i] == '\'' || line[state->i] == '"')
+		{
+			tmp = extract_quote(line, shell, state);
+			if (!tmp)
+				return (NULL);
+			ret = ft_strjoin_track(shell, ret, tmp);
+		}
 		state->i++;
-	return (ft_substr_track(shell, line, start, state->i - start));
+	}
+	ret = ft_substr_track(shell, line, start, state->i - start);
+	return (ret);
 }
 
-char	*extract_quote(char *line, t_shell *shell, t_state *state)
+char	*extract_quote(char *line, t_shell *shell, t_lexer *state)
 {
 	int		start;
 	char	quote;
@@ -50,7 +63,7 @@ char	*extract_quote(char *line, t_shell *shell, t_state *state)
 	return (ft_substr_track(shell, line, start, state->i - start - 1));
 }
 
-char	*extract_dollar(char *line, t_shell *shell, t_state *state)
+char	*extract_dollar(char *line, t_shell *shell, t_lexer *state)
 {
 	int		start;
 

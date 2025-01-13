@@ -6,11 +6,24 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:02:33 by witong            #+#    #+#             */
-/*   Updated: 2025/01/05 11:21:05 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 15:01:44 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	init_state(t_lexer *state)
+{
+	char expand_input[20480];
+
+	state->tokens = NULL;
+	state->expand_input = expand_input;
+	state->i = 0;
+	state->j = 0;
+	state->error = 0;
+	state->is_heredoc = 0;
+	state->quote = '\0';
+}
 
 t_type	check_redirection(char c)
 {
@@ -36,7 +49,7 @@ t_type	check_double_ops(char *line, int i)
 	return (UNKNOWN);
 }
 
-void	handle_illegal_single(char c, t_state *state)
+void	handle_illegal_single(char c, t_lexer *state)
 {
 	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c, 2);
@@ -45,7 +58,7 @@ void	handle_illegal_single(char c, t_state *state)
 	state->i++;
 }
 
-void	handle_illegal_double(char c1, char c2, t_state *state)
+void	handle_illegal_double(char c1, char c2, t_lexer *state)
 {
 	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c1, 2);

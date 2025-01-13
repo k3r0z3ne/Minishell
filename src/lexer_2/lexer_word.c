@@ -6,13 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:19:22 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 14:41:28 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:16:20 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*extract_word(t_shell *shell, char *input, t_state *state)
+char	*extract_word(t_shell *shell, char *input, t_lexer *state)
 {
 	char	*word;
 	char	*segment;
@@ -30,7 +30,7 @@ char	*extract_word(t_shell *shell, char *input, t_state *state)
 	return (word);
 }
 
-char	*handle_word_segment(t_shell *shell, char *input, t_state *state)
+char	*handle_word_segment(t_shell *shell, char *input, t_lexer *state)
 {
 	char	*content;
 
@@ -41,7 +41,7 @@ char	*handle_word_segment(t_shell *shell, char *input, t_state *state)
 	return (content);
 }
 
-char	*handle_operator(t_shell *shell, char *input, t_state *state)
+char	*handle_operator(t_shell *shell, char *input, t_lexer *state)
 {
 	int		len;
 	char	*tmp;
@@ -67,7 +67,7 @@ char	*join_segments(t_shell *shell, char *word, char *segment)
 	return (result);
 }
 
-char	*get_segment(t_shell *shell, char *input, t_state *state)
+char	*get_segment(t_shell *shell, char *input, t_lexer *state)
 {
 	char	*result;
 

@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 01:23:02 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 14:57:20 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:02:58 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void lexer(char *line, t_shell *shell)
 {
-	t_state	state;
+	t_lexer	state;
 
 	if (!line || !*line)
 		return ;

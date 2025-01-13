@@ -6,7 +6,7 @@ INC_DIR = includes
 LIBFT_DIR = libft
 
 SRC =	main.c utils/init.c \
-		lexer/lexer.c lexer/lexer_utils.c \
+		lexer/lexer.c lexer/lexer_input.c lexer/lexer_utils.c \
 		lexer/lexer_utils2.c lexer/lexer_utils3.c \
 		lexer/lexer_extract.c lexer/lexer_handler.c \
 		executor/execution.c executor/path.c executor/exec_utils.c \

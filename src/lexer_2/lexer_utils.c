@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:19:22 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 14:19:22 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:16:09 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_double_redir(char *input, int i)
 		(input[i] == '>' && input[i + 1] == '>'));
 }
 
-void	init_state(t_state *state)
+void	init_state(t_lexer *state)
 {
 	state->i = 0;
 	state->error = 0;

@@ -6,13 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:41:28 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 14:41:28 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:07:47 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*handle_quoted_content(t_shell *shell, char *input, t_state *state)
+char	*handle_quoted_content(t_shell *shell, char *input, t_lexer *state)
 {
 	char	*content;
 	char	*segment;

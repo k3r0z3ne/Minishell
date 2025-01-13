@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 15:53:31 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 14:39:11 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,4 @@ void	free_lst_token(t_token **list)
 		*list = tmp;
 	}
 	*list = NULL;
-}
-void	append_chars(t_shell *shell, t_state *state, char *line, char **output)
-{
-	char	*tmp;
-
-	if (line[state->i] == '\'' || line[state->i] == '\"')
-	{
-		if (state->quote == '\0')
-			state->quote = line[state->i];
-		else if (line[state->i] == state->quote)
-			state->quote = '\0';
-	}
-	tmp = ft_substr_track(shell, line, state->i, 1);
-	*output = ft_strjoin_track(shell, *output, tmp);
-	state->i++;
 }
