@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:02:33 by witong            #+#    #+#             */
-/*   Updated: 2025/01/13 15:01:44 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:54:19 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,3 @@ t_type	check_double_ops(char *line, int i)
 	return (UNKNOWN);
 }
 
-void	handle_illegal_single(char c, t_lexer *state)
-{
-	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
-	ft_putchar_fd(c, 2);
-	ft_putstr_fd("'\n", 2);
-	state->error = 1;
-	state->i++;
-}
-
-void	handle_illegal_double(char c1, char c2, t_lexer *state)
-{
-	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
-	ft_putchar_fd(c1, 2);
-	ft_putchar_fd(c2, 2);
-	ft_putstr_fd("'\n", 2);
-	state->error = 1;
-	state->i += 2;
-}

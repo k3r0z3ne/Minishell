@@ -6,30 +6,11 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/01/13 15:01:52 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:54:45 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static void	check_illegal(char *line, t_lexer *state)
-{
-	while (line[state->i])
-	{
-		if (line[state->i + 1] && is_illegal_double(line[state->i], line[state->i + 1]))
-		{
-			handle_illegal_double(line[state->i], line[state->i + 1], state);
-			break ;
-		}
-		else if (is_illegal_single(line[state->i]))
-		{
-			handle_illegal_single(line[state->i], state);
-			break ;
-		}
-		state->i++;
-	}
-	state->i = 0;
-}
 
 // static void	process_token(char *line, t_shell *shell, t_lexer *state)
 // {
