@@ -41,30 +41,35 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**full_cmd;
-	int				infile; // OU CHAR * // A DETERMINER
-	int				outfile; // OU CHAR * // A DETERMINER
 	bool			is_quote;
-	bool			is_pipe;
 	bool			flag_hd;
 	char			*limiter;
-	int				*pipe;
 	struct s_redir	*redirs;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }			t_cmd;
 
+typedef struct s_exec
+{
+	int		infile;
+	int		outfile;
+	int		cmd_count;
+	int		exit_status;
+	int		*pipe;
+	pid_t	*pids;
+	bool	is_pipe;
+}			t_exec;
+
 /* global data structure */
 typedef struct s_shell
 {
 	int		argc;
-	int		cmd_count;
-	int		exit_status;
 	char	**argv;
 	char	**envp;
 	char	*input;
-	pid_t	*pids;
 	t_token	*token;
 	t_cmd	*cmd;
+	t_exec	*exec;
 	t_clean	*clean;
 }			t_shell;
 

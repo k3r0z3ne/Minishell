@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/12 15:59:35 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:53:46 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	parse_pipe(t_shell *shell)
 	new_cmd->prev = shell->cmd;
 	shell->cmd->next = new_cmd;
 	shell->cmd = new_cmd;
-	shell->cmd_count++;
+	shell->exec->cmd_count++;
 	shell->token = shell->token->next;
 }
 
@@ -86,12 +86,15 @@ static void	parse_tokens(t_shell *shell)
 void	parser(t_shell *shell)
 {
 	t_cmd	*head;
+	t_exec	*exec;
 
 	if (!shell || !shell->token || !shell->token->value)
 		return ;
+	exec = NULL;
 	head = init_cmd(shell, shell->token);
 	if (!head)
 		return ;
+	shell->exec = init_exec(shell);
 	shell->cmd = head;
 	parse_tokens(shell);
 	if (shell->cmd)

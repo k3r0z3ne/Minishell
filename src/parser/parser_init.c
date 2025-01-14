@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/13 17:40:50 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:52:55 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,48 @@ int	how_much_cmd(t_shell *shell)
 	tmp = *shell;
 	while ((&tmp)->cmd)
 	{
-		if (is_builtin(&tmp, (&tmp)->cmd) != -1)
+		if (is_builtin(&tmp) != -1)
 			builtins++;
 		(&tmp)->cmd = (&tmp)->cmd->next;
 	}
-	printf("cmd->count = %d\n", shell->cmd_count);
-	printf("nb builtins = %d\n", builtins);
-	ret = shell->cmd_count - builtins;
-	printf("ret = %d\n", ret);
+	// printf("cmd->count = %d\n", shell->cmd_count);
+	// printf("nb builtins = %d\n", builtins);
+	ret = shell->exec->cmd_count - builtins;
+	// printf("ret = %d\n", ret);
 	return (ret);
+}
+
+t_exec	*init_exec(t_shell *shell)
+{
+	t_exec	*exec;
+
+	exec = tracked_malloc(shell, sizeof(t_exec));
+	if (!exec)
+		return (NULL);
+	exec->infile = 0;
+	exec->outfile = 0;
+	exec->is_pipe = false;
+	exec->exit_status = 0;
+	exec->cmd_count = 1;
+	return (exec);
 }
 
 t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 {
 	t_cmd	*cmd;
+	t_exec	*exec;
 	int		size;
 
 	cmd = tracked_malloc(shell, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
+	exec = tracked_malloc(shell, sizeof(t_exec));
+	if (!exec)
+		return (NULL);
 	size = token_len(tokens);
 	cmd->full_cmd = malloc_full_cmd(shell, size);
-	cmd->infile = 0;
-	cmd->outfile = 0;
 	cmd->is_quote = false;
 	cmd->flag_hd = false;
-	cmd->is_pipe = false;
 	cmd->limiter = NULL;
 	// *cmd->pipe = NULL;
 	cmd->redirs = NULL;

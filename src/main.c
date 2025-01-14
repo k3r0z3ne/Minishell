@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/13 13:40:17 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:21:25 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ int	main(int ac, char **av, char **envp)
 		shell->token = lexer(shell->input, shell);
 		if (shell->token)
 		{
-			print_tokens(shell->token);
+			// print_tokens(shell->token);
 			parser(shell);
 			if (shell->cmd)
 			{
-				print_table(shell->cmd);
-				print_redirs(shell->cmd);
-				shell->exit_status = main_exec(shell);
-				// printf("HERE\n");
+				// print_table(shell->cmd);
+				// print_redirs(shell->cmd);
+				shell->exec->exit_status = main_exec(shell);
 			}
 		}
 		cleanup_all(shell);

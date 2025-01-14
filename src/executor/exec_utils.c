@@ -6,44 +6,44 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/14 14:19:09 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:13:34 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	parent_process(t_cmd *cmd)
+void	parent_process(t_exec *exec)
 {
-	if (cmd->infile > 0)
+	if (exec->infile > 0)
 	{
-		close(cmd->infile);
-		close(cmd->pipe[1]);
+		close(exec->infile);
+		close(exec->pipe[1]);
 	}
-	else if (cmd->outfile > 0)
+	else if (exec->outfile > 0)
 	{
-		close(cmd->pipe[0]);
-		close(cmd->outfile);
+		close(exec->pipe[0]);
+		close(exec->outfile);
 	}
 	else
 	{
-		close(cmd->pipe[0]);
-		close(cmd->pipe[1]);
+		close(exec->pipe[0]);
+		close(exec->pipe[1]);
 	}
 }
 
 int	make_pipes(t_shell *shell, int i)
 {
-	if (i < shell->cmd_count - 1)
+	if (i < shell->exec->cmd_count - 1)
 	{
-		shell->cmd->pipe = (int *)malloc(sizeof(int) * 2);
-		if (!shell->cmd->pipe)
+		shell->exec->pipe = (int *)malloc(sizeof(int) * 2);
+		if (!shell->exec->pipe)
 			return (-1);
-		if (pipe(shell->cmd->pipe) < 0)
+		if (pipe(shell->exec->pipe) < 0)
 			return (-1);
-		shell->cmd->is_pipe = true;
+		shell->exec->is_pipe = true;
 	}
 	else
-		shell->cmd->is_pipe = false;
+		shell->exec->is_pipe = false;
 	return (0);
 }
 
@@ -53,42 +53,42 @@ int	wait_process(t_shell *shell, int n)
 	int	status;
 
 	i = 0;
-	printf("max iter = %d\n", n);
+	// printf("max iter = %d\n", n);
 	while (i < n)
 	{
-		printf("iter in wait_process : %d\n", i);
-		printf("pids[%d] = %d\n", i, shell->pids[i]);
-		if (waitpid(shell->pids[i], &status, 0) < 0)
+		// printf("iter in wait_process : %d\n", i);
+		// printf("pids[%d] = %d\n", i, shell->exec->pids[i]);
+		if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 			return (-1);
 		i++;
 	}
-	free(shell->pids);
+	free(shell->exec->pids);
 	return (status);
 }
 
-int	is_builtin(t_shell *shell, t_cmd *cmd)
+int	is_builtin(t_shell *shell)
 {
-	if (!ft_strcmp(cmd->full_cmd[0], "echo"))
-		shell->exit_status = ft_echo(count_line(cmd->full_cmd), \
-		cmd->full_cmd, shell->envp);
-	// else if (!ft_strcmp(cmd->full_cmd[0], "cd"))
-	// 	shell->exit_status = ft_cd(cmd->full_cmd[1], shell->envp);
-	else if (!ft_strcmp(cmd->full_cmd[0], "pwd"))
-		shell->exit_status = ft_pwd(shell->argc);
-	else if (!ft_strcmp(cmd->full_cmd[0], "export"))
-		shell->exit_status = ft_export(shell);
-	else if (!ft_strcmp(cmd->full_cmd[0], "unset"))
-		shell->exit_status = ft_unset(shell);
-	else if (!ft_strcmp(cmd->full_cmd[0], "env"))
-		shell->exit_status = ft_env(shell->envp);
-	// else if (!ft_strcmp(cmd->full_cmd[0], "exit"))
+	if (!ft_strcmp(shell->cmd->full_cmd[0], "echo"))
+		shell->exec->exit_status = ft_echo(count_line \
+		(shell->cmd->full_cmd), shell->cmd->full_cmd, shell->envp);
+	// else if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
+		// shell->exec->exit_status = ft_cd(shell->cmd->full_cmd[1], shell->envp);
+	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
+		shell->exec->exit_status = ft_pwd(shell->argc);
+	else if (!ft_strcmp(shell->cmd->full_cmd[0], "export"))
+		shell->exec->exit_status = ft_export(shell);
+	else if (!ft_strcmp(shell->cmd->full_cmd[0], "unset"))
+		shell->exec->exit_status = ft_unset(shell);
+	else if (!ft_strcmp(shell->cmd->full_cmd[0], "env"))
+		shell->exec->exit_status = ft_env(shell->envp);
+	// else if (!ft_strcmp(shell->cmd->full_cmd[0], "exit"))
 	// {
-	// 	shell->exit_status = 0;
-	// 	ft_exit(cmd->full_cmd, shell->exit_status);
+	// 	shell->exec->exit_status = 0;
+	// 	ft_exit(shell->cmd->full_cmd, shell->exec->exit_status);
 	// }
 	else
 		return (-1);
-	return (shell->exit_status);
+	return (shell->exec->exit_status);
 }
 int	count_cmd(t_cmd *cmd)
 {

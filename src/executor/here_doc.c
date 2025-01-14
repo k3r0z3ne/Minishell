@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/13 13:52:40 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:12:50 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ char	*expand_heredoc(t_shell *shell, char *line)
 	return (result);
 }
 
-void	handle_here_doc(t_shell *shell, t_cmd *cmd)
+void	handle_here_doc(t_shell *shell)
 {
 	char	*line;
 
-	cmd->flag_hd = true;
-	cmd->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (cmd->infile < 0)
+	shell->cmd->flag_hd = true;
+	shell->exec->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (shell->exec->infile < 0)
 		return ;
 	while (1)
 	{
@@ -40,13 +40,13 @@ void	handle_here_doc(t_shell *shell, t_cmd *cmd)
 		if (!line)
 			break ;
 		printf("line %p\n", line);
-		if (cmd->is_quote == false)
+		if (shell->cmd->is_quote == false)
 			line = expand_heredoc(shell, line);
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
-		if (ft_strcmp(line, cmd->limiter) == 0)
+		if (ft_strcmp(line, shell->cmd->limiter) == 0)
 			break ;
-		ft_putendl_fd(line, cmd->infile);
+		ft_putendl_fd(line, shell->exec->infile);
 	}
 	get_next_line(-1);
 	// close (cmd->infile);
