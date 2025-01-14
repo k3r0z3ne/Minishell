@@ -6,16 +6,11 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 10:23:35 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 08:56:27 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 18:28:49 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_word(t_type type)
-{
-	return (type == WORD || type == SINGLEQ || type == DOUBLEQ);
-}
 
 int	is_redirection2(t_type type)
 {
@@ -24,14 +19,15 @@ int	is_redirection2(t_type type)
 
 int	token_len(t_token *tokens)
 {
-	int	i;
+	int		i;
+	t_token	*tmp;
 
 	i = 0;
-	while (tokens && tokens->type != END)
+	tmp = tokens;
+	while (tmp && tmp->type != END)
 	{
-		if (is_word(tokens->type))
-			i++;
-		tokens = tokens->next;
+		i++;
+		tmp = tmp->next;
 	}
 	return (i);
 }

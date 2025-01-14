@@ -55,17 +55,15 @@ void	handle_illegal_single(char c, t_lexer *state);
 void	handle_illegal_double(char c1, char c2, t_lexer *state);
 void	check_illegal(char *line, t_lexer *state);
 
-/* lexer_utils */
+/* lexer_token */
 t_token	*create_token(t_shell *shell, t_type type, char *value);
 void	token_add_back(t_token **list, t_token *new_token);
 void	print_tokens(t_token *head);
 
-/* lexer_utils2 */
+/* lexer_utils */
+void	init_state(t_lexer *state);
 int	ft_isspace(char c);
 int	is_redirection(char c);
-
-/* lexer_utils3 */
-void	init_state(t_lexer *state);
 t_type	check_redirection(char c);
 t_type	check_double_ops(char *line, int i);
 

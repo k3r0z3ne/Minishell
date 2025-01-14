@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 15:57:02 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 18:36:59 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,14 @@ static void	parse_tokens(t_shell *shell)
 		{
 			unexpected_token(&shell->token);
 			shell->cmd = NULL;
-			// free_cmd(&shell->cmd);
 			break ;
 		}
 		if (shell->token->type == PIPE)
 			parse_pipe(shell);
 		if (is_redirection2(shell->token->type) && shell->token->next
-				&& is_word(shell->token->next->type))
+				&& shell->token->next->type == WORD)
 			parse_redirs(shell);
-		else if (is_word(shell->token->type))
+		else if (shell->token->type == WORD)
 			parse_command(shell);
 		else
 			shell->token = shell->token->next;
