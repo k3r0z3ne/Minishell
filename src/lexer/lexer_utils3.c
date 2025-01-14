@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:02:33 by witong            #+#    #+#             */
-/*   Updated: 2025/01/14 10:29:26 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 13:07:53 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_state(t_lexer *state)
 	state->i = 0;
 	state->j = 0;
 	state->error = 0;
-	state->is_heredoc = 0;
+	state->is_heredoc = false;
 	state->quote = '\0';
 }
 

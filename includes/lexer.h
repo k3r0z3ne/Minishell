@@ -34,8 +34,8 @@ typedef struct s_lexer
 	char	*expand_input;
 	int		i;
 	int		j;
-	bool		error;
-	bool		is_heredoc;
+	bool	error;
+	bool	is_heredoc;
 	char	quote;
 }	t_lexer;
 
