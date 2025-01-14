@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/13 17:35:24 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:11:01 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 	}
 }
 
-pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
+pid_t	process(t_shell *shell, t_cmd *cmd)
 {
 	pid_t	ret;
 	int		exit_status;
@@ -50,11 +50,13 @@ pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
 		return (-1);
 	else if (ret == 0)
 	{
-		redirect_setup(cmd, i, n);
+		if (redirect_setup(cmd) < 0)
+			return (-1);
 		exec_cmd(shell, cmd);
 	}
 	else
-		parent_process(cmd, i, n);
+		parent_process(cmd);
+	printf("ret in process = %d\n", ret);
 	return (ret);
 }
 
@@ -63,24 +65,27 @@ int	several_cmds(t_shell *shell, t_cmd *cmd)
 	int	i;
 	int	exit_status;
 
-	i = 0;
-	cmd->pids = malloc(sizeof(pid_t) * how_much_cmd(shell));
-	if (!cmd->pids)
+	shell->pids = malloc(sizeof(pid_t) * how_much_cmd(shell));
+	if (!shell->pids)
 		return (-1);
+	i = 0;
 	while (cmd && i < shell->cmd_count)
 	{
 		if (make_pipes(shell, i) < 0)
 			return (-1);
-		if (is_builtin(shell, cmd))
+		if (is_builtin(shell, cmd) >= 0)
 			exit_status = is_builtin(shell, cmd);
 		else
-			cmd->pids[i] = process(shell, cmd, i, shell->cmd_count);
+		{
+			shell->pids[i] = process(shell, cmd);
+			printf("here in pids[%d]\n", i);
+		}
 		if (cmd->is_pipe == true)
 			free(shell->cmd->pipe);
 		cmd = cmd->next;
 		i++;
 	}
-	exit_status = wait_process(cmd, how_much_cmd(shell));
+	exit_status = wait_process(shell, how_much_cmd(shell));
 	return (exit_status);
 }
 
@@ -91,16 +96,16 @@ pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
 	exit_status = is_builtin(shell, cmd);
 	if (!is_builtin(shell, cmd))
 		return (exit_status);
-	cmd->pids[0] = fork();
-	if (cmd->pids[0] < 0)
+	shell->pids[0] = fork();
+	if (shell->pids[0] < 0)
 		return (-1);
-	else if (cmd->pids[0] == 0)
+	else if (shell->pids[0] == 0)
 	{
 		is_redir(cmd);
 		exec_cmd(shell, cmd);
 	}
-	else if (cmd->pids[0] > 0 && cmd->flag_hd == false)
-		exit_status = wait_process(cmd, 1);
+	else if (shell->pids[0] > 0 && cmd->flag_hd == false)
+		exit_status = wait_process(shell, 1);
 	return (exit_status);
 }
 

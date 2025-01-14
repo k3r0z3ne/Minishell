@@ -6,20 +6,20 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/13 17:37:45 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:19:09 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	parent_process(t_cmd *cmd, int i, int n)
+void	parent_process(t_cmd *cmd)
 {
-	if (i == 0)
+	if (cmd->infile > 0)
 	{
 		close(cmd->infile);
 		close(cmd->pipe[1]);
 	}
-	else if (i == n - 1)
+	else if (cmd->outfile > 0)
 	{
 		close(cmd->pipe[0]);
 		close(cmd->outfile);
@@ -41,16 +41,13 @@ int	make_pipes(t_shell *shell, int i)
 		if (pipe(shell->cmd->pipe) < 0)
 			return (-1);
 		shell->cmd->is_pipe = true;
-		return (0);
 	}
 	else
-	{
 		shell->cmd->is_pipe = false;
-		return (0);
-	}
+	return (0);
 }
 
-int	wait_process(t_cmd *cmd, int n)
+int	wait_process(t_shell *shell, int n)
 {
 	int	i;
 	int	status;
@@ -59,13 +56,13 @@ int	wait_process(t_cmd *cmd, int n)
 	printf("max iter = %d\n", n);
 	while (i < n)
 	{
-		printf("iter in wait_process : %d\n", i + 1);
-		printf("pids[%d] = %d\n", i, cmd->pids[i]);
-		if (waitpid(cmd->pids[i], &status, 0) < 0)
+		printf("iter in wait_process : %d\n", i);
+		printf("pids[%d] = %d\n", i, shell->pids[i]);
+		if (waitpid(shell->pids[i], &status, 0) < 0)
 			return (-1);
 		i++;
 	}
-	free(cmd->pids);
+	free(shell->pids);
 	return (status);
 }
 

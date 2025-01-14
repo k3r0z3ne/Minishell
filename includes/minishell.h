@@ -48,7 +48,6 @@ typedef struct s_cmd
 	bool			flag_hd;
 	char			*limiter;
 	int				*pipe;
-	pid_t			*pids;
 	struct s_redir	*redirs;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -63,6 +62,7 @@ typedef struct s_shell
 	char	**argv;
 	char	**envp;
 	char	*input;
+	pid_t	*pids;
 	t_token	*token;
 	t_cmd	*cmd;
 	t_clean	*clean;

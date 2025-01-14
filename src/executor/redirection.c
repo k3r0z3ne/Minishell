@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/13 14:04:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:07:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,59 @@ void	is_redir(t_cmd *cmd)
 	}
 }
 
-void	redirect_setup(t_cmd *cmd, int i, int count)
+int	redirect_setup(t_cmd *cmd)
 {
-	if (i == 0)
+	if (cmd->infile > 0)
 	{
 		if (dup2(cmd->infile, STDIN_FILENO) < 0)
-			return ;
+			return (-1);
 		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
-			return ;
-		// clear_pipe(cmd);
+			return (-1);
 	}
-	else if (i == count - 1)
+	else if (cmd->outfile > 0)
 	{
 		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
-			return ;
+			return (-1);
 		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
-			return ;
-		// clear_pipe(cmd);
+			return (-1);
 	}
 	else
 	{
 		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
-			return ;
+			return (-1);
 		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
-			return ;
-		// clear_pipe(cmd);
+			return (-1);
 	}
+	return (0);
 }
+
+// void	redirect_setup(t_cmd *cmd, int i, int count)
+// {
+// 	if (i == 0)
+// 	{
+// 		if (dup2(cmd->infile, STDIN_FILENO) < 0)
+// 			return ;
+// 		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
+// 			return ;
+// 		// clear_pipe(cmd);
+// 	}
+// 	else if (i == count - 1)
+// 	{
+// 		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
+// 			return ;
+// 		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
+// 			return ;
+// 		// clear_pipe(cmd);
+// 	}
+// 	else
+// 	{
+// 		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
+// 			return ;
+// 		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
+// 			return ;
+// 		// clear_pipe(cmd);
+// 	}
+// }
 
 void	clear_pipe(t_cmd *cmd, int count)
 {
