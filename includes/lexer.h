@@ -34,8 +34,8 @@ typedef struct s_lexer
 	char	*expand_input;
 	int		i;
 	int		j;
-	int		error;
-	int		is_heredoc;
+	bool		error;
+	bool		is_heredoc;
 	char	quote;
 }	t_lexer;
 
@@ -45,7 +45,7 @@ typedef struct s_shell t_shell;
 t_token	*lexer(char *line, t_shell *shell);
 
 /* lexer_input */
-void	append_chars(t_shell *shell, t_lexer *state, char *input);
+void	append_char(t_shell *shell, t_lexer *state, char c);
 char	*add_spaces(t_shell *shell, t_lexer *state, char *input);
 
 /* lexer_illegal.c */

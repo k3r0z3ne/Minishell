@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/13 15:29:52 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 11:45:18 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void	expand_lexer(t_shell *shell, t_lexer *state, char *line)
 		return;
 	if (line[state->i] == '$')
 	{
-		if (state->is_heredoc || state->quote == '\'')
+		if (state->is_heredoc == true || state->quote == '\'')
 		{
-			append_chars(shell, state, line);
+			append_char(shell, state, line[state->i]);
 			return;
 		}
 		handle_dollar(shell, line, &state->i, &state->expand_input);
 	}
 	else
-		append_chars(shell, state, line);
+		append_char(shell, state, line[state->i]);
 }
