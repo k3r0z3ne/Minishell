@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2025/01/13 14:39:11 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:32:03 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,4 @@ void	print_tokens(t_token *head)
 		current = current->next;
 	}
 	printf("END\n");
-}
-
-void	free_lst_token(t_token **list)
-{
-	t_token *tmp;
-
-	if (!list || !(*list))
-		return ;
-	while (*list)
-	{
-		tmp = (*list)->next;
-		free((*list)->value);
-		free(*list);
-		*list = tmp;
-	}
-	*list = NULL;
 }

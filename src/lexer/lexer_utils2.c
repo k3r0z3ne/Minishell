@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:25:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/13 16:54:07 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:29:23 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,4 @@ int	ft_isspace(char c)
 int	is_redirection(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
-}
-
-int	is_special_char(char c)
-{
-	return (c == '|' || c == '<' || c == '>'
-		|| c == '$' || c == '\'' || c == '\"');
 }

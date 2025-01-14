@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "../../includes/lexer.h"
 
 void	append_char(t_shell *shell, t_lexer *state, char c)
 {

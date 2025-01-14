@@ -63,8 +63,6 @@ void	print_tokens(t_token *head);
 /* lexer_utils2 */
 int	ft_isspace(char c);
 int	is_redirection(char c);
-int	is_special_char(char c);
-
 
 /* lexer_utils3 */
 void	init_state(t_lexer *state);
