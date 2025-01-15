@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/14 18:19:09 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:31:26 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	exec_cmd(t_shell *shell)
 	}
 	if (!path)
 		return ;
+	printf("HERE\n");
 	if (execve(path, shell->cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);
@@ -46,7 +47,7 @@ pid_t	process(t_shell *shell)
 		return (-1);
 	else if (ret == 0)
 	{
-		if (redirect_setup(shell->exec) < 0)
+		if (redirect_setup(shell->exec, shell->cmd->redirs) < 0)
 			return (-1);
 		exec_cmd(shell);
 	}
@@ -56,7 +57,6 @@ pid_t	process(t_shell *shell)
 			return (-1);
 		parent_process(shell->exec);
 	}
-	// printf("ret in process = %d\n", ret);
 	return (ret);
 }
 
@@ -69,7 +69,7 @@ int	several_cmds(t_shell *shell)
 	if (!shell->exec->pids)
 		return (-1);
 	i = 0;
-	while (shell->cmd && i < shell->exec->cmd_count)
+	while (i < shell->exec->cmd_count)
 	{
 		printf("nb de passage : %d\n", i + 1);
 		if (make_pipes(shell, i) < 0)
@@ -78,10 +78,9 @@ int	several_cmds(t_shell *shell)
 			exit_status = is_builtin(shell);
 		else
 			shell->exec->pids[i] = process(shell);
-		if (shell->exec->is_pipe == true)
-			free(shell->exec->pipe);
 		shell->cmd = shell->cmd->next;
 		i++;
+		printf("END OF CMD\n");
 	}
 	exit_status = wait_process(shell, how_much_cmd(shell));
 	return (exit_status);

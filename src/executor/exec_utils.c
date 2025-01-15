@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/14 18:13:34 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:02:22 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,9 @@ int	make_pipes(t_shell *shell, int i)
 {
 	if (i < shell->exec->cmd_count - 1)
 	{
-		shell->exec->pipe = (int *)malloc(sizeof(int) * 2);
-		if (!shell->exec->pipe)
-			return (-1);
 		if (pipe(shell->exec->pipe) < 0)
 			return (-1);
-		shell->exec->is_pipe = true;
 	}
-	else
-		shell->exec->is_pipe = false;
 	return (0);
 }
 
@@ -53,16 +47,14 @@ int	wait_process(t_shell *shell, int n)
 	int	status;
 
 	i = 0;
-	// printf("max iter = %d\n", n);
 	while (i < n)
 	{
-		// printf("iter in wait_process : %d\n", i);
-		// printf("pids[%d] = %d\n", i, shell->exec->pids[i]);
+		printf("nb de passage\n");
 		if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 			return (-1);
 		i++;
 	}
-	free(shell->exec->pids);
+	// free(shell->exec->pids);
 	return (status);
 }
 

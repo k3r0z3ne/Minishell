@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/14 18:02:40 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:30:40 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,37 @@ int	redirection_check(t_shell *shell, t_exec *exec, t_redir *redirs)
 	return (0);
 }
 
+int	redirect_setup(t_exec *exec, t_redir *redir)
+{
+	if (redir->type == REDIRIN)
+	{
+		printf("INFILE?\n");
+		if (dup2(exec->infile, STDIN_FILENO) < 0)
+			return (-1);
+		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
+			return (-1);
+		close(exec->pipe[0]);
+	}
+	else if (redir->type == REDIROUT)
+	{
+		printf("OUTFILE?\n");
+		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
+			return (-1);
+		if (dup2(exec->outfile, STDOUT_FILENO) < 0)
+			return (-1);
+		close(exec->pipe[1]);
+	}
+	else
+	{
+		printf("INTERFILE\n");
+		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
+			return (-1);
+		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
+			return (-1);
+	}
+	return (0);
+}
+
 void	is_redir(t_exec *exec, t_cmd *cmd)
 {
 	if (exec->infile != -1 && cmd->flag_hd == false)
@@ -51,34 +82,6 @@ void	is_redir(t_exec *exec, t_cmd *cmd)
 			return ;
 		}
 	}
-}
-
-int	redirect_setup(t_exec *exec)
-{
-	if (exec->infile > 0)
-	{
-		if (dup2(exec->infile, STDIN_FILENO) < 0)
-			return (-1);
-		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
-			return (-1);
-		close(exec->pipe[0]);
-	}
-	else if (exec->outfile > 0)
-	{
-		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
-			return (-1);
-		if (dup2(exec->outfile, STDOUT_FILENO) < 0)
-			return (-1);
-		close(exec->pipe[1]);
-	}
-	else
-	{
-		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
-			return (-1);
-		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
-			return (-1);
-	}
-	return (0);
 }
 
 void	clear_pipe(t_exec *exec, int count)
