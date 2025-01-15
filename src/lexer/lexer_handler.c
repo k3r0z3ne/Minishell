@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:52:21 by witong            #+#    #+#             */
-/*   Updated: 2025/01/15 12:06:09 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/15 14:33:15 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,35 +41,6 @@ void	handle_redirection(char *line, t_shell *shell, t_lexer *state)
 	state->j++;
 }
 
-// void	handle_quotes(char *line, t_shell *shell, t_lexer *state)
-// {
-// 	char		*value;
-// 	t_type	type;
-
-// 	type = SINGLEQ;
-// 	if (line[state->i] == '\"')
-// 		type = DOUBLEQ;
-// 	value = extract_quote(line, shell, state);
-// 	if (!value)
-// 		return ;
-// 	token_add_back(&state->tokens, create_token(shell, type, value));
-// }
-
-// void	handle_dollar_lexer(char *line, t_shell *shell, t_lexer *state)
-// {
-// 	char *value;
-// 	t_type	type;
-
-// 	value = extract_dollar(line, shell, state);
-// 	if (!value)
-// 		return ;
-// 	if (ft_strcmp(value, "$") == 0)
-// 		type = WORD;
-// 	else
-// 		type = DOLLAR;
-// 	token_add_back(&state->tokens, create_token(shell, type, value));
-// }
-
 static char	*handle_delimiter(t_lexer *state, char *value, t_type *type)
 {
 	t_token	*prev;
@@ -100,3 +71,5 @@ void	handle_word(char *line, t_shell *shell, t_lexer *state)
 	value = handle_delimiter(state, value, &type);
 	token_add_back(&state->tokens, create_token(shell, type, value));
 }
+
+
