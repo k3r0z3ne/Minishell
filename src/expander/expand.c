@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 14:49:19 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 11:45:18 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	process_expand(t_shell *shell, char **result, char *value)
 static void	handle_dollar(t_shell *shell, char *line, int *i, char **result)
 {
 	char	*tmp;
-	int		chars_processed;
+	int		count;
 
 	if (!line[*i + 1] || line[*i + 1] == ' ' || line[*i + 1] == '$')
 	{
@@ -52,8 +52,8 @@ static void	handle_dollar(t_shell *shell, char *line, int *i, char **result)
 		(*i)++;
 		return ;
 	}
-	chars_processed = process_expand(shell, result, &line[*i]);
-	*i += chars_processed;
+	count = process_expand(shell, result, &line[*i]);
+	*i += count;
 	if (line[*i] == ' ')
 	{
 		tmp = ft_substr_track(shell, line, *i, 1);
@@ -87,21 +87,19 @@ char	*expand_string(t_shell *shell, char *line)
 	return (result);
 }
 
-void	expand_lexer(t_shell *shell, t_state *state, char *line, char **output)
+void	expand_lexer(t_shell *shell, t_lexer *state, char *line)
 {
-	if (!shell || !state || !line || !output)
+	if (!shell || !state || !line)
 		return;
 	if (line[state->i] == '$')
 	{
-		if (state->is_heredoc || state->quote == '\'')
+		if (state->is_heredoc == true || state->quote == '\'')
 		{
-			append_chars(shell, state, line, output);
+			append_char(shell, state, line[state->i]);
 			return;
 		}
-		handle_dollar(shell, line, &state->i, output);
+		handle_dollar(shell, line, &state->i, &state->expand_input);
 	}
 	else
-	{
-		append_chars(shell, state, line, output);
-	}
+		append_char(shell, state, line[state->i]);
 }

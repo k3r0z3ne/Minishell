@@ -28,49 +28,51 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_state
+typedef struct s_lexer
 {
 	t_token	*tokens;
+	char	*expand_input;
 	int		i;
-	int		error;
+	int		j;
+	bool	error;
+	bool	is_heredoc;
 	char	quote;
-	int		is_heredoc;
-}	t_state;
+}	t_lexer;
 
 typedef struct s_shell t_shell;
 
 /* lexer */
 t_token	*lexer(char *line, t_shell *shell);
 
-/* lexer_utils */
+/* lexer_input */
+void	append_char(t_shell *shell, t_lexer *state, char c);
+char	*add_spaces(t_shell *shell, t_lexer *state, char *input);
+
+/* lexer_illegal.c */
+int		is_illegal_single(char c);
+int		is_illegal_double(char c1, char c2);
+void	handle_illegal_single(char c, t_lexer *state);
+void	handle_illegal_double(char c1, char c2, t_lexer *state);
+void	check_illegal(char *line, t_lexer *state);
+
+/* lexer_handler */
+void	handle_double_ops(char *line, t_shell *shell, t_lexer *state);
+void	handle_redirection(char *line, t_shell *shell, t_lexer *state);
+void	handle_word(char *line, t_shell *shell, t_lexer *state);
+
+/* lexer_extract */
+char	*extract_word(char *line, t_shell *shell, t_lexer *state);
+
+/* lexer_token */
 t_token	*create_token(t_shell *shell, t_type type, char *value);
 void	token_add_back(t_token **list, t_token *new_token);
 void	print_tokens(t_token *head);
-void	append_chars(t_shell *shell, t_state *state, char *line, char **output);
 
-/* lexer_utils2 */
+/* lexer_utils */
+void	init_state(t_lexer *state);
 int	ft_isspace(char c);
 int	is_redirection(char c);
-int	is_special_char(char c);
-int	is_illegal_single(char c);
-int	is_illegal_double(char c1, char c2);
-
-/* lexer_utils3 */
 t_type	check_redirection(char c);
 t_type	check_double_ops(char *line, int i);
-void handle_illegal_single(char c, t_state *state);
-void handle_illegal_double(char c1, char c2, t_state *state);
-
-/* lexer_handler */
-void	handle_double_ops(char *line, t_shell *shell, t_state *state);
-void	handle_redirection(char *line, t_shell *shell, t_state *state);
-void	handle_quotes(char *line, t_shell *shell, t_state *state);
-void	handle_dollar_lexer(char *line, t_shell *shell, t_state *state);
-void	handle_word(char *line, t_shell *shell, t_state *state);
-
-/* lexer_extract */
-char	*extract_word(char *line, t_shell *shell, t_state *state);
-char	*extract_quote(char *line, t_shell *shell, t_state *state);
-char	*extract_dollar(char *line, t_shell *shell, t_state *state);
 
 #endif

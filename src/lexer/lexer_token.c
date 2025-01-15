@@ -6,13 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 17:29:56 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:32:03 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*create_token(t_shell *shell, t_tok_type type, char *value)
+t_token	*create_token(t_shell *shell, t_type type, char *value)
 {
 	t_token	*new_token;
 
@@ -24,10 +24,7 @@ t_token	*create_token(t_shell *shell, t_tok_type type, char *value)
 	{
 		new_token->value = ft_strdup_track(shell, value);
 		if (!new_token->value)
-		{
-			free(new_token);
 			return (NULL);
-		}
 	}
 	else
 		new_token->value = NULL;
@@ -67,30 +64,4 @@ void	print_tokens(t_token *head)
 		current = current->next;
 	}
 	printf("END\n");
-}
-
-void	free_token(t_token **token)
-{
-	if (token && *token)
-	{
-		free((*token)->value);
-		free(*token);
-		*token = NULL;
-	}
-}
-
-void	free_lst_token(t_token **list)
-{
-	t_token *tmp;
-
-	if (!list || !(*list))
-		return ;
-	while (*list)
-	{
-		tmp = (*list)->next;
-		free((*list)->value);
-		free(*list);
-		*list = tmp;
-	}
-	*list = NULL;
 }

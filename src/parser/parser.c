@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/11 15:57:02 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/15 12:18:20 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static void	parse_tokens(t_shell *shell)
 		{
 			unexpected_token(&shell->token);
 			shell->cmd = NULL;
-			// free_cmd(&shell->cmd);
 			break ;
 		}
 		if (shell->token->type == PIPE)
