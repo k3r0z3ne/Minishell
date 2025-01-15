@@ -59,6 +59,8 @@ char	*add_spaces(t_shell *shell, t_lexer *state, char *line)
 	state->expand_input = ft_strdup_track(shell, "");
 	while (line[state->i])
 	{
+		if (ft_isspace(line[state->i]))
+			state->is_heredoc = false;
 		if ((line[state->i] == '<' && line[state->i + 1] == '<')
 				|| (line[state->i] == '>' && line[state->i + 1] == '>'))
 			handle_double_ops_space(shell, state, line);
@@ -70,8 +72,6 @@ char	*add_spaces(t_shell *shell, t_lexer *state, char *line)
 				expand_lexer(shell, state, line);
 			else
 			{
-				if (state->is_heredoc)
-					state->is_heredoc = !state->is_heredoc;
 				append_char(shell, state, line[state->i]);
 				state->i++;
 			}

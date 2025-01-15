@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:52:21 by witong            #+#    #+#             */
-/*   Updated: 2025/01/14 15:32:52 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/15 12:06:09 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,33 @@ void	handle_redirection(char *line, t_shell *shell, t_lexer *state)
 // 	token_add_back(&state->tokens, create_token(shell, type, value));
 // }
 
+static char	*handle_delimiter(t_lexer *state, char *value, t_type *type)
+{
+	t_token	*prev;
+
+	*type = WORD;
+	prev = state->tokens;
+	while (prev && prev->next)
+		prev = prev->next;
+	if (prev && prev->type == HEREDOC)
+	{
+		if (state->quote == '\'')
+			*type = SINGLEQ;
+		else if (state->quote == '\"')
+			*type = DOUBLEQ;
+	}
+	return (value);
+}
+
 void	handle_word(char *line, t_shell *shell, t_lexer *state)
 {
-	char *value;
+	char	*value;
+	t_type	type;
 
+	state->quote = 0;  // Reset quote state
 	value = extract_word(line, shell, state);
-	if(!value)
+	if (!value)
 		return ;
-	token_add_back(&state->tokens, create_token(shell, WORD, value));
+	value = handle_delimiter(state, value, &type);
+	token_add_back(&state->tokens, create_token(shell, type, value));
 }

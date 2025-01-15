@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/14 15:31:26 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/15 12:06:58 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int ac, char **av, char **envp)
 			{
 				print_table(shell->cmd);
 				print_redirs(shell->cmd);
-				// shell->exit_status = main_exec(shell, shell->cmd);
+				shell->exit_status = main_exec(shell, shell->cmd);
 			}
 		}
 		cleanup_all(shell);
