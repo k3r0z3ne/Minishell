@@ -6,11 +6,18 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/14 11:45:18 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/15 17:33:54 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+
+// A FAIRE PENDANT L'EXEC
+// static void	case_return(t_shell *shell)
+// {
+
+// }
 
 static int	process_expand(t_shell *shell, char **result, char *value)
 {
@@ -36,9 +43,9 @@ static int	process_expand(t_shell *shell, char **result, char *value)
 static void	handle_dollar(t_shell *shell, char *line, int *i, char **result)
 {
 	char	*tmp;
-	int		count;
 
-	if (!line[*i + 1] || line[*i + 1] == ' ' || line[*i + 1] == '$')
+	if (!line[*i + 1] || (!ft_isalnum(line[*i + 1]) &&
+		line[*i + 1] != '_' && line[*i + 1] != '?'))
 	{
 		tmp = ft_substr_track(shell, line, *i, 1);
 		*result = ft_strjoin_track(shell, *result, tmp);
@@ -52,8 +59,7 @@ static void	handle_dollar(t_shell *shell, char *line, int *i, char **result)
 		(*i)++;
 		return ;
 	}
-	count = process_expand(shell, result, &line[*i]);
-	*i += count;
+	*i += process_expand(shell, result, &line[*i]);
 	if (line[*i] == ' ')
 	{
 		tmp = ft_substr_track(shell, line, *i, 1);
