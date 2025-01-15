@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/15 16:31:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:50:54 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	several_cmds(t_shell *shell)
 	if (!shell->exec->pids)
 		return (-1);
 	i = 0;
-	while (i < shell->exec->cmd_count)
+	while (shell->cmd && i < shell->exec->cmd_count)
 	{
 		printf("nb de passage : %d\n", i + 1);
 		if (make_pipes(shell, i) < 0)
@@ -80,7 +80,7 @@ int	several_cmds(t_shell *shell)
 			shell->exec->pids[i] = process(shell);
 		shell->cmd = shell->cmd->next;
 		i++;
-		printf("END OF CMD\n");
+		// printf("END OF CMD\n");
 	}
 	exit_status = wait_process(shell, how_much_cmd(shell));
 	return (exit_status);
