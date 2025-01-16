@@ -1,96 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   lexer_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2025/01/07 17:29:56 by witong           ###   ########.fr       */
+/*   Created: 2024/12/11 16:02:33 by witong            #+#    #+#             */
+/*   Updated: 2025/01/14 17:07:48 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*create_token(t_shell *shell, t_tok_type type, char *value)
+void	init_state(t_lexer *state)
 {
-	t_token	*new_token;
-
-	new_token = (t_token *)tracked_malloc(shell, sizeof(t_token));
-	if (!new_token)
-		return (NULL);
-	new_token->type = type;
-	if (value)
-	{
-		new_token->value = ft_strdup_track(shell, value);
-		if (!new_token->value)
-		{
-			free(new_token);
-			return (NULL);
-		}
-	}
-	else
-		new_token->value = NULL;
-	new_token->next = NULL;
-	new_token->prev = NULL;
-	return (new_token);
+	state->tokens = NULL;
+	state->i = 0;
+	state->j = 0;
+	state->error = 0;
+	state->is_heredoc = false;
+	state->quote = '\0';
 }
 
-void	token_add_back(t_token **list, t_token *new_token)
+int	ft_isspace(char c)
 {
-	t_token *tmp;
-
-	if (!list || !new_token)
-		return ;
-	if (!*list)
-	{
-		*list = new_token;
-		return ;
-	}
-	tmp = *list;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new_token;
-	new_token->prev = tmp;
+	return (c == 32 || (c >= 9 && c <= 13));
 }
 
-void	print_tokens(t_token *head)
+int	is_redirection(char c)
 {
-	t_token *current;
-
-	if (!head)
-		return ;
-	current = head;
-	while (current)
-	{
-		printf("[%d:%s] -> ", current->type, current->value);
-		current = current->next;
-	}
-	printf("END\n");
+	return (c == '|' || c == '<' || c == '>');
 }
 
-void	free_token(t_token **token)
+t_type	check_redirection(char c)
 {
-	if (token && *token)
-	{
-		free((*token)->value);
-		free(*token);
-		*token = NULL;
-	}
+	if (c == '|')
+		return (PIPE);
+	else if (c == '<')
+		return (REDIRIN);
+	else if (c == '>')
+		return (REDIROUT);
+	return (UNKNOWN);
 }
 
-void	free_lst_token(t_token **list)
+t_type	check_double_ops(char *line, int i)
 {
-	t_token *tmp;
-
-	if (!list || !(*list))
-		return ;
-	while (*list)
-	{
-		tmp = (*list)->next;
-		free((*list)->value);
-		free(*list);
-		*list = tmp;
-	}
-	*list = NULL;
+	if (line[i] == '<' && line[i + 1] == '<')
+		return (HEREDOC);
+	if (line[i] == '>' && line[i + 1] == '>')
+		return (APPEND);
+	if (line[i] == '&' && line[i + 1] == '&')
+		return (UNKNOWN);
+	if (line[i] == '|' && line[i + 1] == '|')
+		return (UNKNOWN);
+	return (UNKNOWN);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/14 16:12:50 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:18:23 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ char	*expand_heredoc(t_shell *shell, char *line)
 
 	if (!line)
 		return (NULL);
-	result = ft_strdup_track(shell, "");
+	result = expand_string(shell, line);
 	if (!result)
 		return (NULL);
-	process_expand_str(shell, &result, line);
 	return (result);
 }
 

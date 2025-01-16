@@ -25,13 +25,13 @@
 
 typedef struct s_shell t_shell;
 typedef struct s_token t_token;
-typedef enum e_tok_type t_tok_type;
+typedef enum e_type t_type;
 typedef struct s_clean t_clean;
 
 /* redirections structure */
 typedef struct s_redir
 {
-	t_tok_type		type;
+	t_type			type;
 	char			*file;
 	struct s_redir	*next;
 	struct s_redir	*prev;

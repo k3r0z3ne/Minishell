@@ -1,4 +1,5 @@
 NAME = minishell
+CC = cc
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -6,17 +7,17 @@ INC_DIR = includes
 LIBFT_DIR = libft
 
 SRC =	main.c utils/init.c \
-		lexer/lexer.c lexer/lexer_utils.c \
-		lexer/lexer_utils2.c lexer/lexer_utils3.c \
+		lexer/lexer.c lexer/lexer_input.c lexer/lexer_illegal.c \
+		lexer/lexer_token.c lexer/lexer_utils.c\
 		lexer/lexer_extract.c lexer/lexer_handler.c \
 		executor/execution.c executor/path.c executor/exec_utils.c \
 		executor/redirection.c executor/here_doc.c \
 		builtins/cd.c builtins/echo.c builtins/env.c \
 		builtins/exit.c builtins/export.c builtins/pwd.c \
 		builtins/unset.c \
-		parser/parser.c parser/parser_init.c \
-		parser/parser_utils.c parser/parser_utils2.c parser/parser_error.c \
-		expander/expand.c expander/expand_str.c \
+		parser/parser.c parser/parser_init.c parser/parser_redirs.c \
+		parser/parser_utils.c parser/parser_error.c \
+		expander/expand.c \
 		utils/clean_up.c utils/global_utils.c utils/gc.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 

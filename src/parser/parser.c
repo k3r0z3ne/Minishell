@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/14 16:53:46 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:19:29 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	parse_redirs(t_shell *shell)
 {
 	t_redir	*new_redir;
 
+	if (!shell->token || !shell->token->next)
+		return;
 	if (shell->token->type == HEREDOC)
 	{
 		shell->cmd->limiter = shell->token->next->value;
@@ -41,7 +43,8 @@ static void	parse_redirs(t_shell *shell)
 		return ;
 	redir_add_back(&shell->cmd->redirs, new_redir);
 	shell->token = shell->token->next;
-	shell->token = shell->token->next;
+	if (shell->token)
+		shell->token = shell->token->next;
 }
 
 static void	parse_pipe(t_shell *shell)
@@ -66,11 +69,8 @@ static void	parse_tokens(t_shell *shell)
 		{
 			unexpected_token(&shell->token);
 			shell->cmd = NULL;
-			// free_cmd(&shell->cmd);
 			break ;
 		}
-		if (shell->token->type == DOUBLEQ || shell->token->type == DOLLAR)
-			expander(shell);
 		if (shell->token->type == PIPE)
 			parse_pipe(shell);
 		if (is_redirection2(shell->token->type) && shell->token->next
@@ -100,8 +100,5 @@ void	parser(t_shell *shell)
 	if (shell->cmd)
 		shell->cmd = head;
 	if (!validate_command(shell))
-	{
-		// free_cmd(&shell->cmd);
 		return ;
-	}
 }
