@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/15 17:33:54 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/16 15:12:29 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,42 @@
 
 // }
 
+static int	get_var_len(char *value)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(value[0]))
+	{
+		while (value[i] && ft_isdigit(value[i]))
+			i++;
+	}
+	else
+	{
+		while (value[i] && (ft_isalnum(value[i]) || value[i] == '_' || value[i] == '?'))
+			i++;
+	}
+	return (i);
+}
+
 static int	process_expand(t_shell *shell, char **result, char *value)
 {
-	int		i;
-	int		start;
+	int		len;
 	char	*str;
 	char	*path;
 
-	i = 0;
-	start = i;
-	while (value[i] && (ft_isalnum(value[i]) || value[i] == '_' || value[i] == '?'))
-		i++;
-	str = ft_substr_track(shell, value, start, i);
+	len = get_var_len(value);
+	str = ft_substr_track(shell, value, 0, len);
 	if (!str)
 		return (0);
-	path = ft_getenv(str, shell->envp);
+	if (ft_isdigit(value[0]))
+		path = ft_strdup_track(shell, "");
+	else
+		path = ft_getenv(str, shell->envp);
 	if (!path)
 		path = ft_strdup_track(shell, "");
 	*result = ft_strjoin_track(shell, *result, path);
-	return (i);
+	return (len);
 }
 
 static void	handle_dollar(t_shell *shell, char *line, int *i, char **result)
