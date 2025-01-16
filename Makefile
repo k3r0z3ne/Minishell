@@ -1,4 +1,5 @@
 NAME = minishell
+CC = cc
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -16,7 +17,7 @@ SRC =	main.c utils/init.c \
 		builtins/unset.c \
 		parser/parser.c parser/parser_init.c parser/parser_redirs.c \
 		parser/parser_utils.c parser/parser_error.c \
-		expander/expand.c\
+		expander/expand.c \
 		utils/clean_up.c utils/global_utils.c utils/gc.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
