@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/15 17:50:27 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:13:34 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	redirect_setup(t_exec *exec, t_redir *redir)
 {
 	if (!redir)
 	{
-		printf("INTERFILE\n");
 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 			return (-1);
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
@@ -45,7 +44,6 @@ int	redirect_setup(t_exec *exec, t_redir *redir)
 	}
 	else if (redir->type == REDIRIN)
 	{
-		printf("INFILE?\n");
 		if (dup2(exec->infile, STDIN_FILENO) < 0)
 			return (-1);
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
@@ -54,7 +52,6 @@ int	redirect_setup(t_exec *exec, t_redir *redir)
 	}
 	else if (redir->type == REDIROUT)
 	{
-		printf("OUTFILE?\n");
 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 			return (-1);
 		if (dup2(exec->outfile, STDOUT_FILENO) < 0)
@@ -69,18 +66,12 @@ void	is_redir(t_exec *exec, t_cmd *cmd)
 	if (exec->infile != -1 && cmd->flag_hd == false)
 	{
 		if (dup2(exec->infile, STDIN_FILENO) < 0)
-		{
-			printf("INFILE\n");
 			return ;
-		}
 	}
 	if (exec->outfile != -1)
 	{
 		if (dup2(exec->outfile, STDOUT_FILENO) < 0)
-		{
-			printf("OUTFILE\n");
 			return ;
-		}
 	}
 }
 
