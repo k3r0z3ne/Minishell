@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/15 12:06:58 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/17 15:19:36 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell	*shell;
 
+	setup_signals();
 	shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);
@@ -25,7 +26,10 @@ int	main(int ac, char **av, char **envp)
 		shell->input = NULL;
 		shell->input = readline("minishell> ");
 		if (!shell->input)
+		{
+			ft_putstr_fd("exit\n", 1);
 			break ;
+		}
 		if (*shell->input != '\0')
 			add_history(shell->input);
 		shell->token = lexer(shell->input, shell);
