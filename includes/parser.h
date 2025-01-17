@@ -3,6 +3,7 @@
 
 typedef struct s_shell t_shell;
 typedef struct s_cmd t_cmd;
+typedef struct s_exec t_exec;
 typedef struct s_redir t_redir;
 
 #include "minishell.h"
@@ -11,8 +12,9 @@ typedef struct s_redir t_redir;
 void	parser(t_shell *shell);
 
 /* parser_init */
-char **malloc_full_cmd(t_shell *shell, int size);
-t_redir *malloc_redirs(int size);
+char	**malloc_full_cmd(t_shell *shell, int size);
+int		how_much_cmd(t_shell *shell);
+t_exec	*init_exec(t_shell *shell);
 t_cmd	*init_cmd(t_shell *shell, t_token *tokens);
 
 /* parser_redirs */

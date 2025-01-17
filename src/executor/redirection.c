@@ -6,83 +6,100 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:14:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:50:27 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	redirection_check(t_shell *shell, t_cmd *cmd, t_redir *redirs)
+int	redirection_check(t_shell *shell, t_exec *exec, t_redir *redirs)
 {
 	if (!redirs)
-		return ;
+		return (-1);
 	while (redirs)
 	{
 		if (redirs->type == 5)
-			cmd->infile = open(redirs->file, O_RDONLY, 0664);
+			exec->infile = open(redirs->file, O_RDONLY, 0664);
 		else if (redirs->type == 6)
-			cmd->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			exec->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 		else if (redirs->type == 7)
-			cmd->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
+			exec->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
 		else if (redirs->type == 8)
-		{
-			cmd->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
-			handle_here_doc(shell, cmd);
-		}
-		else
-		{
-			cmd->infile = -1;
-			cmd->outfile = -1;
-		}
+			handle_here_doc(shell);
+		if (exec->infile < 0 || exec->outfile < 0)
+			return (-1);
 		redirs = redirs->next;
 	}
+	return (0);
 }
 
-void	is_redir(t_cmd *cmd)
+int	redirect_setup(t_exec *exec, t_redir *redir)
 {
-	if (cmd->infile != -1)
+	if (!redir)
 	{
-		if (dup2(cmd->infile, STDIN_FILENO) < 0)
-			return ;
+		printf("INTERFILE\n");
+		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
+			return (-1);
+		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
+			return (-1);
 	}
-	if (cmd->outfile != -1)
+	else if (redir->type == REDIRIN)
 	{
-		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
+		printf("INFILE?\n");
+		if (dup2(exec->infile, STDIN_FILENO) < 0)
+			return (-1);
+		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
+			return (-1);
+		close(exec->pipe[0]);
+	}
+	else if (redir->type == REDIROUT)
+	{
+		printf("OUTFILE?\n");
+		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
+			return (-1);
+		if (dup2(exec->outfile, STDOUT_FILENO) < 0)
+			return (-1);
+		close(exec->pipe[1]);
+	}
+	return (0);
+}
+
+void	is_redir(t_exec *exec, t_cmd *cmd)
+{
+	if (exec->infile != -1 && cmd->flag_hd == false)
+	{
+		if (dup2(exec->infile, STDIN_FILENO) < 0)
+		{
+			printf("INFILE\n");
 			return ;
+		}
+	}
+	if (exec->outfile != -1)
+	{
+		if (dup2(exec->outfile, STDOUT_FILENO) < 0)
+		{
+			printf("OUTFILE\n");
+			return ;
+		}
 	}
 }
 
-void	redirect_setup(t_cmd *cmd, int i, int n)
+void	clear_pipe(t_exec *exec, int count)
 {
-	
-	if (i == 0)
+	int	i;
+
+	i = 0;
+	while (i < count - 1)
 	{
-		if (dup2(cmd->infile, STDIN_FILENO) < 0)
-			return ;
-			// closerror(cmd, "dup2a");
-		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
-			return ;
-			// closerror(cmd, "dup2b");
-		// clear_pipe(cmd);
+		if (exec->pipe[i])
+		{
+			close(exec->pipe[0]);
+			close(exec->pipe[1]);
+		}
+		i++;
 	}
-	else if (i == n - 1)
-	{
-		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
-			return ;
-			// closerror(cmd, "dup2c");
-		if (dup2(cmd->outfile, STDOUT_FILENO) < 0)
-			return ;
-			// closerror(cmd, "dup2d");
-		// clear_pipe(cmd);
-	}
-	else
-	{
-		if (dup2(cmd->pipe[0], STDIN_FILENO) < 0)
-			return ;
-			// closerror(cmd, "dup2e");
-		if (dup2(cmd->pipe[1], STDOUT_FILENO) < 0)
-			return ;
-			// closerror(cmd, "dup2f");
-		// clear_pipe(cmd);
-	}
+	if (exec->infile)
+		close(exec->infile);
+	if (exec->outfile)
+		close(exec->outfile);
 }

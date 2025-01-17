@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/15 12:18:20 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/16 17:19:29 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	parse_command(t_shell *shell)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (shell->cmd->full_cmd[i])
@@ -49,7 +49,7 @@ static void	parse_redirs(t_shell *shell)
 
 static void	parse_pipe(t_shell *shell)
 {
-	t_cmd *new_cmd;
+	t_cmd	*new_cmd;
 
 	new_cmd = init_cmd(shell, shell->token);
 	if (!new_cmd)
@@ -57,6 +57,7 @@ static void	parse_pipe(t_shell *shell)
 	new_cmd->prev = shell->cmd;
 	shell->cmd->next = new_cmd;
 	shell->cmd = new_cmd;
+	shell->exec->cmd_count++;
 	shell->token = shell->token->next;
 }
 
@@ -84,13 +85,16 @@ static void	parse_tokens(t_shell *shell)
 
 void	parser(t_shell *shell)
 {
-	t_cmd *head;
+	t_cmd	*head;
+	t_exec	*exec;
 
 	if (!shell || !shell->token || !shell->token->value)
 		return ;
+	exec = NULL;
 	head = init_cmd(shell, shell->token);
 	if (!head)
 		return ;
+	shell->exec = init_exec(shell);
 	shell->cmd = head;
 	parse_tokens(shell);
 	if (shell->cmd)

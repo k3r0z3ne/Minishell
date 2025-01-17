@@ -42,7 +42,7 @@ typedef struct s_lexer
 typedef struct s_shell t_shell;
 
 /* lexer */
-t_token	*lexer(char *line, t_shell *shell);
+t_token		*lexer(char *line, t_shell *shell);
 
 /* lexer_input */
 void	append_char(t_shell *shell, t_lexer *state, char c);

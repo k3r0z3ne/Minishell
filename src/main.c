@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/15 12:06:58 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/16 17:16:16 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	main(int ac, char **av, char **envp)
 		shell->token = lexer(shell->input, shell);
 		if (shell->token)
 		{
-			print_tokens(shell->token);
+			// print_tokens(shell->token);
 			parser(shell);
 			if (shell->cmd)
 			{
-				print_table(shell->cmd);
-				print_redirs(shell->cmd);
-				shell->exit_status = main_exec(shell, shell->cmd);
+				// print_table(shell->cmd);
+				// print_redirs(shell->cmd);
+				shell->exec->exit_status = main_exec(shell);
 			}
 		}
 		cleanup_all(shell);
