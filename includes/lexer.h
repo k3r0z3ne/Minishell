@@ -45,23 +45,23 @@ typedef struct s_shell t_shell;
 t_token		*lexer(char *line, t_shell *shell);
 
 /* lexer_input */
-void	append_char(t_shell *shell, t_lexer *state, char c);
-char	*add_spaces(t_shell *shell, t_lexer *state, char *input);
+void	append_char(t_shell *shell, t_lexer *lexer, char c);
+char	*add_spaces(t_shell *shell, t_lexer *lexer, char *input);
 
 /* lexer_illegal.c */
 int		is_illegal_single(char c);
 int		is_illegal_double(char c1, char c2);
-void	handle_illegal_single(char c, t_lexer *state);
-void	handle_illegal_double(char c1, char c2, t_lexer *state);
-void	check_illegal(char *line, t_lexer *state);
+void	handle_illegal_single(char c, t_lexer *lexer);
+void	handle_illegal_double(char c1, char c2, t_lexer *lexer);
+void	check_illegal(char *line, t_lexer *lexer);
 
 /* lexer_handler */
-void	handle_double_ops(char *line, t_shell *shell, t_lexer *state);
-void	handle_redirection(char *line, t_shell *shell, t_lexer *state);
-void	handle_word(char *line, t_shell *shell, t_lexer *state);
+void	handle_double_ops(char *line, t_shell *shell, t_lexer *lexer);
+void	handle_redirection(char *line, t_shell *shell, t_lexer *lexer);
+void	handle_word(char *line, t_shell *shell, t_lexer *lexer);
 
 /* lexer_extract */
-char	*extract_word(char *line, t_shell *shell, t_lexer *state);
+char	*extract_word(char *line, t_shell *shell, t_lexer *lexer);
 
 /* lexer_token */
 t_token	*create_token(t_shell *shell, t_type type, char *value);
@@ -69,7 +69,7 @@ void	token_add_back(t_token **list, t_token *new_token);
 void	print_tokens(t_token *head);
 
 /* lexer_utils */
-void	init_state(t_lexer *state);
+void	init_lexer(t_lexer *lexer);
 int	ft_isspace(char c);
 int	is_redirection(char c);
 t_type	check_redirection(char c);

@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 10:36:33 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/18 10:45:04 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	shell_loop(void)
 		shell->token = lexer(shell->input, shell);
 		if (shell->token)
 		{
-			// print_tokens(shell->token);
+			print_tokens(shell->token);
 			parser(shell);
 			if (shell->cmd)
 			{
-				// print_table(shell->cmd);
-				// print_redirs(shell->cmd);
+				print_table(shell->cmd);
+				print_redirs(shell->cmd);
 				shell->exec->exit_status = main_exec(shell);
 			}
 		}
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	init_shell(shell, ac, av, envp);
 	shell_loop();
-	
+	free_array(shell->envp);
 	free(shell);
 	rl_clear_history();
 	return (0);
