@@ -1,4 +1,5 @@
 NAME = minishell
+CC = cc
 
 SRC_DIR = src
 OBJ_DIR = obj

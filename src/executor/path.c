@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/11 15:55:47 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/16 17:17:18 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*check_path(char **cmd, char *env)
 	}
 	path = NULL;
 	path = set_path(tab, cmd);
-	printf("check_path path : %s\n", path);
+	// printf("check_path path : %s\n", path);
 	free(tab);
 	return (path);
 }
@@ -41,8 +41,8 @@ char	*find_path(t_shell *shell)
 	i = 0;
 	if (!shell->envp || shell->envp[0] == NULL || ft_strlen(shell->envp[0]) == 0)
 		return ("");
-	if (ft_strncmp(shell->envp[i], "LD_LIBRARY_PATH=/usr/lib/debug", 31) == 0)
-		return ("");
+	// if (ft_strncmp(shell->envp[i], "LD_LIBRARY_PATH=/usr/lib/debug", 31) == 0)
+	// 	return ("");
 	while (ft_strnstr(shell->envp[i], "PATH=", 5) == NULL)
 		i++;
 	if (shell->envp[i] == NULL || shell->envp[i][0] == '\0')
@@ -71,6 +71,6 @@ char	*set_path(char **tab, char **cmd)
 		path = "";
 		i++;
 	}
-	printf("set_path path : %s\n", path);
+	// printf("set_path path : %s\n", path);
 	return (path);
 }

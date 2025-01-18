@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:12:07 by witong            #+#    #+#             */
-/*   Updated: 2025/01/09 13:14:14 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/09 15:36:29 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ char	*ft_strdup_track(t_shell *shell, char *src)
 
 char	*ft_substr_track(t_shell *shell, char const *s, unsigned int start, size_t len)
 {
-	size_t i;
-	char *str;
+	char	*str;
+	size_t	i;
 
 	if (s == NULL)
 		return (NULL);

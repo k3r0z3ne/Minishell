@@ -30,13 +30,13 @@ void	shell_loop(void)
 		shell->token = lexer(shell->input, shell);
 		if (shell->token)
 		{
-			print_tokens(shell->token);
+			// print_tokens(shell->token);
 			parser(shell);
 			if (shell->cmd)
 			{
-				print_table(shell->cmd);
-				print_redirs(shell->cmd);
-				// shell->exit_status = main_exec(shell, shell->cmd);
+				// print_table(shell->cmd);
+				// print_redirs(shell->cmd);
+				shell->exec->exit_status = main_exec(shell);
 			}
 		}
 		cleanup_all(shell);

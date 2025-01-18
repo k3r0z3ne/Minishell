@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:34:29 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 20:21:01 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/14 16:26:58 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	init_shell(t_shell *shell, int argc, char **argv, char **envp)
 {
 	shell->argc = argc;
-	shell->exit_status = 0;
 	shell->argv = argv;
 	shell->envp = arraydup(envp);
 	shell->token = NULL;

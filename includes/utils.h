@@ -5,7 +5,7 @@
 
 typedef struct s_clean
 {
-	void	*ptr;
+	void			*ptr;
 	struct s_clean	*next;
 }		t_clean;
 

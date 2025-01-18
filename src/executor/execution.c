@@ -6,115 +6,119 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/08 12:18:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:50:54 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	exec_cmd(t_shell *shell, t_cmd *cmd)
+void	exec_cmd(t_shell *shell)
 {
-	char *path;
-	char *tmp;
+	char	*path;
+	char	*tmp;
 
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
-		return;
-	path = check_path(cmd->full_cmd, tmp);
+		return ;
+	path = check_path(shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
 	{
 		path = NULL;
-		path = ft_strdup(cmd->full_cmd[0]);
+		path = ft_strdup(shell->cmd->full_cmd[0]);
 	}
 	if (!path)
-		return;
-	printf("path : %s\n", path);
-	printf("exec_cmd = OK!\n");
-	printf("cmd : %s\n", *cmd->full_cmd);
-	if (execve(path, cmd->full_cmd, shell->envp) < 0)
+		return ;
+	printf("HERE\n");
+	if (execve(path, shell->cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);
-		return;
+		free_array(shell->cmd->full_cmd);
+		return ;
 	}
-	// free(path);
-	// free_array(cmd->full_cmd);
 }
 
-pid_t	only_cmd(t_shell *shell, t_cmd *cmd)
+pid_t	process(t_shell *shell)
 {
-	int	exit_status;
+	pid_t	ret;
 
-	exit_status = is_builtin(shell, cmd);
-	if (exit_status != -1)
-		return (exit_status);
-	cmd->pids[0] = fork();
-	printf("pids[0] = %d\n", cmd->pids[0]);
-	if (cmd->pids[0] < 0)
+	ret = fork();
+	if (ret < 0)
 		return (-1);
-	else if (cmd->pids[0] == 0)
+	else if (ret == 0)
 	{
-		is_redir(cmd);
-		exec_cmd(shell, cmd);
-		printf("only_cmd_2 = OK!\n");
+		if (redirect_setup(shell->exec, shell->cmd->redirs) < 0)
+			return (-1);
+		exec_cmd(shell);
 	}
 	else
-		exit_status = wait_process(cmd, 1);
-	return (cmd->pids[0]);
-}
-
-pid_t	process(t_shell *shell, t_cmd *cmd, int i, int n)
-{
-	int	exit_status;
-
-	exit_status = is_builtin(shell, cmd);
-	if (is_builtin(shell, cmd))
-		return (exit_status);
-	cmd->pids[i] = fork();
-	if (cmd->pids[i] < 0)
-		return (-1);
-	else if (cmd->pids[i] == 0)
 	{
-		redirect_setup(cmd, i, n);
-		exec_cmd(shell, cmd);
+		if (dup2(shell->exec->pipe[1], STDIN_FILENO) < 0)
+			return (-1);
+		parent_process(shell->exec);
 	}
-	else
-		parent_process(cmd, i, n);
-	return (cmd->pids[i]);
+	return (ret);
 }
 
-int	several_cmds(t_shell *shell, t_cmd *cmd)
+int	several_cmds(t_shell *shell)
 {
 	int	i;
-	int	n_cmds;
 	int	exit_status;
 
-	n_cmds = ft_lstsize((t_list *)cmd);
+	shell->exec->pids = malloc(sizeof(pid_t) * how_much_cmd(shell));
+	if (!shell->exec->pids)
+		return (-1);
 	i = 0;
-	while (cmd && i < n_cmds - 1)
+	while (shell->cmd && i < shell->exec->cmd_count)
 	{
-		cmd->pipe = (int *)malloc(sizeof(int) * 2);
-		if (!cmd->pipe)
+		printf("nb de passage : %d\n", i + 1);
+		if (make_pipes(shell, i) < 0)
 			return (-1);
-		cmd->pids[i] = process(shell, cmd, i, n_cmds);
-		free(cmd->pipe);
-		cmd = cmd->next;
+		if (is_builtin(shell) >= 0)
+			exit_status = is_builtin(shell);
+		else
+			shell->exec->pids[i] = process(shell);
+		shell->cmd = shell->cmd->next;
 		i++;
+		// printf("END OF CMD\n");
 	}
-	exit_status = wait_process(cmd, n_cmds);
+	exit_status = wait_process(shell, how_much_cmd(shell));
 	return (exit_status);
 }
 
-int	main_exec(t_shell *shell, t_cmd *cmd)
+pid_t	only_cmd(t_shell *shell)
 {
 	int	exit_status;
 
-	printf("main_exec = OK!\n");
-	redirection_check(shell, cmd, cmd->redirs);
-	if (count_cmd(cmd) > 1)
-		exit_status = several_cmds(shell, cmd);
-	else if (count_cmd(cmd) == 1)
-		exit_status = only_cmd(shell, cmd);
+	exit_status = is_builtin(shell);
+	if (!is_builtin(shell))
+		return (exit_status);
+	shell->exec->pids[0] = fork();
+	if (shell->exec->pids[0] < 0)
+		return (-1);
+	else if (shell->exec->pids[0] == 0)
+	{
+		is_redir(shell->exec, shell->cmd);
+		exec_cmd(shell);
+	}
+	else if (shell->exec->pids[0] > 0 && shell->cmd->flag_hd == false)
+		exit_status = wait_process(shell, 1);
+	return (exit_status);
+}
+
+int	main_exec(t_shell *shell)
+{
+	int	exit_status;
+	int	nb_cmd;
+
+	nb_cmd = count_cmd(shell->cmd);
+	if (redirection_check(shell, shell->exec, shell->cmd->redirs) < 0)
+		return (-1);
+	// printf("nb cmd = %d\n", count_cmd(shell->exec));
+	if (nb_cmd > 1)
+		exit_status = several_cmds(shell);
+	else if (nb_cmd == 1)
+		exit_status = only_cmd(shell);
 	else
 		return (-1);
 	unlink(".tmp.txt");
