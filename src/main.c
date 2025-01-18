@@ -6,15 +6,14 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 10:45:04 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/18 13:13:26 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_shell	*shell;
 
-void	shell_loop(void)
+void	shell_loop(t_shell *shell)
 {
 	while (1)
 	{
@@ -36,7 +35,7 @@ void	shell_loop(void)
 			{
 				print_table(shell->cmd);
 				print_redirs(shell->cmd);
-				shell->exec->exit_status = main_exec(shell);
+				// shell->exec->exit_status = main_exec(shell);
 			}
 		}
 		cleanup_all(shell);
@@ -45,12 +44,14 @@ void	shell_loop(void)
 
 int	main(int ac, char **av, char **envp)
 {
+	t_shell	*shell;
+
 	setup_signals();
 	shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);
 	init_shell(shell, ac, av, envp);
-	shell_loop();
+	shell_loop(shell);
 	free_array(shell->envp);
 	free(shell);
 	rl_clear_history();

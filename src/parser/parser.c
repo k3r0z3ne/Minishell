@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/16 17:19:29 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/18 11:06:02 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,17 @@ static void	parse_tokens(t_shell *shell)
 void	parser(t_shell *shell)
 {
 	t_cmd	*head;
-	t_exec	*exec;
 
 	if (!shell || !shell->token || !shell->token->value)
 		return ;
-	exec = NULL;
 	head = init_cmd(shell, shell->token);
 	if (!head)
 		return ;
-	shell->exec = init_exec(shell);
 	shell->cmd = head;
 	parse_tokens(shell);
 	if (shell->cmd)
 		shell->cmd = head;
 	if (!validate_command(shell))
 		return ;
+	shell->exec = init_exec(shell);
 }

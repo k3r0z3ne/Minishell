@@ -66,7 +66,6 @@ typedef struct s_shell
 	char	**argv;
 	char	**envp;
 	char	*input;
-	t_lexer	*state;
 	t_token	*token;
 	t_cmd	*cmd;
 	t_exec	*exec;
