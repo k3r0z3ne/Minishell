@@ -6,21 +6,16 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/17 15:19:36 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/18 10:36:33 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int ac, char **av, char **envp)
-{
-	t_shell	*shell;
+t_shell	*shell;
 
-	setup_signals();
-	shell = (t_shell *)malloc(sizeof(t_shell));
-	if (!shell)
-		return (1);
-	init_shell(shell, ac, av, envp);
+void	shell_loop(void)
+{
 	while (1)
 	{
 		shell->input = NULL;
@@ -41,11 +36,22 @@ int	main(int ac, char **av, char **envp)
 			{
 				print_table(shell->cmd);
 				print_redirs(shell->cmd);
-				shell->exit_status = main_exec(shell, shell->cmd);
+				// shell->exit_status = main_exec(shell, shell->cmd);
 			}
 		}
 		cleanup_all(shell);
 	}
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	setup_signals();
+	shell = (t_shell *)malloc(sizeof(t_shell));
+	if (!shell)
+		return (1);
+	init_shell(shell, ac, av, envp);
+	shell_loop();
+	
 	free(shell);
 	rl_clear_history();
 	return (0);

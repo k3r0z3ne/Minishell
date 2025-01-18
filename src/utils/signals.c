@@ -6,30 +6,20 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:55:04 by witong            #+#    #+#             */
-/*   Updated: 2025/01/17 16:15:56 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/18 10:37:57 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_sigquit(int sig)
-{
-	if (sig == SIGQUIT)
-	{
-		ft_putstr_fd("TEST SIGQUIT", 1);
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
-	}
-}
-
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	// rl_replace_line("", 0);
-	// rl_on_new_line();
-	// rl_redisplay();
-	ft_putstr_fd("\nminishell> ", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	ft_putstr_fd("\n", 1);
+	rl_redisplay();
+	// shell->exit_status = 130;
 }
 
 void	setup_signals(void)
@@ -45,12 +35,29 @@ void	setup_signals(void)
 		perror("sigaction");
 		exit(EXIT_FAILURE);
 	}
-	sa_quit.sa_handler = handle_sigquit;
+	sa_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sa_quit.sa_mask);
-	sa_quit.sa_flags = SA_RESTART;
+	sa_quit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
 	{
 		perror("sigaction");
 		exit(EXIT_FAILURE);
 	}
 }
+
+void	activate_ctrl_backslash(void)
+{
+	struct sigaction sa_quit;
+
+	sa_quit.sa_handler = SIG_DFL;
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = 0;
+	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
+	{
+		perror("sigaction");
+		exit(EXIT_FAILURE);
+	}
+	// shell->exit_status = 131;
+}
+
+
