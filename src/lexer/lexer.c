@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/01/20 13:46:16 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/20 17:42:56 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_token *lexer(char *line, t_shell *shell)
 	init_lexer(&lexer);
 	check_illegal(line, &lexer);
 	lexer.expand_input = add_spaces(shell, &lexer, line);
-	printf("add_spaces: %s\n", lexer.expand_input);
+	// printf("add_spaces: %s\n", lexer.expand_input);
 	lexer.j = 0;
 	while (lexer.expand_input[lexer.j])
 	{

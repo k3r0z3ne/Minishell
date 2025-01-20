@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/20 16:59:44 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/21 00:05:55 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	parent_process(t_exec *exec, t_redir *redir)
 	if (!redir)
 	{
 		// printf("close pipes\n");
-		close(exec->pipe[0]);
 		close(exec->pipe[1]);
+		if (exec->last_cmd == true)
+			close(exec->pipe[0]);
 	}
 	else if (redir->type == REDIRIN)
 	{
@@ -38,6 +39,7 @@ int	make_pipes(t_shell *shell, int i)
 {
 	if (i < shell->exec->cmd_count - 1)
 	{
+		// printf("PIPE\n");
 		if (pipe(shell->exec->pipe) < 0)
 			return (-1);
 	}
@@ -52,9 +54,10 @@ int	wait_process(t_shell *shell, int n)
 	i = 0;
 	while (i < n)
 	{
-		// printf("nb de passage\n");
+		printf("i in wait_process = %d\n", i);
 		if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 			return (-1);
+		printf("nb de passage\n");
 		i++;
 	}
 	return (status);

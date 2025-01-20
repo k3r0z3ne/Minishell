@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/20 16:01:58 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/20 23:11:15 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_exec	*init_exec(t_shell *shell)
 	exec->outfile = 0;
 	exec->exit_status = 0;
 	exec->cmd_count = 1;
+	exec->last_cmd = false;
 	return (exec);
 }
 
