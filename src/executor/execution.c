@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/15 17:50:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:18:23 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ pid_t	process(t_shell *shell)
 	}
 	else
 	{
-		if (dup2(shell->exec->pipe[1], STDIN_FILENO) < 0)
+		// if (dup2(shell->exec->pipe[1], STDIN_FILENO) < 0)
+		// 	return (-1);
+		if (dup2(STDOUT_FILENO, shell->exec->pipe[0]) < 0)
 			return (-1);
-		parent_process(shell->exec);
+		// waitpid(ret, NULL, 0);
+		parent_process(shell->exec, shell->cmd->redirs);
+		printf("HERE\n");
 	}
 	return (ret);
 }
@@ -71,25 +75,28 @@ int	several_cmds(t_shell *shell)
 	i = 0;
 	while (shell->cmd && i < shell->exec->cmd_count)
 	{
-		printf("nb de passage : %d\n", i + 1);
 		if (make_pipes(shell, i) < 0)
 			return (-1);
 		if (is_builtin(shell) >= 0)
 			exit_status = is_builtin(shell);
 		else
 			shell->exec->pids[i] = process(shell);
+		printf("cmd : %s\n", shell->cmd->full_cmd[0]);
 		shell->cmd = shell->cmd->next;
 		i++;
-		// printf("END OF CMD\n");
 	}
 	exit_status = wait_process(shell, how_much_cmd(shell));
+	printf("END\n");
 	return (exit_status);
 }
 
 pid_t	only_cmd(t_shell *shell)
 {
-	int	exit_status;
+	int		exit_status;
 
+	shell->exec->pids = malloc(sizeof(pid_t));
+	if (!shell->exec->pids)
+		return (-1);
 	exit_status = is_builtin(shell);
 	if (!is_builtin(shell))
 		return (exit_status);
@@ -114,7 +121,6 @@ int	main_exec(t_shell *shell)
 	nb_cmd = count_cmd(shell->cmd);
 	if (redirection_check(shell, shell->exec, shell->cmd->redirs) < 0)
 		return (-1);
-	// printf("nb cmd = %d\n", count_cmd(shell->exec));
 	if (nb_cmd > 1)
 		exit_status = several_cmds(shell);
 	else if (nb_cmd == 1)

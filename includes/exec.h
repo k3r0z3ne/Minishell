@@ -22,7 +22,7 @@ void	is_redir(t_exec *exec, t_cmd *cmd);
 void	clear_pipe(t_exec *exec, int count);
 
 /* exec_utils */
-void	parent_process(t_exec *exec);
+void	parent_process(t_exec *exec, t_redir *redir);
 int		make_pipes(t_shell *shell, int i);
 int		wait_process(t_shell *shell, int n);
 int		is_builtin(t_shell *shell);

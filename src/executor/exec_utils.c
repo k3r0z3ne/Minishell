@@ -3,32 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/15 14:02:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:09:34 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	parent_process(t_exec *exec)
+void	parent_process(t_exec *exec, t_redir *redir)
 {
-	if (exec->infile > 0)
+	printf("une fois ?\n");
+	if (!redir)
 	{
+		printf("close pipes\n");
+		close(exec->pipe[0]);
+		close(exec->pipe[1]);
+	}
+	else if (redir->type == REDIRIN)
+	{
+		printf("close infile\n");
 		close(exec->infile);
 		close(exec->pipe[1]);
 	}
-	else if (exec->outfile > 0)
+	else if (redir->type == REDIROUT)
 	{
+		printf("close outfile\n");
 		close(exec->pipe[0]);
 		close(exec->outfile);
 	}
 	else
-	{
-		close(exec->pipe[0]);
-		close(exec->pipe[1]);
-	}
+		printf("close nothing\n");
 }
 
 int	make_pipes(t_shell *shell, int i)
@@ -49,12 +55,11 @@ int	wait_process(t_shell *shell, int n)
 	i = 0;
 	while (i < n)
 	{
-		printf("nb de passage\n");
+		// printf("nb de passage\n");
 		if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 			return (-1);
 		i++;
 	}
-	// free(shell->exec->pids);
 	return (status);
 }
 
