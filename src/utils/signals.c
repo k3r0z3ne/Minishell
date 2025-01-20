@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:55:04 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 10:37:57 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/20 16:39:15 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_sigint(int sig)
 	rl_on_new_line();
 	ft_putstr_fd("\n", 1);
 	rl_redisplay();
-	// shell->exit_status = 130;
+	g_signal = 128 + SIGINT;
 }
 
 void	setup_signals(void)
@@ -44,6 +44,29 @@ void	setup_signals(void)
 		exit(EXIT_FAILURE);
 	}
 }
+void	ignore_ctrl_c(void)
+{
+	struct sigaction sa_int;
+
+	sa_int.sa_handler = SIG_IGN;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = 0;
+	sigaction(SIGINT, &sa_int, NULL);
+}
+
+void	activate_ctrl_c(void)
+{
+	struct sigaction sa_int;
+
+	sa_int.sa_handler = SIG_DFL;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = SA_RESTART;
+	if (sigaction(SIGINT, &sa_int, NULL) == -1)
+	{
+		perror("sigaction");
+		exit(EXIT_FAILURE);
+	}
+}
 
 void	activate_ctrl_backslash(void)
 {
@@ -57,7 +80,10 @@ void	activate_ctrl_backslash(void)
 		perror("sigaction");
 		exit(EXIT_FAILURE);
 	}
-	// shell->exit_status = 131;
 }
+// Ajouter activate_ctrl_backslash et activate_ctrl_c au debut des childs
+// A AJOUTER A LA FIN DES CHILDS
+// if (WIFSIGNALED(status))
+// 	g_signal = WTERMSIG(status) + 128;
 
 

@@ -34,6 +34,8 @@ void	init_shell(t_shell *shell, int argc, char **argv, char **envp);
 
 /* signals */
 void	setup_signals(void);
+void	ignore_ctrl_c(void);
+void	activate_ctrl_c(void);
 void	activate_ctrl_backslash(void);
 
 #endif

@@ -3,50 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/01/17 17:05:07 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/20 13:46:16 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	process_token(char *line, t_shell *shell, t_lexer *state)
+static void	process_token(char *line, t_shell *shell, t_lexer *lexer)
 {
-	if (ft_isspace(line[state->j]))
-		state->j++;
-	else if (check_double_ops(line, state->j) != UNKNOWN)
-		handle_double_ops(line, shell, state);
-	else if (is_redirection(line[state->j]))
-		handle_redirection(line, shell, state);
-	// else if (line[state->j] == '\'' || line[state->j] == '\"')
-	// 	handle_quotes(line, shell, state);
-	// else if (line[state->j] == '$')
-	// 	handle_dollar_lexer(line, shell, state);
+	if (ft_isspace(line[lexer->j]))
+		lexer->j++;
+	else if (check_double_ops(line, lexer->j) != UNKNOWN)
+		handle_double_ops(line, shell, lexer);
+	else if (is_redirection(line[lexer->j]))
+		handle_redirection(line, shell, lexer);
 	else
-		handle_word(line, shell, state);
+		handle_word(line, shell, lexer);
 }
 
 t_token *lexer(char *line, t_shell *shell)
 {
-	t_lexer state;
+	t_lexer lexer;
 
 	if (!line || !*line)
 		return (NULL);
-	init_state(&state);
-	check_illegal(line, &state);
-	add_spaces(shell, &state, line);
-	// printf("add_spaces: %s\n", state.expand_input);
-	state.j = 0;
-	while (state.expand_input[state.j])
+	init_lexer(&lexer);
+	check_illegal(line, &lexer);
+	lexer.expand_input = add_spaces(shell, &lexer, line);
+	printf("add_spaces: %s\n", lexer.expand_input);
+	lexer.j = 0;
+	while (lexer.expand_input[lexer.j])
 	{
-		process_token(state.expand_input, shell, &state);
-		if (state.error)
+		process_token(lexer.expand_input, shell, &lexer);
+		if (lexer.error)
 			break;
 	}
-	if (state.error || !state.tokens)
+	if (lexer.error || !lexer.tokens)
 		return (NULL);
-	token_add_back(&state.tokens, create_token(shell, END, NULL));
-	return (state.tokens);
+	token_add_back(&lexer.tokens, create_token(shell, END, NULL));
+	return (lexer.tokens);
 }

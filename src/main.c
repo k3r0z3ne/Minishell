@@ -6,18 +6,20 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 10:36:33 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/20 15:13:47 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_shell	*shell;
+int	g_signal = 0;
 
-void	shell_loop(void)
+
+static void	shell_main_loop(t_shell *shell)
 {
 	while (1)
 	{
+		setup_signals();
 		shell->input = NULL;
 		shell->input = readline("minishell> ");
 		if (!shell->input)
@@ -30,12 +32,12 @@ void	shell_loop(void)
 		shell->token = lexer(shell->input, shell);
 		if (shell->token)
 		{
-			// print_tokens(shell->token);
+			print_tokens(shell->token);
 			parser(shell);
 			if (shell->cmd)
 			{
-				// print_table(shell->cmd);
-				// print_redirs(shell->cmd);
+				print_table(shell->cmd);
+				print_redirs(shell->cmd);
 				shell->exec->exit_status = main_exec(shell);
 			}
 		}
@@ -45,13 +47,14 @@ void	shell_loop(void)
 
 int	main(int ac, char **av, char **envp)
 {
-	setup_signals();
+	t_shell	*shell;
+
 	shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);
 	init_shell(shell, ac, av, envp);
-	shell_loop();
-	
+	shell_main_loop(shell);
+	free_array(shell->envp);
 	free(shell);
 	rl_clear_history();
 	return (0);
