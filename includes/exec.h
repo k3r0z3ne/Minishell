@@ -25,8 +25,11 @@ void	clear_pipe(t_exec *exec, int count);
 void	parent_process(t_exec *exec, t_redir *redir);
 int		make_pipes(t_shell *shell, int i);
 int		wait_process(t_shell *shell, int n);
-int		is_builtin(t_shell *shell);
 int		count_cmd(t_cmd *cmd);
+
+/* exec_utils2 */
+int 	exec_builtin(t_shell *shell);
+bool	is_builtin(t_shell *shell);
 
 /* here_doc */
 void	handle_here_doc(t_shell *shell);
