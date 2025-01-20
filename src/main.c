@@ -3,14 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/16 17:16:16 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/20 15:13:47 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	g_signal = 0;
+
+
+static void	shell_main_loop(t_shell *shell)
+{
+	while (1)
+	{
+		setup_signals();
+		shell->input = NULL;
+		shell->input = readline("minishell> ");
+		if (!shell->input)
+		{
+			ft_putstr_fd("exit\n", 1);
+			break ;
+		}
+		if (*shell->input != '\0')
+			add_history(shell->input);
+		shell->token = lexer(shell->input, shell);
+		if (shell->token)
+		{
+			print_tokens(shell->token);
+			parser(shell);
+			if (shell->cmd)
+			{
+				print_table(shell->cmd);
+				print_redirs(shell->cmd);
+				shell->exec->exit_status = main_exec(shell);
+			}
+		}
+		cleanup_all(shell);
+	}
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -20,28 +53,8 @@ int	main(int ac, char **av, char **envp)
 	if (!shell)
 		return (1);
 	init_shell(shell, ac, av, envp);
-	while (1)
-	{
-		shell->input = NULL;
-		shell->input = readline("minishell> ");
-		if (!shell->input)
-			break ;
-		if (*shell->input != '\0')
-			add_history(shell->input);
-		shell->token = lexer(shell->input, shell);
-		if (shell->token)
-		{
-			// print_tokens(shell->token);
-			parser(shell);
-			if (shell->cmd)
-			{
-				// print_table(shell->cmd);
-				// print_redirs(shell->cmd);
-				shell->exec->exit_status = main_exec(shell);
-			}
-		}
-		cleanup_all(shell);
-	}
+	shell_main_loop(shell);
+	free_array(shell->envp);
 	free(shell);
 	rl_clear_history();
 	return (0);

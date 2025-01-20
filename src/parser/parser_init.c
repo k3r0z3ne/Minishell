@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
 /*   Updated: 2025/01/20 16:01:58 by xenon            ###   ########.fr       */
@@ -64,16 +64,12 @@ t_exec	*init_exec(t_shell *shell)
 t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 {
 	t_cmd	*cmd;
-	t_exec	*exec;
 	int		size;
 
 	if (!shell || !tokens)
 		return (NULL);
 	cmd = tracked_malloc(shell, sizeof(t_cmd));
 	if (!cmd)
-		return (NULL);
-	exec = tracked_malloc(shell, sizeof(t_exec));
-	if (!exec)
 		return (NULL);
 	size = token_len(tokens);
 	cmd->full_cmd = malloc_full_cmd(shell, size);
