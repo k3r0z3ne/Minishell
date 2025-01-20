@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/20 12:59:20 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/20 15:13:47 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 int	g_signal = 0;
 
 
-void	shell_loop(t_shell *shell)
+static void	shell_main_loop(t_shell *shell)
 {
 	while (1)
 	{
+		setup_signals();
 		shell->input = NULL;
 		shell->input = readline("minishell> ");
 		if (!shell->input)
@@ -48,12 +49,11 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell	*shell;
 
-	setup_signals();
 	shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);
 	init_shell(shell, ac, av, envp);
-	shell_loop(shell);
+	shell_main_loop(shell);
 	free_array(shell->envp);
 	free(shell);
 	rl_clear_history();

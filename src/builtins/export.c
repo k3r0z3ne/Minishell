@@ -6,24 +6,52 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/01/08 17:34:50 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/20 15:56:57 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-static int	ft_env_export(char **envp)
+static void	sort_array(char **array)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*tmp;
 
 	i = 0;
-	while (envp[i])
+	while (array[i])
 	{
-		ft_putstr_fd("export ", 1);
-		ft_putendl_fd(envp[i], 1);
+		j = i + 1;
+		while (array[j])
+		{
+			if (ft_strncmp(array[i], array[j], ft_strlen(array[i])) > 0)
+			{
+				tmp = array[i];
+				array[i] = array[j];
+				array[j] = tmp;
+			}
+			j++;
+		}
 		i++;
 	}
-	return (0);
+}
+
+static void	ft_env_export(char **envp)
+{
+	int	i;
+	char **tmp;
+
+	i = 0;
+
+	tmp = arraydup(envp);
+	sort_array(tmp);
+	while (tmp[i])
+	{
+		ft_putstr_fd("export ", 1);
+		ft_putendl_fd(tmp[i], 1);
+		i++;
+	}
+	free_array(tmp);
 }
 
 static int	add_to_env(t_shell *shell, int i)
