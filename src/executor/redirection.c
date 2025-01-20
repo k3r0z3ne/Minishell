@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/17 13:13:34 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/20 13:11:49 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	redirection_check(t_shell *shell, t_exec *exec, t_redir *redirs)
 {
+	printf("REDIRECTION\n");
 	if (!redirs)
-		return (-1);
+		return (0);
 	while (redirs)
 	{
 		if (redirs->type == 5)
