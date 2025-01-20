@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/20 13:11:49 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/20 17:00:00 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	redirection_check(t_shell *shell, t_exec *exec, t_redir *redirs)
 {
-	printf("REDIRECTION\n");
 	if (!redirs)
 		return (0);
 	while (redirs)
@@ -38,6 +37,7 @@ int	redirect_setup(t_exec *exec, t_redir *redir)
 {
 	if (!redir)
 	{
+		// printf("REDIR INTERFILE\n");
 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 			return (-1);
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
@@ -45,6 +45,7 @@ int	redirect_setup(t_exec *exec, t_redir *redir)
 	}
 	else if (redir->type == REDIRIN)
 	{
+		// printf("REDIR INFILE\n");
 		if (dup2(exec->infile, STDIN_FILENO) < 0)
 			return (-1);
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
@@ -53,6 +54,7 @@ int	redirect_setup(t_exec *exec, t_redir *redir)
 	}
 	else if (redir->type == REDIROUT)
 	{
+		// printf("REDIR OUTFILE\n");
 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 			return (-1);
 		if (dup2(exec->outfile, STDOUT_FILENO) < 0)

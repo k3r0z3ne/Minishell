@@ -10,7 +10,8 @@ SRC =	main.c utils/init.c \
 		lexer/lexer.c lexer/lexer_input.c lexer/lexer_illegal.c \
 		lexer/lexer_token.c lexer/lexer_utils.c\
 		lexer/lexer_extract.c lexer/lexer_handler.c \
-		executor/execution.c executor/path.c executor/exec_utils.c \
+		executor/execution.c executor/path.c \
+		executor/exec_utils.c  executor/exec_utils2.c \
 		executor/redirection.c executor/here_doc.c \
 		builtins/cd.c builtins/echo.c builtins/env.c \
 		builtins/exit.c builtins/export.c builtins/pwd.c \

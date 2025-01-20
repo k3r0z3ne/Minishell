@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/16 17:17:40 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/20 16:01:58 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int	how_much_cmd(t_shell *shell)
 	tmp = *shell;
 	while ((&tmp)->cmd)
 	{
-		if (is_builtin(&tmp) != -1)
+		if (is_builtin(&tmp) == true)
 			builtins++;
 		(&tmp)->cmd = (&tmp)->cmd->next;
 	}
-	// printf("cmd->count = %d\n", shell->cmd_count);
+	// printf("cmd->count = %d\n", shell->exec->cmd_count);
 	// printf("nb builtins = %d\n", builtins);
 	ret = shell->exec->cmd_count - builtins;
 	// printf("ret = %d\n", ret);
