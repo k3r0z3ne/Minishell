@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:55:04 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 10:37:57 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/20 13:04:06 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_sigint(int sig)
 	rl_on_new_line();
 	ft_putstr_fd("\n", 1);
 	rl_redisplay();
-	// shell->exit_status = 130;
+	g_signal = 128 + SIGINT;
 }
 
 void	setup_signals(void)
@@ -57,7 +57,9 @@ void	activate_ctrl_backslash(void)
 		perror("sigaction");
 		exit(EXIT_FAILURE);
 	}
-	// shell->exit_status = 131;
 }
+// A AJOUTER A LA FIN DES CHILDS
+// if (WIFSIGNALED(status))
+// 	g_signal = WTERMSIG(status);
 
 

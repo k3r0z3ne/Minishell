@@ -72,4 +72,7 @@ typedef struct s_shell
 	t_clean	*clean;
 }			t_shell;
 
+/* global variable */
+extern int	g_signal;
+
 #endif

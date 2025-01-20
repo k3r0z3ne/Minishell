@@ -6,11 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 13:13:26 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/20 12:59:20 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	g_signal = 0;
 
 
 void	shell_loop(t_shell *shell)
@@ -35,7 +37,7 @@ void	shell_loop(t_shell *shell)
 			{
 				print_table(shell->cmd);
 				print_redirs(shell->cmd);
-				// shell->exec->exit_status = main_exec(shell);
+				shell->exec->exit_status = main_exec(shell);
 			}
 		}
 		cleanup_all(shell);
