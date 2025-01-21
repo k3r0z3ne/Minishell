@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:43:06 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/21 15:27:12 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/21 16:02:42 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static bool create_new_env(t_shell *shell, char **new_env, char *word, int wlen)
 	unset = false;
 	while (shell->envp[i])
 	{
-		if (!ft_strncmp(shell->envp[i], word, wlen)
-				&& shell->envp[i][wlen] == '=')
+		if (!ft_strncmp(shell->envp[i], word, wlen))
 			unset = true;
 		else
 			new_env[j++] = ft_strdup(shell->envp[i]);
