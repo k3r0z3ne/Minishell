@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/20 13:49:04 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/20 17:18:09 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void	parser(t_shell *shell)
 	if (!head)
 		return ;
 	shell->cmd = head;
+	shell->exec = init_exec(shell);
 	parse_tokens(shell);
 	if (shell->cmd)
 		shell->cmd = head;
 	if (!validate_command(shell))
 		return ;
-	shell->exec = init_exec(shell);
 }

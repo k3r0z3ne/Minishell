@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:55:14 by arotondo          #+#    #+#             */
-/*   Updated: 2024/12/18 17:34:15 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:49:30 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
+#include "../../includes/minishell.h"
 
 int	ft_pwd(int argc)
 {
@@ -23,7 +23,7 @@ int	ft_pwd(int argc)
 	}
 	curr_dir = malloc(sizeof(char) * 1024);
 	if (!curr_dir)
-		return (-1); 
+		return (-1);
 	if (getcwd(curr_dir, 1024) == NULL)
 	{
 		free(curr_dir);

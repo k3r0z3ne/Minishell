@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/20 17:02:09 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/21 14:14:53 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ pid_t	only_cmd(t_shell *shell)
 {
 	int		exit_status;
 
+	exit_status = 0;
 	shell->exec->pids = malloc(sizeof(pid_t));
 	if (!shell->exec->pids)
 		return (-1);
@@ -112,7 +113,7 @@ pid_t	only_cmd(t_shell *shell)
 		is_redir(shell->exec, shell->cmd);
 		exec_cmd(shell);
 	}
-	else if (shell->exec->pids[0] > 0 && shell->cmd->flag_hd == false)
+	// else if (shell->exec->pids[0] > 0 && shell->cmd->flag_hd == false)
 		exit_status = wait_process(shell, 1);
 	return (exit_status);
 }
