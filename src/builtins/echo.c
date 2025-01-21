@@ -6,11 +6,11 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/09 15:16:40 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/21 14:49:19 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
+#include "../../includes/minishell.h"
 
 // en suspens : test avec append void test_echo.sh
 // gerer le cas ./my_echo - aaa		-->	doit ecrire a partir de a

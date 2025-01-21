@@ -115,7 +115,7 @@ pid_t	only_cmd(t_shell *shell)
 		is_redir(shell->exec, shell->cmd);
 		exec_cmd(shell);
 	}
-	else if (shell->exec->pids[0] > 0 && shell->cmd->flag_hd == false)
+	// else if (shell->exec->pids[0] > 0 && shell->cmd->flag_hd == false)
 		exit_status = wait_process(shell, 1);
 	return (exit_status);
 }

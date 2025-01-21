@@ -6,74 +6,80 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/01/20 15:56:57 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/21 17:32:12 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
+#include "../../includes/minishell.h"
 
-static void	sort_array(char **array)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-
-	i = 0;
-	while (array[i])
-	{
-		j = i + 1;
-		while (array[j])
-		{
-			if (ft_strncmp(array[i], array[j], ft_strlen(array[i])) > 0)
-			{
-				tmp = array[i];
-				array[i] = array[j];
-				array[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-static void	ft_env_export(char **envp)
+static char	*get_var_name(t_shell *shell, char *str)
 {
 	int	i;
-	char **tmp;
+	char *name;
 
 	i = 0;
-
-	tmp = arraydup(envp);
-	sort_array(tmp);
-	while (tmp[i])
-	{
-		ft_putstr_fd("export ", 1);
-		ft_putendl_fd(tmp[i], 1);
+	while(str[i] && str[i] != '=')
 		i++;
-	}
-	free_array(tmp);
+	name = ft_substr_track(shell, str, 0, i);
+	return (name);
 }
 
-static int	add_to_env(t_shell *shell, int i)
+static int	find_env_var(char **envp, char *var_name)
 {
-	int	j;
-	int	k;
+	int	i;
+	int var_len;
 
-	j = 0;
-	k = 0;
-	while (shell->cmd->full_cmd[i][j])
+	if (!envp || !var_name)
+		return (-1);
+	var_len = ft_strlen(var_name);
+	i = 0;
+	while (envp[i])
 	{
-		if (shell->cmd->full_cmd[i][j] == '=')
-		{
-			while (shell->envp[k])
-				k++;
-			shell->envp[k] = ft_strdup(shell->cmd->full_cmd[i]);
-			shell->envp[k + 1] = NULL;
-			return (0);
-		}
-		j++;
+		if (ft_strncmp(envp[i], var_name, i) == 0
+				&& (envp[i][var_len] == '=' || envp[i][var_len] == '\0'))
+			return (i);
+		i++;
 	}
-	return (1);
+	return (-1);
+}
+
+static void	add_to_env(t_shell *shell, char *arg)
+{
+	int env_size;
+	char	**new_env;
+
+	env_size = 0;
+	while (shell->envp && shell->envp[env_size])
+		env_size++;
+	new_env = ft_realloc_array(shell->envp, env_size + 1);
+	if (!new_env)
+		return ;
+	new_env[env_size] = ft_strdup(arg);
+	shell->envp = new_env;
+}
+
+static void	update_env_var(t_shell *shell, int i, char *arg)
+{
+	free(shell->envp[i]);
+	shell->envp[i] = ft_strdup(arg);
+}
+
+static void	handle_env_var(t_shell *shell, char *arg)
+{
+	char	*var_name;
+	int		var_index;
+
+	var_name = get_var_name(shell, arg);
+	var_index = find_env_var(shell->envp, var_name);
+	if (var_index >= 0)
+	{
+		if(ft_strchr(arg, '=') != NULL)
+			update_env_var(shell, var_index, arg);
+	}
+	else
+	{
+		add_to_env(shell, arg);
+	}
 }
 
 int	ft_export(t_shell *shell)
@@ -87,7 +93,7 @@ int	ft_export(t_shell *shell)
 	{
 		while (shell->cmd->full_cmd[i])
 		{
-			add_to_env(shell, i);
+			handle_env_var(shell, shell->cmd->full_cmd[i]);
 			i++;
 		}
 	}
