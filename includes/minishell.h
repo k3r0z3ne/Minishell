@@ -57,6 +57,7 @@ typedef struct s_exec
 	int		exit_status;
 	int		pipe[2];
 	pid_t	*pids;
+	bool	last_cmd;
 }			t_exec;
 
 /* global data structure */

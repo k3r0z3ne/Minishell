@@ -19,7 +19,7 @@ char	*set_path(char **tab, char **cmd);
 int		redirection_check(t_shell *shell, t_exec *exec, t_redir *redirs);
 int		redirect_setup(t_exec *exec, t_redir *redir);
 void	is_redir(t_exec *exec, t_cmd *cmd);
-void	clear_pipe(t_exec *exec, int count);
+void	clear_pipe(t_exec *exec);
 
 /* exec_utils */
 void	parent_process(t_exec *exec, t_redir *redir);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/21 14:14:53 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/21 17:58:02 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_cmd(t_shell *shell)
 	}
 	if (!path)
 		return ;
-	// printf("HERE\n");
+	// printf("EXECVE\n");6
 	if (execve(path, shell->cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);
@@ -52,14 +52,7 @@ pid_t	process(t_shell *shell)
 		exec_cmd(shell);
 	}
 	else
-	{
-		if (dup2(shell->exec->pipe[1], STDIN_FILENO) < 0)
-			return (-1);
-		// if (dup2(STDOUT_FILENO, shell->exec->pipe[0]) < 0)
-		// 	return (-1);
 		parent_process(shell->exec, shell->cmd->redirs);
-		// printf("HERE\n");
-	}
 	return (ret);
 }
 
@@ -68,12 +61,14 @@ int	several_cmds(t_shell *shell)
 	int	i;
 	int	exit_status;
 
-	shell->exec->pids = malloc(sizeof(pid_t) * how_much_cmd(shell));
+	shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * how_much_cmd(shell));
 	if (!shell->exec->pids)
 		return (-1);
 	i = 0;
+	exit_status = 0;
 	while (shell->cmd && i < shell->exec->cmd_count)
 	{
+		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		if (make_pipes(shell, i) < 0)
 			return (-1);
 		if (is_builtin(shell) == true)
@@ -84,11 +79,18 @@ int	several_cmds(t_shell *shell)
 		else
 			shell->exec->pids[i] = process(shell);
 		// printf("cmd : %s\n", shell->cmd->full_cmd[0]);
+		// printf("i = %d\n", i);
 		shell->cmd = shell->cmd->next;
 		i++;
 	}
-	exit_status = wait_process(shell, how_much_cmd(shell));
+	// i = -1;
+	// while (++i < how_much_cmd(shell))
+	// {
+	// 	if (waitpid(shell->exec->pids[i], &exit_status, 0) < 0)
+	// 		return (-1);
+	// }
 	// printf("END\n);
+	exit_status = wait_process(shell, how_much_cmd(shell));
 	return (exit_status);
 }
 
@@ -97,7 +99,7 @@ pid_t	only_cmd(t_shell *shell)
 	int		exit_status;
 
 	exit_status = 0;
-	shell->exec->pids = malloc(sizeof(pid_t));
+	shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
 	if (!shell->exec->pids)
 		return (-1);
 	if (is_builtin(shell) == true)
