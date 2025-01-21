@@ -22,6 +22,11 @@ void	ft_exit(char **cmd, int status);
 /* export */
 int		ft_export(t_shell *shell);
 
+/* export_utils */
+void	sort_array(char **array);
+void	ft_env_export(char **envp);
+char	**ft_realloc_array(char **old_envp, int new_size);
+
 /* pwd */
 int		ft_pwd(int argc);
 
