@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/21 18:28:21 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/22 00:07:00 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,24 @@ void	parent_process(t_exec *exec, t_redir *redir)
 		if (exec->pipe[1] != -1)
 			close(exec->pipe[1]);
 	}
+}
+
+int	setup_old_pipe(t_exec *exec, int idx, int old_pipe)
+{
+	if (old_pipe != -1)
+	{
+		if (dup2(old_pipe, STDIN_FILENO) < 0)
+			return (-1);
+		close(old_pipe);
+	}
+	if (idx < exec->cmd_count - 1)
+	{
+		close(exec->pipe[0]);
+		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
+			return (-1);
+		close(exec->pipe[1]);
+	}
+	return (0);
 }
 
 int	make_pipes(t_shell *shell, int i)

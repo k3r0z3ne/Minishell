@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/21 17:58:02 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/22 00:10:09 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,34 @@ void	exec_cmd(t_shell *shell)
 	}
 }
 
-pid_t	process(t_shell *shell)
+pid_t	process(t_shell *shell, int i)
 {
+	int		old_pipe;
 	pid_t	ret;
 
+	old_pipe = -1;
 	ret = fork();
 	if (ret < 0)
 		return (-1);
 	else if (ret == 0)
 	{
+		if (setup_old_pipe(shell->exec, i, old_pipe) < 0)
+			return (-1);
 		if (redirect_setup(shell->exec, shell->cmd->redirs) < 0)
 			return (-1);
 		exec_cmd(shell);
 	}
 	else
-		parent_process(shell->exec, shell->cmd->redirs);
+	{
+		if (old_pipe != -1)
+			close(old_pipe);
+		if (i < shell->exec->cmd_count - 1)
+		{
+			close(shell->exec->pipe[1]);
+			old_pipe = shell->exec->pipe[0];
+		}
+	}
+		// parent_process(shell->exec, shell->cmd->redirs);
 	return (ret);
 }
 
@@ -77,7 +90,7 @@ int	several_cmds(t_shell *shell)
 			return (exit_status);
 		}
 		else
-			shell->exec->pids[i] = process(shell);
+			shell->exec->pids[i] = process(shell, i);
 		// printf("cmd : %s\n", shell->cmd->full_cmd[0]);
 		// printf("i = %d\n", i);
 		shell->cmd = shell->cmd->next;
