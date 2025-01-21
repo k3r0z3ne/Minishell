@@ -5,7 +5,7 @@
 
 /* execution */
 void	exec_cmd(t_shell *shell);
-pid_t	process(t_shell *shell);
+pid_t	process(t_shell *shell, int i);
 int		several_cmds(t_shell *shell);
 pid_t	only_cmd(t_shell *shell);
 int		main_exec(t_shell *shell);
@@ -23,6 +23,7 @@ void	clear_pipe(t_exec *exec);
 
 /* exec_utils */
 void	parent_process(t_exec *exec, t_redir *redir);
+int		setup_old_pipe(t_exec *exec, int idx, int old_pipe);
 int		make_pipes(t_shell *shell, int i);
 int		wait_process(t_shell *shell, int n);
 int		count_cmd(t_cmd *cmd);
