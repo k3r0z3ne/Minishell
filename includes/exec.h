@@ -7,8 +7,13 @@
 void	exec_cmd(t_shell *shell);
 pid_t	process(t_shell *shell, int i);
 int		several_cmds(t_shell *shell);
-pid_t	only_cmd(t_shell *shell);
 int		main_exec(t_shell *shell);
+
+/* one_command */
+pid_t	only_cmd(t_shell *shell);
+void	is_redir(t_shell *shell, t_redir *redirs);
+void	close_files(t_shell *shell);
+
 
 /* path */
 char	*check_path(char **cmd, char *env);
@@ -16,9 +21,8 @@ char	*find_path(t_shell *shell);
 char	*set_path(char **tab, char **cmd);
 
 /* redirection */
-int		redirection_check(t_shell *shell, t_exec *exec, t_redir *redirs);
+int		redirection_check(t_shell *shell, t_exec *exec);
 int		redirect_setup(t_exec *exec, t_redir *redir);
-void	is_redir(t_exec *exec, t_cmd *cmd);
 void	clear_pipe(t_exec *exec);
 
 /* exec_utils */

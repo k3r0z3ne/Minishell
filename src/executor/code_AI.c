@@ -1,26 +1,30 @@
 #include "../../includes/exec.h"
 
 // Update redirection type checks using enums from lexer.h
-int redirection_check(t_shell *shell, t_exec *exec, t_redir *redirs)
+int redirection_check(t_shell *shell, t_exec *exec)
 {
-    if (!redirs) 
-		return 0;
-    while (redirs)
+	t_redir	*tmp;
+
+	tmp = shell->cmd->redirs;
+	if (!tmp)
+		return (0);
+	while (tmp)
 	{
-        if (redirs->type == REDIRIN)
-            exec->infile = open(redirs->file, O_RDONLY);
-        else if (redirs->type == REDIROUT)
-            exec->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-        else if (redirs->type == APPEND)
-            exec->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
-        else if (redirs->type == HEREDOC)
-            handle_here_doc(shell);
-        if (exec->infile < 0 || exec->outfile < 0) 
-			return -1;
-        redirs = redirs->next;
-    }
-    return 0;
+		if (tmp->type == REDIRIN)
+			exec->infile = open(tmp->file, O_RDONLY, 0664);
+		else if (tmp->type == REDIROUT)
+			exec->outfile = open(tmp->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+		else if (tmp->type == APPEND)
+			exec->outfile = open(tmp->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
+		else if (tmp->type == HEREDOC)
+			handle_here_doc(shell);
+		if (exec->infile < 0 || exec->outfile < 0)
+			return (-1);
+		tmp = tmp->next;
+	}
+    return (0);
 }
+
 int redirect_setup(t_exec *exec, t_redir *redir)
 {
     if (!redir)
@@ -159,12 +163,12 @@ int several_cmds(t_shell *shell)
     shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * shell->exec->cmd_count);
     while (shell->cmd && i < shell->exec->cmd_count)
 	{
-        if (i < shell->exec->cmd_count - 1)
-		{
-            if (pipe(pipe_fd) < 0)
-                return (-1);
-        }
-        shell->exec->pids[i] = fork();
+        if (i < shell->exec->cmd_count - 1) // make_pipes   |
+		{   //                                              |
+            if (pipe(pipe_fd) < 0) //                       |
+                return (-1); //                             |
+        } //                                               \_/
+        shell->exec->pids[i] = fork(); // process
         if (shell->exec->pids[i] == 0)
 		{
             if (old_pipe != -1) // Set up input from previous pipe
@@ -172,7 +176,6 @@ int several_cmds(t_shell *shell)
                 dup2(old_pipe, STDIN_FILENO);
                 close(old_pipe);
             }
-            
             if (i < shell->exec->cmd_count - 1) // Set up output to current pipe
 			{
                 close(pipe_fd[0]);
