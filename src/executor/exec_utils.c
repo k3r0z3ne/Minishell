@@ -6,29 +6,11 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/22 16:34:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:20:25 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
-
-void	parent_process(t_exec *exec, t_redir *redir)
-{
-	if (redir)
-	{
-		if (redir->type == REDIRIN)
-			close(exec->infile);
-		else if (redir->type == REDIROUT)
-			close(exec->outfile);
-	}
-	else
-	{
-		if (exec->pipe[0] != -1)
-			close(exec->pipe[0]);
-		if (exec->pipe[1] != -1)
-			close(exec->pipe[1]);
-	}
-}
 
 int	setup_old_pipe(t_exec *exec, int idx, int old_pipe)
 {
@@ -43,25 +25,9 @@ int	setup_old_pipe(t_exec *exec, int idx, int old_pipe)
 	}
 	if (idx < exec->cmd_count - 1)
 	{
-		close(exec->pipe[0]);
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
 		{
 			perror("dup2 failed");
-			exit(EXIT_FAILURE);
-		}
-		close(exec->pipe[1]);
-	}
-	return (0);
-}
-
-int	make_pipes(t_shell *shell, int i)
-{
-	if (i < shell->exec->cmd_count - 1)
-	{
-		// printf("PIPE\n");
-		if (pipe(shell->exec->pipe) < 0)
-		{
-			perror("Creation pipe failed");
 			exit(EXIT_FAILURE);
 		}
 	}
