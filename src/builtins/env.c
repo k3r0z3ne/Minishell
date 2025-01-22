@@ -3,37 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/16 17:16:31 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/22 15:17:03 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_getenv(const char *name, char **envp)
-{
-	size_t	len;
-	size_t	i;
-
-	if (!envp || !*envp || !*name)
-		return (NULL);
-	len = ft_strlen(name);
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
-			return (envp[i] + len + 1);
-		i++;
-	}
-	return (NULL);
-}
-
 int	ft_env(char **envp)
 {
 	int	i;
 
+	if (!envp)
+		return (-1);
 	i = 0;
 	while (envp[i])
 	{

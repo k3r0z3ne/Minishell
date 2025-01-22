@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:52:21 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 10:58:59 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/22 13:14:19 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	handle_word(char *line, t_shell *shell, t_lexer *lexer)
 	char	*value;
 	t_type	type;
 
-	lexer->quote = 0;  // Reset quote lexer
+	lexer->quote = 0;
 	value = extract_word(line, shell, lexer);
 	if (!value)
 		return ;
