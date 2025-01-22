@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/01/21 17:32:12 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/22 12:38:51 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ static int	find_env_var(char **envp, char *var_name)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], var_name, i) == 0
+		if (ft_strncmp(envp[i], var_name, var_len) == 0
 				&& (envp[i][var_len] == '=' || envp[i][var_len] == '\0'))
+		{
 			return (i);
+		}
 		i++;
 	}
 	return (-1);
