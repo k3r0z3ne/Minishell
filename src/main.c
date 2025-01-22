@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/20 18:14:11 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/22 19:15:57 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	shell_main_loop(t_shell *shell)
 			if (shell->cmd)
 			{
 				// print_table(shell->cmd);
-				// print_redirs(shell->cmd);
+				print_redirs(shell->cmd);
 				shell->exec->exit_status = main_exec(shell);
 			}
 		}
