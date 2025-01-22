@@ -1,9 +1,7 @@
-L'ésotérisme désigne l'ensemble des enseignements secrets
+ Ne pas vérifier la valeur de retour de close() est une pratique courante mais également une grave erreur de programmation. Il est possible qu'une erreur correspondant à un appel write(2) antérieur ne soit rapportée que lors du close() final. Ne pas vérifier la valeur de retour lorsque l'on ferme un fichier peut conduire à une perte silencieuse de données. Ceci est principalement vrai dans le cas de systèmes de fichiers NFS,
+ ou avec l'utilisation des quotas de disques.
 
-réservés à des initiés. 
-Ce terme, dont le sens diffère de façon notable selon les époques et 
-les auteurs, est parfois utilisé dans la culture populaire pour parler
-de courants de pensée marginaux à 
-composante secrète ou étrange (sociétés secrètes, occultisme, 
-paranormal, magie, etc.).
-
+Une fermeture sans erreur ne garantit pas que les données ont été vraiment écrites sur le disque, car le noyau repousse les écritures le plus tard possible. Il n'est pas fréquent qu'un système de fichiers vide les tampons dès la fermeture d'un flux. Si vous désirez vous assurer que les informations sont en sûreté sur le disque, utilisez fsync(2) (mais des considérations matérielles entrent en jeu
+à ce moment).
+Il est probablement imprudent de fermer des descripteurs de fichier 
+alors qu'ils peuvent peut-être être utilisés par des appels système dans d'autres threads du même processus. Puisqu'un descripteur de fichier peut être réutilisé, il y a des conditions de concurrence obscures qui peuvent provoquer des effets de bord indésirés.   
