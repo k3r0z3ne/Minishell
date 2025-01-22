@@ -19,7 +19,8 @@ SRC =	main.c utils/init.c \
 		parser/parser.c parser/parser_init.c parser/parser_redirs.c \
 		parser/parser_utils.c parser/parser_error.c \
 		expander/expand.c\
-		utils/clean_up.c utils/global_utils.c utils/gc.c utils/signals.c
+		utils/global_utils.c utils/env_utils.c \
+		utils/gc.c utils/signals.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g
