@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/22 19:17:51 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:02:08 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ pid_t	process(t_shell *shell, int i)
 		close(shell->exec->pipe[1]);
 		old_pipe = shell->exec->pipe[0];
 	}
-	clear_pipe(shell->exec);
+	// if (ret > 0)
+	// 	clear_pipe(shell->exec);
 	return (ret);
 }
 
@@ -106,7 +107,7 @@ int	make_pipes(t_shell *shell, int i)
 			perror("Creation pipe failed");
 			exit(EXIT_FAILURE);
 		}
-		printf("PIPE\n");
+		// printf("PIPE\n");
 	}
 	return (0);
 }
