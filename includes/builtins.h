@@ -5,7 +5,12 @@
 #include "exec.h"
 
 /* cd */
-int		ft_cd(const char *path, char **envp);
+int		ft_cd(t_shell *shell, char *path);
+
+/* cd_utils */
+void	go_prev_dir(char **envp);
+void	update_pwd(t_shell *shell);
+
 
 /* echo */
 void	apply_flag(int flag);
