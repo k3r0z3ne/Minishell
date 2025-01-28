@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
+/*   Updated: 2025/01/22 19:45:00 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +72,10 @@ static void	parse_tokens(t_shell *shell)
 			break ;
 		}
 		if (shell->token->type == PIPE)
+		{
+			end_redir(shell);
 			parse_pipe(shell);
+		}
 		if (is_redirection2(shell->token->type) && shell->token->next
 				&& is_word(shell->token->next->type))
 			parse_redirs(shell);
@@ -80,6 +84,7 @@ static void	parse_tokens(t_shell *shell)
 		else
 			shell->token = shell->token->next;
 	}
+	end_redir(shell);
 }
 
 void	parser(t_shell *shell)

@@ -20,6 +20,7 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens);
 /* parser_redirs */
 t_redir	*create_redir(t_shell *shell, t_token *tokens);
 void	redir_add_back(t_redir **redirs, t_redir *new_redir);
+void	end_redir(t_shell *shell);
 void	print_redirs(t_cmd *cmd);
 void	print_table(t_cmd *cmd);
 

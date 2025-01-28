@@ -11,15 +11,17 @@ SRC =	main.c utils/init.c \
 		lexer/lexer_token.c lexer/lexer_utils.c\
 		lexer/lexer_extract.c lexer/lexer_handler.c \
 		executor/execution.c executor/path.c \
-		executor/exec_utils.c  executor/exec_utils2.c \
+		executor/exec_utils.c executor/exec_utils2.c \
 		executor/redirection.c executor/here_doc.c \
+		executor/one_command.c executor/several_commands.c \
 		builtins/cd.c builtins/echo.c builtins/env.c \
 		builtins/exit.c builtins/export.c builtins/export_utils.c \
 		builtins/pwd.c builtins/unset.c \
 		parser/parser.c parser/parser_init.c parser/parser_redirs.c \
 		parser/parser_utils.c parser/parser_error.c \
 		expander/expand.c\
-		utils/clean_up.c utils/global_utils.c utils/gc.c utils/signals.c
+		utils/global_utils.c utils/env_utils.c \
+		utils/gc.c utils/signals.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g

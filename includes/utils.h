@@ -9,18 +9,15 @@ typedef struct s_clean
 	struct s_clean	*next;
 }		t_clean;
 
-/* clean_up */
-void	free_array(char **array);
-void	free_redir(t_redir **redir);
-void	free_redirs(t_redir **redirs);
-void	free_cmd(t_cmd **cmd);
-void	*tracked_malloc(t_shell *shell, size_t size);
-void	cleanup_all(t_shell *shell);
-
 /* global utils */
 int		ft_isupper(int c);
 int		count_line(char **array);
+
+/* env_utils.c*/
+char	**mini_env(void);
+char	*ft_getenv(const char *name, char **envp);
 char	**arraydup(char **array);
+void	free_array(char **array);
 
 /* gc */
 char	*ft_strdup_track(t_shell *shell, char *src);
