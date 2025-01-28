@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:56:47 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/21 23:55:36 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/28 17:10:49 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ int	redirection_check(t_shell *shell, t_exec *exec, t_redir *redirs)
 	while (redirs)
 	{
 		if (redirs->type == REDIRIN)
+		{
+			if (exec->infile != 0)
+				close(exec->infile);
 			exec->infile = open(redirs->file, O_RDONLY, 0664);
+		}
 		else if (redirs->type == REDIROUT)
 			exec->outfile = open(redirs->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 		else if (redirs->type == APPEND)
