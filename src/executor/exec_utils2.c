@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:37:01 by xenon             #+#    #+#             */
-/*   Updated: 2025/01/20 15:59:12 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/29 14:57:27 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ int exec_builtin(t_shell *shell)
 	if (!ft_strcmp(shell->cmd->full_cmd[0], "echo"))
 		shell->exec->exit_status = ft_echo(count_line \
 		(shell->cmd->full_cmd), shell->cmd->full_cmd, shell->envp);
-	// else if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
-		// shell->exec->exit_status = ft_cd(shell->cmd->full_cmd[1], shell->envp);
+	else if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
+	{
+		if (!shell->cmd->full_cmd[1] || !shell->cmd->full_cmd[2])
+			shell->exec->exit_status = ft_cd(shell, shell->cmd->full_cmd[1]);
+		else
+			ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+	}
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
 		shell->exec->exit_status = ft_pwd(shell->argc);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "export"))

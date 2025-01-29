@@ -14,6 +14,7 @@ int		ft_isupper(int c);
 int		count_line(char **array);
 
 /* env_utils.c*/
+char	*ft_strjoin2(const char *s1, const char *s2);
 char	**mini_env(void);
 char	*ft_getenv(const char *name, char **envp);
 char	**arraydup(char **array);

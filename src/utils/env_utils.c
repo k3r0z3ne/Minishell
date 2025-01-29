@@ -6,13 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:39:01 by witong            #+#    #+#             */
-/*   Updated: 2025/01/22 15:40:13 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/23 12:54:52 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*ft_strjoin2(const char *s1, const char *s2)
+char	*ft_strjoin2(const char *s1, const char *s2)
 {
 	char	*str;
 	int		i;

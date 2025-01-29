@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/22 16:41:20 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:28:58 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 
 void	close_files(t_shell *shell)
 {
-	if (shell->exec->infile != -1)
+	if (shell->exec->infile != 0)
 		close(shell->exec->infile);
-	if (shell->exec->outfile != -1)
+	if (shell->exec->outfile != 0)
 		close(shell->exec->outfile);
 }
