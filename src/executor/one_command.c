@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 12:27:15 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:33:06 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 void	close_files(t_shell *shell)
 {
 	if (shell->exec->infile != 0)
+	if (shell->exec->infile != 0)
 		close(shell->exec->infile);
+	if (shell->exec->outfile != 0)
 	if (shell->exec->outfile != 0)
 		close(shell->exec->outfile);
 }

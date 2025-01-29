@@ -10,6 +10,7 @@
 # include <string.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <errno.h>
 # include <limits.h>
 # include <fcntl.h>
 # include <sys/types.h>
