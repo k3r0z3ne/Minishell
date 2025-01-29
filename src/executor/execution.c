@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 11:36:17 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:38:13 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	exec_cmd(t_shell *shell)
 		perror("No command path found");
 		exit(EXIT_FAILURE);
 	}
-	// fprintf(stderr, "EXECVE\n");
 	if (execve(path, shell->cmd->full_cmd, shell->envp) < 0)
 	{
 		free(path);

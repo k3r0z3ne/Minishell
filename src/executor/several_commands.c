@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 15:03:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:53:15 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 pid_t	process(t_shell *shell, int i)
 {
-	int		old_pipe;
 	pid_t	ret;
 
-	old_pipe = -1;
 	ret = fork();
 	if (ret < 0)
 	{
@@ -28,21 +26,18 @@ pid_t	process(t_shell *shell, int i)
 	{
 		activate_ctrl_c();
 		activate_ctrl_backslash();
-		setup_old_pipe(shell->exec, i, old_pipe);
+		setup_old_pipe(shell->exec);
 		redirect_setup(shell);
 		exec_cmd(shell);
 	}
+	if (shell->exec->old_pipe != -1)
+		close(shell->exec->old_pipe);
 	if (i < shell->exec->cmd_count - 1)
 	{
 		close(shell->exec->pipe[1]);
-		old_pipe = shell->exec->pipe[0];
-		fprintf(stderr, "old pipe2 = %d\n", old_pipe);
+		shell->exec->old_pipe = shell->exec->pipe[0];
+		// close(shell->exec->pipe[0]);
 	}
-	if (old_pipe != -1)
-		close(old_pipe);
-	// close(shell->exec->pipe[0]);
-	// if (ret > 0)
-	clear_pipe(shell, i);
 	return (ret);
 }
 

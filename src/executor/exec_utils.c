@@ -6,35 +6,32 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 14:41:46 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:50:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-int	setup_old_pipe(t_exec *exec, int idx, int old_pipe)
+int	setup_old_pipe(t_exec *exec)
 {
-	fprintf(stderr, "old pipe1 = %d\n", old_pipe);
-	if (old_pipe != -1)
+	if (exec->old_pipe != -1)
 	{
-		fprintf(stderr, "dup old_pipe\n");
-		if (dup2(old_pipe, STDIN_FILENO) < 0)
+		if (dup2(exec->old_pipe, STDIN_FILENO) < 0)
 		{
-			perror("dup2 failed");
+			perror("dup2o failed");
 			exit(EXIT_FAILURE);
 		}
-		close(old_pipe);
+		fprintf(stderr, "dup old_pipe\n");
+		close(exec->old_pipe);
 	}
-	if (idx < exec->cmd_count - 1)
+	if (exec->last_cmd == false)
 	{
-		fprintf(stderr, "dup pipe[1]\n");
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
 		{
-			perror("dup2 failed");
+			perror("dup2p failed");
 			exit(EXIT_FAILURE);
 		}
 		close(exec->pipe[1]);
-		// exec->pipe[1] = -1;
 	}
 	return (0);
 }
@@ -51,7 +48,7 @@ int	wait_process(t_shell *shell, int n)
 	while (i < n)
 	{
 		if (shell->exec->pids[i] > 0)
-		{	
+		{
 			// printf("i in wait_process = %d\n", i);
 			if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 				return (-1);
