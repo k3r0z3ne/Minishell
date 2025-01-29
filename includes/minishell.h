@@ -23,10 +23,10 @@
 # include "builtins.h"
 # include "utils.h"
 
-typedef struct s_shell t_shell;
-typedef struct s_token t_token;
-typedef enum e_type t_type;
-typedef struct s_clean t_clean;
+typedef struct	s_shell t_shell;
+typedef struct	s_token t_token;
+typedef enum 	e_type t_type;
+typedef struct	s_clean t_clean;
 
 /* redirections structure */
 typedef struct s_redir
@@ -43,6 +43,9 @@ typedef struct s_cmd
 	char			**full_cmd;
 	bool			is_quote;
 	bool			flag_hd;
+	int				in_count;
+	int				out_count;
+	int				hd_count;
 	char			*limiter;
 	struct s_redir	*redirs;
 	struct s_cmd	*next;

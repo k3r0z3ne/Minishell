@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:37:01 by xenon             #+#    #+#             */
-/*   Updated: 2025/01/20 15:59:12 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/29 11:21:10 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,25 @@ bool	is_builtin(t_shell *shell)
 		return (true);
 	else
 		return (false);
+}
+
+void	count_fds(t_shell *shell)
+{
+	t_redir	*tmp;
+
+	tmp = shell->cmd->redirs;
+	if (!tmp)
+		return ;
+	while (tmp)
+	{
+		if (tmp->type == REDIRIN)
+			shell->cmd->in_count++;
+		else if (tmp->type == REDIROUT)
+			shell->cmd->out_count++;
+		else if (tmp->type == APPEND)
+			shell->cmd->out_count++;
+		else if(tmp->type == HEREDOC)
+			shell->cmd->hd_count++;
+		tmp = tmp->next;
+	}
 }
