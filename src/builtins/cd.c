@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/23 17:24:45 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/29 15:13:23 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ static void	expand_tilde(char *path, char **envp)
 		free(home);
 		if (chdir(expanded_path) != 0)
 			perror("cd failed");
-		printf("%s\n", expanded_path);
 	}
 }
 
-static void	simple_relative_path(char *path, char **envp)
+static void	relative_path(char *path, char **envp)
 {
 	char	*tmp;
 	char	*go_path;
@@ -52,29 +51,22 @@ static void	simple_relative_path(char *path, char **envp)
 	if (!go_path)
 		return ;
 	free(tmp);
-	printf("%s\n", go_path);
 	if (chdir(go_path) != 0)
-		perror("cd failed");
+		fprintf(stderr, "minishell: cd: %s: %s\n", path, strerror(errno));
 	free(go_path);
 }
 
-// static void	relative_path(char *path, char **envp)
-// {
-// 	if (ft_strncmp(path, ".", 1) == 0)
-// 	if (ft_strncmp(path, "..", 2) == 0)
-
-// }
-
 static void	go_home(char **envp)
 {
-	char	*go_path;
+	char	*home;
 
-	go_path = ft_getenv("HOME", envp);
-	if (!go_path)
+	home = ft_getenv("HOME", envp);
+	if (!home)
+	{
+		ft_putstr_fd("cd: HOME not set\n", 2);
 		return ;
-	if (chdir(go_path) != 0)
-		perror("cd failed");
-	printf("%s\n", go_path);
+	}
+	chdir(home);
 }
 
 int	ft_cd(t_shell *shell, char *path)
@@ -91,7 +83,7 @@ int	ft_cd(t_shell *shell, char *path)
 	else if (path[0] == '-')
 		go_prev_dir(shell->envp);
 	else
-		simple_relative_path(path, shell->envp);
+		relative_path(path, shell->envp);
 	update_pwd(shell);
 	return (0);
 }

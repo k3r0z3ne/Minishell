@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:57:25 by witong            #+#    #+#             */
-/*   Updated: 2025/01/23 17:01:20 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/29 13:56:49 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	go_prev_dir(char **envp)
 	if (!go_path)
 		return ;
 	if (chdir(go_path) != 0)
-		perror("cd failed");
+		fprintf(stderr, "minishell: cd: %s: %s\n", go_path, strerror(errno));
 	printf("%s\n", go_path);
 }
 
