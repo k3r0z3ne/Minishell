@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/22 16:53:03 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:36:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int	main_exec(t_shell *shell)
 		exit(EXIT_FAILURE);
 	}
 	unlink(".tmp.txt");
+	fprintf(stderr, "EOC\n");
 	return (exit_status);
 }

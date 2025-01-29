@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/22 19:10:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:06:15 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 	cmd->is_quote = false;
 	cmd->flag_hd = false;
 	cmd->limiter = NULL;
-	// *cmd->pipe = NULL;
+	cmd->in_count = 0;
+	cmd->out_count = 0;
+	cmd->hd_count = 0;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;

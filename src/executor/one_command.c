@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 12:28:58 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/29 15:33:06 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ pid_t	only_cmd(t_shell *shell)
 
 	exit_status = 0;
 	redirection_check(shell, shell->exec);
+	count_fds(shell);
 	shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
 	if (!shell->exec->pids)
 	{
@@ -37,7 +38,11 @@ pid_t	only_cmd(t_shell *shell)
 	}
 	else if (shell->exec->pids[0] == 0)
 	{
+		activate_ctrl_c();
+		activate_ctrl_backslash();
 		is_redir(shell, shell->cmd->redirs);
+		// redirect_setup(shell);
+		// if_redirection(shell, shell->exec, shell->cmd->redirs);
 		exec_cmd(shell);
 	}
 	else if (shell->exec->pids[0] > 0 && shell->cmd->flag_hd == false)
@@ -80,7 +85,9 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 void	close_files(t_shell *shell)
 {
 	if (shell->exec->infile != 0)
+	if (shell->exec->infile != 0)
 		close(shell->exec->infile);
+	if (shell->exec->outfile != 0)
 	if (shell->exec->outfile != 0)
 		close(shell->exec->outfile);
 }
