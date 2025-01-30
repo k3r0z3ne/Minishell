@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 15:03:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:18:21 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 pid_t	process(t_shell *shell, int i)
 {
-	int		old_pipe;
 	pid_t	ret;
 
-	old_pipe = -1;
 	ret = fork();
 	if (ret < 0)
 	{
@@ -28,21 +26,20 @@ pid_t	process(t_shell *shell, int i)
 	{
 		activate_ctrl_c();
 		activate_ctrl_backslash();
-		setup_old_pipe(shell->exec, i, old_pipe);
 		redirect_setup(shell);
+		fprintf(stderr, "infile status in cmd nb:%d = %d\n", i + 1, is_fd_open(shell->exec->infile));
+		setup_old_pipe(shell->exec);
 		exec_cmd(shell);
 	}
+	if (shell->exec->old_pipe != -1)
+		close(shell->exec->old_pipe);
 	if (i < shell->exec->cmd_count - 1)
 	{
 		close(shell->exec->pipe[1]);
-		old_pipe = shell->exec->pipe[0];
-		fprintf(stderr, "old pipe2 = %d\n", old_pipe);
+		shell->exec->old_pipe = shell->exec->pipe[0];
+		// close(shell->exec->pipe[0]);
 	}
-	if (old_pipe != -1)
-		close(old_pipe);
-	// close(shell->exec->pipe[0]);
-	// if (ret > 0)
-	clear_pipe(shell, i);
+	fprintf(stderr, "command %i done.\n", i + 1);
 	return (ret);
 }
 
@@ -75,8 +72,6 @@ int	several_cmds(t_shell *shell)
 		i++;
 	}
 	exit_status = wait_process(shell, how_much_cmd(shell));
-	// close(shell->exec->infile);
-	// close(shell->exec->outfile);
 	return (exit_status);
 }
 
@@ -89,9 +84,7 @@ int	make_pipes(t_shell *shell, int i)
 			perror("Creation pipe failed");
 			exit(EXIT_FAILURE);
 		}
-		// fprintf(stderr, "pipe[0] = %d\n", shell->exec->pipe[0]);
-		// fprintf(stderr, "pipe[1] = %d\n", shell->exec->pipe[1]);
-		printf("PIPE\n");
+		// printf("PIPE\n");
 	}
 	return (0);
 }

@@ -60,6 +60,7 @@ typedef struct s_exec
 	int		cmd_count;
 	int		exit_status;
 	int		pipe[2];
+	int		old_pipe;
 	pid_t	*pids;
 	bool	last_cmd;
 }			t_exec;
