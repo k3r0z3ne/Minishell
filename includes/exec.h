@@ -30,10 +30,10 @@ int		if_outfile(t_shell *shell, t_exec *exec, t_redir *redir);
 int		if_no_redirection(t_exec *exec);
 
 /* exec_utils */
+int		is_fd_open(int fd);
 int		setup_old_pipe(t_exec *exec);
 int		wait_process(t_shell *shell, int n);
 int		count_cmd(t_cmd *cmd);
-void	clear_pipe(t_shell *shell, int i);
 
 /* exec_utils2 */
 int 	exec_builtin(t_shell *shell);

@@ -14,7 +14,6 @@ SRC =	main.c utils/init.c \
 		executor/exec_utils.c executor/exec_utils2.c \
 		executor/redirection.c executor/here_doc.c \
 		executor/one_command.c executor/several_commands.c \
-		executor/redirection2.c \
 		builtins/cd.c builtins/cd_utils.c builtins/echo.c builtins/env.c \
 		builtins/exit.c builtins/export.c builtins/export_utils.c \
 		builtins/pwd.c builtins/unset.c \

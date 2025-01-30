@@ -3,17 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 18:50:19 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:54:54 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
+int is_fd_open(int fd)
+{
+	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
+}
+
 int	setup_old_pipe(t_exec *exec)
 {
+	fprintf(stderr, "old pipe status : %d\n", is_fd_open(exec->old_pipe));
 	if (exec->old_pipe != -1)
 	{
 		if (dup2(exec->old_pipe, STDIN_FILENO) < 0)

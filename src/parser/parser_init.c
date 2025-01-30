@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/29 15:47:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:14:41 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_exec	*init_exec(t_shell *shell)
 	exec = tracked_malloc(shell, sizeof(t_exec));
 	if (!exec)
 		return (NULL);
-	exec->infile = 0;
-	exec->outfile = 0;
+	exec->infile = -1;
+	exec->outfile = -1;
 	exec->exit_status = 0;
 	exec->cmd_count = 1;
 	exec->last_cmd = false;

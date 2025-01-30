@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 15:33:06 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/30 14:56:57 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ pid_t	only_cmd(t_shell *shell)
 		activate_ctrl_backslash();
 		is_redir(shell, shell->cmd->redirs);
 		// redirect_setup(shell);
-		// if_redirection(shell, shell->exec, shell->cmd->redirs);
 		exec_cmd(shell);
 	}
 	else if (shell->exec->pids[0] > 0 && shell->cmd->flag_hd == false)
@@ -58,7 +57,7 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 	tmp = redirs;
 	while (tmp)
 	{
-		if (shell->exec->infile != -1 && shell->cmd->flag_hd == false)
+		if (tmp->type == REDIRIN && shell->cmd->flag_hd == false)
 		{
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
 			{
@@ -66,9 +65,8 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 				exit(EXIT_FAILURE);
 			}
 			close(shell->exec->infile);
-			shell->exec->infile = -1;
 		}
-		else if (shell->exec->outfile != -1)
+		else if (tmp->type == REDIROUT)
 		{
 			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
 			{
@@ -76,18 +74,47 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 				exit(EXIT_FAILURE);
 			}
 			close(shell->exec->outfile);
-			shell->exec->outfile = -1;
 		}
 		tmp = tmp->next;
 	}
 }
 
+int	redirection_check(t_shell *shell, t_exec *exec)
+{
+	t_redir	*tmp;
+
+	tmp = shell->cmd->redirs;
+	if (tmp->type == END)
+		return (0);
+	while (tmp)
+	{
+		if (tmp->type == REDIRIN)
+		{
+			if (exec->infile)
+				close(exec->infile);
+			exec->infile = open(tmp->file, O_RDONLY, 0664);
+			shell->cmd->in_count--;
+		}
+		else if (tmp->type == REDIROUT)
+			exec->outfile = open(tmp->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+		else if (tmp->type == APPEND)
+			exec->outfile = open(tmp->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
+		else if (tmp->type == HEREDOC)
+			handle_here_doc(shell);
+		if (exec->infile < 0 || exec->outfile < 0)
+		{
+			perror("Invalid fd");
+			exit(EXIT_FAILURE);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void	close_files(t_shell *shell)
 {
 	if (shell->exec->infile != 0)
-	if (shell->exec->infile != 0)
 		close(shell->exec->infile);
-	if (shell->exec->outfile != 0)
 	if (shell->exec->outfile != 0)
 		close(shell->exec->outfile);
 }

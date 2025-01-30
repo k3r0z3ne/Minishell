@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/30 13:15:18 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/30 15:18:21 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ pid_t	process(t_shell *shell, int i)
 	{
 		activate_ctrl_c();
 		activate_ctrl_backslash();
-		setup_old_pipe(shell->exec);
 		redirect_setup(shell);
+		fprintf(stderr, "infile status in cmd nb:%d = %d\n", i + 1, is_fd_open(shell->exec->infile));
+		setup_old_pipe(shell->exec);
 		exec_cmd(shell);
 	}
 	if (shell->exec->old_pipe != -1)
@@ -38,6 +39,7 @@ pid_t	process(t_shell *shell, int i)
 		shell->exec->old_pipe = shell->exec->pipe[0];
 		// close(shell->exec->pipe[0]);
 	}
+	fprintf(stderr, "command %i done.\n", i + 1);
 	return (ret);
 }
 
@@ -70,8 +72,6 @@ int	several_cmds(t_shell *shell)
 		i++;
 	}
 	exit_status = wait_process(shell, how_much_cmd(shell));
-	// close(shell->exec->infile);
-	// close(shell->exec->outfile);
 	return (exit_status);
 }
 
@@ -84,9 +84,7 @@ int	make_pipes(t_shell *shell, int i)
 			perror("Creation pipe failed");
 			exit(EXIT_FAILURE);
 		}
-		// fprintf(stderr, "pipe[0] = %d\n", shell->exec->pipe[0]);
-		// fprintf(stderr, "pipe[1] = %d\n", shell->exec->pipe[1]);
-		printf("PIPE\n");
+		// printf("PIPE\n");
 	}
 	return (0);
 }
