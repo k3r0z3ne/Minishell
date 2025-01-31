@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/30 13:54:54 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/31 14:24:24 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ int	wait_process(t_shell *shell, int n)
 			if (WIFEXITED(status))
 				exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
+			{
+				if (WTERMSIG(status) == SIGQUIT)
+					ft_putstr_fd("Quit (core dumped)\n", 2);
 				exit_status = 128 + WTERMSIG(status);
+			}
 			shell->exec->pids[i] = -1;
 			// printf("nb de passage\n");:
 		}
