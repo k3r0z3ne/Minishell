@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/30 15:22:38 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/30 17:10:42 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	redirect_setup(t_shell *shell)
 	}
 	return (0);
 }
+
 int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
 	fprintf(stderr, "if infile ?\n");

@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/30 14:56:57 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/30 17:17:56 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 
 void	close_files(t_shell *shell)
 {
-	if (shell->exec->infile != 0)
+	if (shell->exec->infile != -1)
 		close(shell->exec->infile);
-	if (shell->exec->outfile != 0)
+	if (shell->exec->outfile != -1)
 		close(shell->exec->outfile);
 }

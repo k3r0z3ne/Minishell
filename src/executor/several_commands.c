@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/30 15:18:21 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/30 16:56:13 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,15 @@ int	several_cmds(t_shell *shell)
 	int	i;
 	int	exit_status;
 
-	shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * how_much_cmd(shell));
-	if (!shell->exec->pids)
+	if (shell->exec->builtin_less != 0)
 	{
-		perror("Memory allocation failed");
-		exit(EXIT_FAILURE);
+		
+		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * shell->exec->builtin_less);
+		if (!shell->exec->pids)
+		{
+			perror("Memory allocation failed");
+			exit(EXIT_FAILURE);
+		}
 	}
 	i = 0;
 	exit_status = 0;
