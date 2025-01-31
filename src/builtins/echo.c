@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/21 14:49:19 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:30:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_echo(int nb, char **arg, char **envp)
 			ft_putchar_fd(' ', 1);
 	}
 	apply_flag(flag);
-	return (0);
+	exit(EXIT_SUCCESS);
 }
 
 // int	main(int argc, char **argv, char **envp)

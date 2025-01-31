@@ -8,7 +8,8 @@ void	exec_cmd(t_shell *shell);
 int		main_exec(t_shell *shell);
 
 /* one_command */
-pid_t	only_cmd(t_shell *shell);
+pid_t	process1(t_shell *shell);
+int		only_cmd(t_shell *shell);
 void	is_redir(t_shell *shell, t_redir *redirs);
 void	close_files(t_shell *shell);
 
@@ -36,8 +37,9 @@ int		wait_process(t_shell *shell, int n);
 int		count_cmd(t_cmd *cmd);
 
 /* exec_utils2 */
-int 	exec_builtin(t_shell *shell);
+void	exec_builtin(t_shell *shell);
 bool	is_builtin(t_shell *shell);
+bool	is_forkable(t_shell *shell);
 void	count_fds(t_shell *shell);
 
 /* here_doc */

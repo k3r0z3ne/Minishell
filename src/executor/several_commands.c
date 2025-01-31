@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/30 16:56:13 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/31 16:44:23 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ pid_t	process(t_shell *shell, int i)
 		activate_ctrl_c();
 		activate_ctrl_backslash();
 		redirect_setup(shell);
-		fprintf(stderr, "infile status in cmd nb:%d = %d\n", i + 1, is_fd_open(shell->exec->infile));
+		fprintf(stderr, "infile status in cmd nb: %d = %d\n", i + 1, is_fd_open(shell->exec->infile));
 		setup_old_pipe(shell->exec);
-		exec_cmd(shell);
+		if (is_forkable(shell) == true)
+			exec_builtin(shell);
+		else
+			exec_cmd(shell);
 	}
 	if (shell->exec->old_pipe != -1)
 		close(shell->exec->old_pipe);
@@ -50,8 +53,8 @@ int	several_cmds(t_shell *shell)
 
 	if (shell->exec->builtin_less != 0)
 	{
-		
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * shell->exec->builtin_less);
+		fprintf(stderr, "builtin_less = %d\n", shell->exec->builtin_less);
 		if (!shell->exec->pids)
 		{
 			perror("Memory allocation failed");
@@ -66,16 +69,13 @@ int	several_cmds(t_shell *shell)
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		make_pipes(shell, i);
 		if (is_builtin(shell) == true)
-		{
-			exit_status = exec_builtin(shell);
-			return (exit_status);
-		}
+			exec_builtin(shell);
 		else
 			shell->exec->pids[i] = process(shell, i);
 		shell->cmd = shell->cmd->next;
 		i++;
 	}
-	exit_status = wait_process(shell, how_much_cmd(shell));
+	exit_status = wait_process(shell, shell->exec->builtin_less);
 	return (exit_status);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/01/22 12:38:51 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:31:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ int	ft_export(t_shell *shell)
 			i++;
 		}
 	}
-	return (0);
+	exit(EXIT_SUCCESS);
 }

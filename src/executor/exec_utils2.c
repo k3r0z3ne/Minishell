@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/01/30 17:14:59 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/31 17:27:39 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/exec.h"
 
-int exec_builtin(t_shell *shell)
+void	exec_builtin(t_shell *shell)
 {
-	if (shell->exec->old_pipe != -1)
-		close(shell->exec->old_pipe);
-	redirect_setup(shell);
-	setup_old_pipe(shell->exec);
 	if (!ft_strcmp(shell->cmd->full_cmd[0], "echo"))
 		shell->exec->exit_status = ft_echo(count_line \
 		(shell->cmd->full_cmd), shell->cmd->full_cmd, shell->envp);
@@ -42,30 +37,29 @@ int exec_builtin(t_shell *shell)
 	// 	shell->exec->exit_status = 0;
 	// 	ft_exit(shell->cmd->full_cmd, shell->exec->exit_status);
 	// }
-	if (shell->exec->last_cmd == false)
-		shell->exec->old_pipe = shell->exec->pipe[0];
-	else
-		close(shell->exec->pipe[0]);
-	fprintf(stderr, "pipe[0] status : %d\n", is_fd_open(shell->exec->pipe[0]));
-	fprintf(stderr, "pipe[1] status : %d\n", is_fd_open(shell->exec->pipe[1]));
-	return (shell->exec->exit_status);
 }
 
 bool	is_builtin(t_shell *shell)
 {
-	if (!ft_strcmp(shell->cmd->full_cmd[0], "echo"))
-		return (true);
-	else if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
-		return (true);
-	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
+	if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
 		return (true);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "export"))
 		return (true);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "unset"))
 		return (true);
-	else if (!ft_strcmp(shell->cmd->full_cmd[0], "env"))
-		return (true);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "exit"))
+		return (true);
+	else
+		return (false);
+}
+
+bool	is_forkable(t_shell *shell)
+{
+	if (!ft_strcmp(shell->cmd->full_cmd[0], "echo"))
+		return (true);
+	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
+		return (true);
+	else if (!ft_strcmp(shell->cmd->full_cmd[0], "env"))
 		return (true);
 	else
 		return (false);

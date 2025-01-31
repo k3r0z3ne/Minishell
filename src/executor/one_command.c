@@ -3,50 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/30 17:17:56 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/31 17:27:12 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-pid_t	only_cmd(t_shell *shell)
+pid_t	process1(t_shell *shell)
+{
+	pid_t	ret;
+
+	fprintf(stderr, "FORK\n");
+	ret = fork();
+	if (ret < 0)
+	{
+		perror("Fork failed");
+		exit(EXIT_FAILURE);
+	}
+	else if (!ret)
+	{
+		activate_ctrl_c();
+		activate_ctrl_backslash();
+		is_redir(shell, shell->cmd->redirs);
+		if (is_forkable(shell) == true)
+			exec_builtin(shell);
+		else
+			exec_cmd(shell);
+	}
+	else
+		close_files(shell);
+	return (ret);
+}
+
+int	only_cmd(t_shell *shell)
 {
 	int	exit_status;
 
 	exit_status = 0;
 	redirection_check(shell, shell->exec);
 	count_fds(shell);
-	shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
-	if (!shell->exec->pids)
+	if (shell->exec->builtin_less != 0)
 	{
-		perror("Memory allocation failed");
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "builtin_less = %d\n", shell->exec->builtin_less);
+		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
+		if (!shell->exec->pids)
+		{
+			perror("Memory allocation failed");
+			exit(EXIT_FAILURE);
+		}
 	}
 	if (is_builtin(shell) == true)
-	{
-		exit_status = exec_builtin(shell);
-		return (exit_status);
-	}
-	shell->exec->pids[0] = fork();
-	if (shell->exec->pids[0] < 0)
-	{
-		perror("Fork failed");
-		exit(EXIT_FAILURE);
-	}
-	else if (shell->exec->pids[0] == 0)
-	{
-		activate_ctrl_c();
-		activate_ctrl_backslash();
-		is_redir(shell, shell->cmd->redirs);
-		// redirect_setup(shell);
-		exec_cmd(shell);
-	}
-	else if (shell->exec->pids[0] > 0 && shell->cmd->flag_hd == false)
+		exec_builtin(shell);
+	else
+		shell->exec->pids[0] = process1(shell);
+	if (shell->cmd->flag_hd == false)
 		exit_status = wait_process(shell, 1);
-	close_files(shell);
 	return (exit_status);
 }
 

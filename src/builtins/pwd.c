@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:55:14 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/22 15:41:54 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:31:12 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ int	ft_pwd(int argc)
 		return (-1);
 	ft_putendl_fd(curr_dir, 1);
 	free(curr_dir);
-	return (0);
+	exit(EXIT_SUCCESS);
 }
