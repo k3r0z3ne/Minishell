@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 17:27:12 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:50:29 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,9 @@ pid_t	process1(t_shell *shell)
 {
 	pid_t	ret;
 
-	fprintf(stderr, "FORK\n");
 	ret = fork();
 	if (ret < 0)
-	{
-		perror("Fork failed");
-		exit(EXIT_FAILURE);
-	}
+		err_exit("Fork failed");
 	else if (!ret)
 	{
 		activate_ctrl_c();
@@ -47,13 +43,9 @@ int	only_cmd(t_shell *shell)
 	count_fds(shell);
 	if (shell->exec->builtin_less != 0)
 	{
-		fprintf(stderr, "builtin_less = %d\n", shell->exec->builtin_less);
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
 		if (!shell->exec->pids)
-		{
-			perror("Memory allocation failed");
-			exit(EXIT_FAILURE);
-		}
+			err_exit("Memory allocation failed");
 	}
 	if (is_builtin(shell) == true)
 		exec_builtin(shell);
@@ -74,19 +66,13 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 		if (tmp->type == REDIRIN && shell->cmd->flag_hd == false)
 		{
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-			{
-				perror("dup2 failed");
-				exit(EXIT_FAILURE);
-			}
+				err_exit("dup2 failed");
 			close(shell->exec->infile);
 		}
 		else if (tmp->type == REDIROUT)
 		{
 			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
-			{
-				perror("dup2 failed");
-				exit(EXIT_FAILURE);
-			}
+				err_exit("dup2 failed");
 			close(shell->exec->outfile);
 		}
 		tmp = tmp->next;
@@ -116,10 +102,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 		else if (tmp->type == HEREDOC)
 			handle_here_doc(shell);
 		if (exec->infile < 0 || exec->outfile < 0)
-		{
-			perror("Invalid fd");
-			exit(EXIT_FAILURE);
-		}
+			err_exit("Invalid fd");
 		tmp = tmp->next;
 	}
 	return (0);

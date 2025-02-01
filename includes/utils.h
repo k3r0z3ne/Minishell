@@ -6,14 +6,14 @@
 typedef struct s_clean
 {
 	void			*ptr;
-	struct s_clean	*next;
-}		t_clean;
+	struct	s_clean	*next;
+}			t_clean;
 
 /* global utils */
 int		ft_isupper(int c);
 int		count_line(char **array);
 
-/* env_utils.c*/
+/* env_utils */
 char	*ft_strjoin2(const char *s1, const char *s2);
 char	**mini_env(void);
 char	*ft_getenv(const char *name, char **envp);
@@ -29,11 +29,15 @@ void	cleanup_all(t_shell *shell);
 
 /* init */
 void	init_shell(t_shell *shell, int argc, char **argv, char **envp);
+void	init_pids(t_shell *shell);
 
 /* signals */
 void	setup_signals(void);
 void	ignore_ctrl_c(void);
 void	activate_ctrl_c(void);
 void	activate_ctrl_backslash(void);
+
+/* error */
+int	err_exit(char *err_message);
 
 #endif

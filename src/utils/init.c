@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:34:29 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/22 15:35:12 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:48:14 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,15 @@ void	init_shell(t_shell *shell, int argc, char **argv, char **envp)
 	shell->cmd = NULL;
 	shell->exec = NULL;
 	shell->clean = NULL;
+}
+
+void	init_pids(t_shell *shell)
+{
+	if (shell->exec->builtin_less != 0)
+	{
+		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * shell->exec->builtin_less);
+		fprintf(stderr, "builtin_less = %d\n", shell->exec->builtin_less);
+		if (!shell->exec->pids)
+			err_exit("Memory allocation failed");
+	}
 }

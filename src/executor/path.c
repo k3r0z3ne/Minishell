@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 17:10:52 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:50:50 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,9 @@ char	*check_path(char **cmd, char *env)
 	else
 		tab = ft_split(".", '/');
 	if (!tab)
-	{
-		// free_array(tab);
 		return (NULL);
-	}
 	path = NULL;
 	path = set_path(tab, cmd);
-	// printf("check_path path : %s\n", path);
 	free(tab);
 	return (path);
 }
@@ -69,6 +65,5 @@ char	*set_path(char **tab, char **cmd)
 		path = "";
 		i++;
 	}
-	// printf("set_path path : %s\n", path);
 	return (path);
 }

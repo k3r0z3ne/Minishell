@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 17:30:57 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:51:26 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	expand_tilde(char *path, char **envp)
 	else if (home && path[1] == '\0')
 	{
 		if (chdir(home) != 0)
-			perror("cd failed");
+			err_exit("cd failed");
 		printf("%s\n", home);
 	}
 	else
@@ -34,7 +34,7 @@ static void	expand_tilde(char *path, char **envp)
 		expanded_path = ft_strjoin2(home, &path[1]);
 		free(home);
 		if (chdir(expanded_path) != 0)
-			perror("cd failed");
+			err_exit("cd failed");
 	}
 }
 
@@ -76,7 +76,7 @@ int	ft_cd(t_shell *shell, char *path)
 	else if (path[0] == '/')
 	{
 		if (chdir(path) != 0)
-			perror("cd failed");
+			err_exit("cd failed");
 	}
 	else if (path[0] == '~')
 		expand_tilde(path, shell->envp);
