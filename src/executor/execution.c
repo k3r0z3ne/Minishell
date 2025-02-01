@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 17:13:28 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:46:08 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,10 @@ void	exec_cmd(t_shell *shell)
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
-	{
-		perror("$PATH not found");
-		exit(EXIT_FAILURE);
-	}
+		err_exit("$PATH not found");
 	path = check_path(shell->cmd->full_cmd, tmp);
-	if (path || path[0] == '\0')
-	{
-		perror("No command path found");
-		exit(EXIT_FAILURE);
-	}
+	if (path && path[0] == '\0')
+		err_exit("No command path found");
 	if (execve(path, shell->cmd->full_cmd, shell->envp) < 0)
 		free(path);
 }
@@ -45,11 +39,7 @@ int	main_exec(t_shell *shell)
 	else if (shell->exec->cmd_count == 1)
 		exit_status = only_cmd(shell);
 	else
-	{
-		perror("No command found");
-		exit(EXIT_FAILURE);
-	}
+		err_exit("No command found");
 	unlink(".tmp.txt");
-	fprintf(stderr, "EOC\n");
 	return (exit_status);
 }

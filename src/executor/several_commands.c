@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 16:44:23 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:48:40 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,12 @@ pid_t	process(t_shell *shell, int i)
 
 	ret = fork();
 	if (ret < 0)
-	{
-		perror("Fork failed");
-		exit(EXIT_FAILURE);
-	}
+		err_exit("Fork failed");
 	else if (ret == 0)
 	{
 		activate_ctrl_c();
 		activate_ctrl_backslash();
 		redirect_setup(shell);
-		fprintf(stderr, "infile status in cmd nb: %d = %d\n", i + 1, is_fd_open(shell->exec->infile));
 		setup_old_pipe(shell->exec);
 		if (is_forkable(shell) == true)
 			exec_builtin(shell);
@@ -40,29 +36,20 @@ pid_t	process(t_shell *shell, int i)
 	{
 		close(shell->exec->pipe[1]);
 		shell->exec->old_pipe = shell->exec->pipe[0];
-		// close(shell->exec->pipe[0]);
 	}
-	fprintf(stderr, "command %i done.\n", i + 1);
 	return (ret);
 }
+
+
 
 int	several_cmds(t_shell *shell)
 {
 	int	i;
 	int	exit_status;
 
-	if (shell->exec->builtin_less != 0)
-	{
-		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * shell->exec->builtin_less);
-		fprintf(stderr, "builtin_less = %d\n", shell->exec->builtin_less);
-		if (!shell->exec->pids)
-		{
-			perror("Memory allocation failed");
-			exit(EXIT_FAILURE);
-		}
-	}
 	i = 0;
 	exit_status = 0;
+	init_pids(shell);
 	while (shell->cmd && i < shell->exec->cmd_count)
 	{
 		count_fds(shell);
@@ -84,11 +71,7 @@ int	make_pipes(t_shell *shell, int i)
 	if (i < shell->exec->cmd_count - 1)
 	{
 		if (pipe(shell->exec->pipe) < 0)
-		{
-			perror("Creation pipe failed");
-			exit(EXIT_FAILURE);
-		}
-		// printf("PIPE\n");
+			err_exit("Creation pipe failed");
 	}
 	return (0);
 }

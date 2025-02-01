@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:55:04 by witong            #+#    #+#             */
-/*   Updated: 2025/01/29 12:02:16 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:52:59 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,12 @@ void	setup_signals(void)
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-	{
-		perror("sigaction");
-		exit(EXIT_FAILURE);
-	}
+		err_exit("sigaction");
 	sa_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-	{
-		perror("sigaction");
-		exit(EXIT_FAILURE);
-	}
+		err_exit("sigaction");
 }
 void	ignore_ctrl_c(void)
 {
@@ -62,10 +56,7 @@ void	activate_ctrl_c(void)
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-	{
-		perror("sigaction");
-		exit(EXIT_FAILURE);
-	}
+		err_exit("sigaction");
 }
 
 void	activate_ctrl_backslash(void)
@@ -76,10 +67,7 @@ void	activate_ctrl_backslash(void)
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-	{
-		perror("sigaction");
-		exit(EXIT_FAILURE);
-	}
+		err_exit("sigaction");
 }
 // Ajouter activate_ctrl_backslash et activate_ctrl_c au debut des childs
 // A AJOUTER A LA FIN DES CHILDS

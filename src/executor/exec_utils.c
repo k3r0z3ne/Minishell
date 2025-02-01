@@ -6,37 +6,29 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/01 15:07:52 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/01 17:46:38 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-int is_fd_open(int fd)
-{
-	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
-}
+// int is_fd_open(int fd)
+// {
+// 	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
+// }
 
 int	setup_old_pipe(t_exec *exec)
 {
-	// fprintf(stderr, "old pipe status : %d\n", is_fd_open(exec->old_pipe));
 	if (exec->old_pipe != -1)
 	{
 		if (dup2(exec->old_pipe, STDIN_FILENO) < 0)
-		{
-			perror("dup2o failed");
-			exit(EXIT_FAILURE);
-		}
-		fprintf(stderr, "dup old_pipe\n");
+			err_exit("dup2o failed");
 		close(exec->old_pipe);
 	}
-	if (exec->last_cmd == false)
+	if (exec->last_cmd == false && exec->pipe[1] != 0)
 	{
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
-		{
-			perror("dup2p failed");
-			exit(EXIT_FAILURE);
-		}
+			err_exit("dup2p failed");
 		close(exec->pipe[1]);
 	}
 	return (0);
@@ -55,10 +47,8 @@ int	wait_process(t_shell *shell, int n)
 	{
 		if (shell->exec->pids[i] > 0)
 		{
-			// printf("i in wait_process = %d\n", i);
 			if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 				return (-1);
-			printf("Waiting for PID %d\n", shell->exec->pids[i]);
 			if (WIFEXITED(status))
 				exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
@@ -68,7 +58,6 @@ int	wait_process(t_shell *shell, int n)
 				exit_status = 128 + WTERMSIG(status);
 			}
 			shell->exec->pids[i] = -1;
-			// printf("nb de passage\n");:
 		}
 		i++;
 	}
