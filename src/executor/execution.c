@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 18:38:13 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:13:28 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,24 @@ void	exec_cmd(t_shell *shell)
 		exit(EXIT_FAILURE);
 	}
 	path = check_path(shell->cmd->full_cmd, tmp);
-	if (path && path[0] == '\0')
-	{
-		path = NULL;
-		path = ft_strdup(shell->cmd->full_cmd[0]);
-	}
-	if (!path)
+	if (path || path[0] == '\0')
 	{
 		perror("No command path found");
 		exit(EXIT_FAILURE);
 	}
 	if (execve(path, shell->cmd->full_cmd, shell->envp) < 0)
-	{
 		free(path);
-		// free_array(shell->cmd->full_cmd);
-	}
 }
 
 int	main_exec(t_shell *shell)
 {
 	int	exit_status;
-	int	nb_cmd;
 
-	nb_cmd = count_cmd(shell->cmd);
-	if (nb_cmd > 1)
+	shell->exec->cmd_count = count_cmd(shell->cmd);
+	shell->exec->builtin_less = how_much_cmd(shell);
+	if (shell->exec->cmd_count > 1)
 		exit_status = several_cmds(shell);
-	else if (nb_cmd == 1)
+	else if (shell->exec->cmd_count == 1)
 		exit_status = only_cmd(shell);
 	else
 	{

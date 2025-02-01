@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/22 15:17:03 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:31:44 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ int	ft_env(char **envp)
 		ft_putendl_fd(envp[i], 1);
 		i++;
 	}
-	return (0);
+	exit(EXIT_SUCCESS);
 }

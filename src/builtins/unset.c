@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:43:06 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/21 16:02:42 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:31:37 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ int	ft_unset(t_shell *shell)
 		i++;
 	}
 	if (!unset)
-		return (1);
-	return (0);
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }

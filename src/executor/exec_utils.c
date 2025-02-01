@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 14:24:24 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/01 15:07:52 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int is_fd_open(int fd)
 
 int	setup_old_pipe(t_exec *exec)
 {
-	fprintf(stderr, "old pipe status : %d\n", is_fd_open(exec->old_pipe));
+	// fprintf(stderr, "old pipe status : %d\n", is_fd_open(exec->old_pipe));
 	if (exec->old_pipe != -1)
 	{
 		if (dup2(exec->old_pipe, STDIN_FILENO) < 0)

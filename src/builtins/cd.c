@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/29 15:13:23 by witong           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:30:57 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ int	ft_cd(t_shell *shell, char *path)
 	else
 		relative_path(path, shell->envp);
 	update_pwd(shell);
-	return (0);
+	exit(EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/01/30 15:14:41 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/31 16:44:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	how_much_cmd(t_shell *shell)
 
 	builtins = 0;
 	tmp = *shell;
+	ret = 0;
 	while ((&tmp)->cmd)
 	{
 		if (is_builtin(&tmp) == true)
@@ -60,6 +61,7 @@ t_exec	*init_exec(t_shell *shell)
 	exec->cmd_count = 1;
 	exec->last_cmd = false;
 	exec->old_pipe = -1;
+	exec->builtin_less = 0;
 	return (exec);
 }
 

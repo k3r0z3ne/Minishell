@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/16 17:17:18 by xenon            ###   ########.fr       */
+/*   Updated: 2025/01/31 17:10:52 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ char	*find_path(t_shell *shell)
 	i = 0;
 	if (!shell->envp || shell->envp[0] == NULL || ft_strlen(shell->envp[0]) == 0)
 		return ("");
-	// if (ft_strncmp(shell->envp[i], "LD_LIBRARY_PATH=/usr/lib/debug", 31) == 0)
-	// 	return ("");
 	while (ft_strnstr(shell->envp[i], "PATH=", 5) == NULL)
 		i++;
 	if (shell->envp[i] == NULL || shell->envp[i][0] == '\0')
