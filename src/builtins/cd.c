@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/01 17:51:26 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/01 19:16:04 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	relative_path(char *path, char **envp)
 		return ;
 	free(tmp);
 	if (chdir(go_path) != 0)
-		fprintf(stderr, "minishell: cd: %s: %s\n", path, strerror(errno));
+		printf("minishell: cd: %s: %s\n", path, strerror(errno));
 	free(go_path);
 }
 
