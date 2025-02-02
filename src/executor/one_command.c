@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/01 17:50:29 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/02 18:40:35 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ int	only_cmd(t_shell *shell)
 	if (is_builtin(shell) == true)
 		exec_builtin(shell);
 	else
+	{
 		shell->exec->pids[0] = process1(shell);
-	if (shell->cmd->flag_hd == false)
-		exit_status = wait_process(shell, 1);
+		if (shell->cmd->flag_hd == false)
+			exit_status = wait_process(shell, 1);
+	}
 	return (exit_status);
 }
 
