@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/01 17:46:38 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/02 14:33:57 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	wait_process(t_shell *shell, int n)
 	int		status;
 	int		exit_status;
 
+	if (!shell || !shell->exec || !shell->exec->pids)
+		return (-1);
 	i = 0;
 	status = 0;
 	exit_status = 0;

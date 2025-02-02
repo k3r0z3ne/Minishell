@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:57:25 by witong            #+#    #+#             */
-/*   Updated: 2025/01/29 13:56:49 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/02 14:25:29 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,11 @@ static void	set_env(t_shell *shell, char *env_var, char *new_path)
 void	update_pwd(t_shell *shell)
 {
 	char	*cwd;
+
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return ;
 	set_env(shell, "OLDPWD", ft_getenv("PWD", shell->envp));
 	set_env(shell, "PWD", cwd);
+	free(cwd);
 }
