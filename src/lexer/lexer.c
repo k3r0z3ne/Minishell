@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/02/03 12:43:06 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/03 16:47:00 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ static void check_special_cases(char *line, t_lexer *lexer)
 	}
 	else if ((line[0] == ':' || line[0] == '!') && line[1] == '\0')
 		lexer->error = 1;
+	else if (line[0] == '/')
+	{
+		ft_putstr_fd("lexer: ", 2);
+		write(2, line, ft_strlen(line));
+		ft_putstr_fd(": Is a directory\n", 2);
+		lexer->error = 1;
+	}
 }
 
 static void	process_token(char *line, t_shell *shell, t_lexer *lexer)
