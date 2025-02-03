@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:43:06 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 17:31:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:01:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ int	ft_unset(t_shell *shell)
 		i++;
 	}
 	if (!unset)
-		exit(EXIT_FAILURE);
-	exit(EXIT_SUCCESS);
+		return (1);
+	return (0);
 }

@@ -44,6 +44,7 @@ typedef struct s_cmd
 	char			**full_cmd;
 	bool			is_quote;
 	bool			flag_hd;
+	int				cmd_len;
 	int				in_count;
 	int				out_count;
 	int				hd_count;

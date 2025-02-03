@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/01 17:46:08 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/03 14:06:16 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ void	exec_cmd(t_shell *shell)
 	tmp = find_path(shell);
 	if (!tmp)
 		err_exit("$PATH not found");
-	path = check_path(shell->cmd->full_cmd, tmp);
+	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
 		err_exit("No command path found");
-	if (execve(path, shell->cmd->full_cmd, shell->envp) < 0)
-		free(path);
+	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 
 int	main_exec(t_shell *shell)
 {
 	int	exit_status;
 
+	exit_status = 0;
 	shell->exec->cmd_count = count_cmd(shell->cmd);
 	shell->exec->builtin_less = how_much_cmd(shell);
 	if (shell->exec->cmd_count > 1)

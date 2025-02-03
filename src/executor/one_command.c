@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/02 18:40:35 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/03 19:39:08 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ pid_t	process1(t_shell *shell)
 		activate_ctrl_c();
 		activate_ctrl_backslash();
 		is_redir(shell, shell->cmd->redirs);
-		if (is_forkable(shell) == true)
-			exec_builtin(shell);
-		else
-			exec_cmd(shell);
+		exec_cmd(shell);
+		// ignore_ctrl_c();
 	}
 	else
 		close_files(shell);
@@ -53,7 +51,7 @@ int	only_cmd(t_shell *shell)
 	{
 		shell->exec->pids[0] = process1(shell);
 		if (shell->cmd->flag_hd == false)
-			exit_status = wait_process(shell, 1);
+			exit_status = wait_process(shell, shell->exec->builtin_less);
 	}
 	return (exit_status);
 }
@@ -112,8 +110,8 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 
 void	close_files(t_shell *shell)
 {
-	if (shell->exec->infile != -1)
+	if (shell->exec->infile != 0)
 		close(shell->exec->infile);
-	if (shell->exec->outfile != -1)
+	if (shell->exec->outfile != 0)
 		close(shell->exec->outfile);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/02 14:33:57 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/03 13:47:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	wait_process(t_shell *shell, int n)
 		if (shell->exec->pids[i] > 0)
 		{
 			if (waitpid(shell->exec->pids[i], &status, 0) < 0)
-				return (-1);
+				err_exit("waitpid failed");
 			if (WIFEXITED(status))
 				exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
@@ -59,7 +59,7 @@ int	wait_process(t_shell *shell, int n)
 					ft_putstr_fd("Quit (core dumped)\n", 2);
 				exit_status = 128 + WTERMSIG(status);
 			}
-			shell->exec->pids[i] = -1;
+			// shell->exec->pids[i] = -1;
 		}
 		i++;
 	}
