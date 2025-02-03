@@ -22,6 +22,7 @@ int		make_pipes(t_shell *shell, int i);
 char	*check_path(t_shell *shell, char **cmd, char *env);
 char	*find_path(t_shell *shell);
 char	*set_path(t_shell *shell, char **tab, char **cmd);
+char	*if_symbolik(t_shell *shell);
 
 /* redirection */
 int		redirection_check(t_shell *shell, t_exec *exec);

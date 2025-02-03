@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 17:30:19 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:51:32 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,5 @@ int	ft_echo(int nb, char **arg, char **envp)
 			ft_putchar_fd(' ', 1);
 	}
 	apply_flag(flag);
-	exit(EXIT_SUCCESS);
+	return (0);
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	return (ft_echo(argc, argv, envp));
-// }

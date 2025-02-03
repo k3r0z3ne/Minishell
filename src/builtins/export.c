@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/01/31 17:31:17 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:01:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ int	ft_export(t_shell *shell)
 			i++;
 		}
 	}
-	exit(EXIT_SUCCESS);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 17:31:44 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:01:06 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ int	ft_env(char **envp)
 		ft_putendl_fd(envp[i], 1);
 		i++;
 	}
-	exit(EXIT_SUCCESS);
+	return (0);
 }

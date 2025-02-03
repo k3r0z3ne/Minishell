@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:55:14 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/31 17:31:12 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:01:25 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ int	ft_pwd(int argc)
 		return (-1);
 	ft_putendl_fd(curr_dir, 1);
 	free(curr_dir);
-	exit(EXIT_SUCCESS);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/01 17:48:40 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/03 17:03:49 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,14 @@ pid_t	process(t_shell *shell, int i)
 		activate_ctrl_backslash();
 		redirect_setup(shell);
 		setup_old_pipe(shell->exec);
-		if (is_forkable(shell) == true)
+		if (is_builtin(shell) == true)
+		{
 			exec_builtin(shell);
+			exit(shell->exec->exit_status);
+		}
 		else
 			exec_cmd(shell);
+		ignore_ctrl_c();
 	}
 	if (shell->exec->old_pipe != -1)
 		close(shell->exec->old_pipe);
@@ -39,8 +43,6 @@ pid_t	process(t_shell *shell, int i)
 	}
 	return (ret);
 }
-
-
 
 int	several_cmds(t_shell *shell)
 {
@@ -55,14 +57,11 @@ int	several_cmds(t_shell *shell)
 		count_fds(shell);
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		make_pipes(shell, i);
-		if (is_builtin(shell) == true)
-			exec_builtin(shell);
-		else
-			shell->exec->pids[i] = process(shell, i);
+		shell->exec->pids[i] = process(shell, i);
 		shell->cmd = shell->cmd->next;
 		i++;
 	}
-	exit_status = wait_process(shell, shell->exec->builtin_less);
+	exit_status = wait_process(shell, shell->exec->cmd_count);
 	return (exit_status);
 }
 
