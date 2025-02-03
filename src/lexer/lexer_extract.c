@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 10:59:13 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/03 12:40:24 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*extract_quote(char *line, t_shell *shell, t_lexer *lexer)
 	if (!line[lexer->j] || line[lexer->j] != quote)
 	{
 		if (start == 1)
-			ft_putstr_fd("lexer: command not found\n", 2);
+			ft_putstr_fd("lexer: : command not found\n", 2);
 		else
 			ft_putstr_fd("lexer: unclosed quotes\n", 2);
 		lexer->error = 1;

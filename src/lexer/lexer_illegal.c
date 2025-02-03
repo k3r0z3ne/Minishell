@@ -6,13 +6,11 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:53:17 by witong            #+#    #+#             */
-/*   Updated: 2025/01/23 14:53:27 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/03 12:29:46 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// || c == '[' || c == ']' 
 
 int	is_illegal_single(char c)
 {
