@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/02 18:40:35 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/03 13:48:10 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	only_cmd(t_shell *shell)
 	{
 		shell->exec->pids[0] = process1(shell);
 		if (shell->cmd->flag_hd == false)
-			exit_status = wait_process(shell, 1);
+			exit_status = wait_process(shell, shell->exec->builtin_less);
 	}
 	return (exit_status);
 }

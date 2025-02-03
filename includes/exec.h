@@ -19,9 +19,9 @@ int		several_cmds(t_shell *shell);
 int		make_pipes(t_shell *shell, int i);
 
 /* path */
-char	*check_path(char **cmd, char *env);
+char	*check_path(t_shell *shell, char **cmd, char *env);
 char	*find_path(t_shell *shell);
-char	*set_path(char **tab, char **cmd);
+char	*set_path(t_shell *shell, char **tab, char **cmd);
 
 /* redirection */
 int		redirection_check(t_shell *shell, t_exec *exec);
