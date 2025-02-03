@@ -40,6 +40,8 @@ int	wait_process(t_shell *shell, int n)
 	int		status;
 	int		exit_status;
 
+	if (!shell || !shell->exec || !shell->exec->pids)
+		return (-1);
 	i = 0;
 	status = 0;
 	exit_status = 0;
