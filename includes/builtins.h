@@ -30,6 +30,7 @@ int		ft_export(t_shell *shell);
 void	sort_array(char **array);
 void	ft_env_export(char **envp);
 char	**ft_realloc_array(char **old_envp, int new_size);
+int		is_valid_var(char *str);
 
 /* pwd */
 int		ft_pwd(int argc);
