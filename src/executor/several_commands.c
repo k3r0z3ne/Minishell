@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 17:03:49 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:01:20 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ pid_t	process(t_shell *shell, int i)
 	{
 		activate_ctrl_c();
 		activate_ctrl_backslash();
-		redirect_setup(shell);
+		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		setup_old_pipe(shell->exec);
 		if (is_builtin(shell) == true)
 		{
@@ -32,7 +32,7 @@ pid_t	process(t_shell *shell, int i)
 		}
 		else
 			exec_cmd(shell);
-		ignore_ctrl_c();
+		// ignore_ctrl_c();
 	}
 	if (shell->exec->old_pipe != -1)
 		close(shell->exec->old_pipe);

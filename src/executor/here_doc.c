@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/23 15:55:10 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:02:46 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@ void	handle_here_doc(t_shell *shell)
 	shell->cmd->flag_hd = true;
 	shell->exec->infile = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (shell->exec->infile < 0)
-		return ;
+		err_exit("error opening file");
+	fprintf(stderr, "here_doc file = %d\n", shell->exec->infile);
 	while (1)
 	{
 		write(0, "> ", 3);
 		line = get_next_line(0);
 		if (!line)
 			break ;
-		printf("line %p\n", line);
+		// printf("line %p\n", line);
 		if (shell->cmd->is_quote == false)
 			line = expand_heredoc(shell, line);
 		if (line[ft_strlen(line) - 1] == '\n')
@@ -48,5 +49,4 @@ void	handle_here_doc(t_shell *shell)
 		ft_putendl_fd(line, shell->exec->infile);
 	}
 	get_next_line(-1);
-	// close (cmd->infile);
 }

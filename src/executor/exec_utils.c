@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 13:47:19 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:00:33 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	setup_old_pipe(t_exec *exec)
 	}
 	if (exec->last_cmd == false && exec->pipe[1] != 0)
 	{
+		fprintf(stderr, "HERE\n");
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
 			err_exit("dup2p failed");
 		close(exec->pipe[1]);

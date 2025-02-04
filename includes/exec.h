@@ -26,9 +26,9 @@ char	*if_symbolik(t_shell *shell);
 
 /* redirection */
 int		redirection_check(t_shell *shell, t_exec *exec);
-int		redirect_setup(t_shell *shell);
+int		redirect_setup(t_shell *shell, t_exec *exec, t_redir *redirs);
 int		if_infile(t_shell *shell, t_exec *exec, t_redir *redir);
-int		if_outfile(t_shell *shell, t_exec *exec, t_redir *redir);
+int		if_outfile(t_exec *exec, t_redir *redir);
 int		if_no_redirection(t_exec *exec);
 
 /* exec_utils */
@@ -40,7 +40,6 @@ int		count_cmd(t_cmd *cmd);
 /* exec_utils2 */
 void	exec_builtin(t_shell *shell);
 bool	is_builtin(t_shell *shell);
-bool	is_forkable(t_shell *shell);
 void	count_fds(t_shell *shell);
 
 /* here_doc */
