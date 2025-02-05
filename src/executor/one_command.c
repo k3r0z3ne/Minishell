@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 19:39:08 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:56:03 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ pid_t	process1(t_shell *shell)
 		activate_ctrl_backslash();
 		is_redir(shell, shell->cmd->redirs);
 		exec_cmd(shell);
-		// ignore_ctrl_c();
 	}
 	else
 		close_files(shell);
@@ -50,6 +49,7 @@ int	only_cmd(t_shell *shell)
 	else
 	{
 		shell->exec->pids[0] = process1(shell);
+		ignore_ctrl_c();
 		if (shell->cmd->flag_hd == false)
 			exit_status = wait_process(shell, shell->exec->builtin_less);
 	}

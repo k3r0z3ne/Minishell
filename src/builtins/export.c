@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/02/04 22:32:14 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/05 17:05:25 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ static void	handle_env_var(t_shell *shell, char *arg)
 	}
 	var_name = get_var_name(shell, arg);
 	var_index = find_env_var(shell->envp, var_name);
-	if (var_index >= 0)
+	if (ft_strchr(arg, '='))
 	{
-		if(ft_strchr(arg, '=') != NULL)
+		if (var_index >= 0)
 			update_env_var(shell, var_index, arg);
+		else
+			add_to_env(shell, arg);
 	}
-	else
-		add_to_env(shell, arg);
 }
 
 int	ft_export(t_shell *shell)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 17:03:49 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:56:15 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ pid_t	process(t_shell *shell, int i)
 		}
 		else
 			exec_cmd(shell);
-		ignore_ctrl_c();
 	}
 	if (shell->exec->old_pipe != -1)
 		close(shell->exec->old_pipe);
@@ -61,6 +60,7 @@ int	several_cmds(t_shell *shell)
 		shell->cmd = shell->cmd->next;
 		i++;
 	}
+	ignore_ctrl_c();
 	exit_status = wait_process(shell, shell->exec->cmd_count);
 	return (exit_status);
 }
