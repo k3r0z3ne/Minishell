@@ -27,3 +27,6 @@ echo -nnnnnnnnnnnnnnnnnnnnnannnn asdasdasdas --> -nnnnnnnnnnnnnnnnnnnnnannnn asd
 attention au nb de signaux necessaires pour sortir des deux programmes
 - env -i ./minishell --> unset $PATH
 - mkdir a/b; cd a/b' rm -r ../../a
+
+segfault : <<< cat
+segfault : <cat | wc
