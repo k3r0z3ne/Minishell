@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/04 19:01:20 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/05 18:16:05 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-pid_t	process(t_shell *shell, int i)
+pid_t	process(t_shell *shell)
 {
 	pid_t	ret;
 
@@ -23,7 +23,6 @@ pid_t	process(t_shell *shell, int i)
 	{
 		activate_ctrl_c();
 		activate_ctrl_backslash();
-		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		setup_old_pipe(shell->exec);
 		if (is_builtin(shell) == true)
 		{
@@ -32,11 +31,10 @@ pid_t	process(t_shell *shell, int i)
 		}
 		else
 			exec_cmd(shell);
-		// ignore_ctrl_c();
 	}
 	if (shell->exec->old_pipe != -1)
 		close(shell->exec->old_pipe);
-	if (i < shell->exec->cmd_count - 1)
+	if (shell->exec->last_cmd == false)
 	{
 		close(shell->exec->pipe[1]);
 		shell->exec->old_pipe = shell->exec->pipe[0];
@@ -57,10 +55,13 @@ int	several_cmds(t_shell *shell)
 		count_fds(shell);
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		make_pipes(shell, i);
-		shell->exec->pids[i] = process(shell, i);
+		redirect_setup(shell, shell->exec, shell->cmd->redirs);
+		shell->exec->pids[i] = process(shell);
 		shell->cmd = shell->cmd->next;
+		close_files(shell);
 		i++;
 	}
+	ignore_ctrl_c();
 	exit_status = wait_process(shell, shell->exec->cmd_count);
 	return (exit_status);
 }

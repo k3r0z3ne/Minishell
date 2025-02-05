@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/04 19:00:33 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/05 18:37:49 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-// int is_fd_open(int fd)
-// {
-// 	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
-// }
+int is_fd_open(int fd)
+{
+	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
+}
 
 int	setup_old_pipe(t_exec *exec)
 {
 	if (exec->old_pipe != -1)
 	{
+		fprintf(stderr, "old_pipe = %d\n", is_fd_open(exec->old_pipe));
 		if (dup2(exec->old_pipe, STDIN_FILENO) < 0)
 			err_exit("dup2o failed");
 		close(exec->old_pipe);
+		fprintf(stderr, "old_pipe = %d\n", is_fd_open(exec->old_pipe));
 	}
 	if (exec->last_cmd == false && exec->pipe[1] != 0)
 	{
@@ -76,7 +78,7 @@ int	count_cmd(t_cmd *cmd)
 	if (!tmp)
 		return (0);
 	i = 1;
-	while (tmp->next != NULL)
+	while (tmp->next)
 	{
 		tmp = tmp->next;
 		i++;

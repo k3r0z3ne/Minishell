@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:16:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 15:44:03 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:39:20 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,6 @@ bool	is_builtin(t_shell *shell)
 	else
 		return (false);
 }
-
-// bool	is_forkable(t_shell *shell)
-// {
-// 	if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
-// 		return (true);
-// 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "echo"))
-// 		return (true);
-// 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
-// 		return (true);
-// 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "env"))
-// 		return (true);
-// 	else
-// 		return (false);
-// }
 
 void	count_fds(t_shell *shell)
 {

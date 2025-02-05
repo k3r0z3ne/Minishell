@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 17:08:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:10:58 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,8 @@ char	*set_path(t_shell *shell, char **tab, char **cmd)
 		path = "";
 		i++;
 	}
-	if (if_symbolik(shell) == NULL)
+	if (access(shell->cmd->full_cmd[0], F_OK | X_OK) == 0)
+		return (shell->cmd->full_cmd[0]);
+	else
 		return (path);
-	else
-		return (if_symbolik(shell));
-}
-
-char	*if_symbolik(t_shell *shell)
-{
-	char	*cwd;
-	char	*full_path;
-
-	cwd = ft_strjoin_track(shell, getcwd(NULL, 0), "/");
-	full_path = ft_strjoin_track(shell, cwd, shell->cmd->full_cmd[0]);
-	if (access(full_path, F_OK | X_OK) == 0)
-		return (full_path);
-	else
-		return (NULL);
 }

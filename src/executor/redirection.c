@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/04 16:25:28 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/05 15:16:31 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,42 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redirs)
 	return (0);
 }
 
-int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
+int	if_infile(t_shell *shell, t_exec *exec, t_redir *redirs)
 {
-	if (redir->type == REDIRIN)
+	if (redirs->type == REDIRIN)
 	{
-		if (shell->cmd->in_count)
-		{
-			exec->infile = open(redir->file, O_RDONLY, 0664);
-			if (exec->infile < 0)
-				err_exit("Invalid infile");
-		}
-		shell->cmd->in_count--;
+		exec->infile = open(redirs->file, O_RDONLY, 0664);
+		if (exec->infile < 0)
+			err_exit("Invalid infile");
+		// shell->cmd->in_count--;
 	}
-	else if (redir->type == HEREDOC)
+	else if (redirs->type == HEREDOC)
 		handle_here_doc(shell);
 	if (dup2(exec->infile, STDIN_FILENO) < 0)
 		err_exit("dup2a failed");
 	close(exec->infile);
 	return (0);
 }
+
+// int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
+// {
+// 	if (redir->type == REDIRIN)
+// 	{
+// 		if (shell->cmd->in_count)
+// 		{
+// 			exec->infile = open(redir->file, O_RDONLY, 0664);
+// 			if (exec->infile < 0)
+// 				err_exit("Invalid infile");
+// 			if (dup2(exec->infile, STDIN_FILENO) < 0)
+// 				err_exit("dup2a failed");
+// 		}
+// 		shell->cmd->in_count--;
+// 	}
+// 	else if (redir->type == HEREDOC)
+// 		handle_here_doc(shell);
+// 	close(exec->infile);
+// 	return (0);
+// }
 
 int	if_outfile(t_exec *exec, t_redir *redir)
 {
