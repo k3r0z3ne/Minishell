@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:25:07 by witong            #+#    #+#             */
-/*   Updated: 2025/01/22 19:58:13 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/05 12:41:22 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,13 @@ void	end_redir(t_shell *shell)
 	t_redir	*new_redir;
 
 	new_redir = create_redir(shell, NULL);
-	if (new_redir)
-		redir_add_back(&shell->cmd->redirs, new_redir);
+	if (new_redir && shell->cmd)
+	{
+		if (shell->cmd->redirs)
+			redir_add_back(&shell->cmd->redirs, new_redir);
+		else
+			shell->cmd->redirs = new_redir;
+	}
 }
 
 void	print_redirs(t_cmd *cmd)

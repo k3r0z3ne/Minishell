@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/01/22 19:45:00 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/05 12:51:05 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	parse_redirs(t_shell *shell)
 {
 	t_redir	*new_redir;
 
-	if (!shell->token || !shell->token->next)
+	if (!shell || !shell->token || !shell->token->next)
 		return;
 	if (shell->token->type == HEREDOC)
 	{
@@ -51,6 +51,8 @@ static void	parse_pipe(t_shell *shell)
 {
 	t_cmd	*new_cmd;
 
+	if (!shell || !shell->token)
+		return ;
 	new_cmd = init_cmd(shell, shell->token);
 	if (!new_cmd)
 		return ;
@@ -69,7 +71,7 @@ static void	parse_tokens(t_shell *shell)
 		{
 			unexpected_token(&shell->token);
 			shell->cmd = NULL;
-			break ;
+			return ;
 		}
 		if (shell->token->type == PIPE)
 		{
@@ -91,7 +93,6 @@ void	parser(t_shell *shell)
 {
 	t_cmd	*head;
 
-	head = NULL;
 	if (!shell || !shell->token || !shell->token->value)
 		return ;
 	head = init_cmd(shell, shell->token);
@@ -99,6 +100,8 @@ void	parser(t_shell *shell)
 		return ;
 	shell->cmd = head;
 	shell->exec = init_exec(shell);
+	if (!shell->exec)
+		return ;
 	parse_tokens(shell);
 	if (shell->cmd)
 		shell->cmd = head;
