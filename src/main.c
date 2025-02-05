@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/01/29 12:00:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:09:41 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	shell_main_loop(t_shell *shell)
 	while (1)
 	{
 		setup_signals();
-		shell->input = NULL;
 		shell->input = readline("minishell> ");
 		if (!shell->input)
 		{
@@ -42,6 +41,7 @@ static void	shell_main_loop(t_shell *shell)
 			}
 		}
 		cleanup_all(shell);
+		free(shell->input);
 	}
 }
 

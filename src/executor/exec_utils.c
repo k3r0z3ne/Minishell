@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/05 18:37:49 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:57:32 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ int	wait_process(t_shell *shell, int n)
 	int		i;
 	int		status;
 	int		exit_status;
+	int		print_sigquit;
 
 	if (!shell || !shell->exec || !shell->exec->pids)
 		return (-1);
 	i = 0;
 	status = 0;
 	exit_status = 0;
+	print_sigquit = 0;
 	while (i < n)
 	{
 		if (shell->exec->pids[i] > 0)
@@ -58,8 +60,11 @@ int	wait_process(t_shell *shell, int n)
 				exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
-				if (WTERMSIG(status) == SIGQUIT)
+				if (!print_sigquit && WTERMSIG(status) == SIGQUIT)
+				{
 					ft_putstr_fd("Quit (core dumped)\n", 2);
+					print_sigquit = 1;
+				}
 				exit_status = 128 + WTERMSIG(status);
 			}
 			// shell->exec->pids[i] = -1;

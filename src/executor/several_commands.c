@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/05 18:16:05 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:58:04 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	several_cmds(t_shell *shell)
 		close_files(shell);
 		i++;
 	}
+	ignore_ctrl_c();
 	ignore_ctrl_c();
 	exit_status = wait_process(shell, shell->exec->cmd_count);
 	return (exit_status);
