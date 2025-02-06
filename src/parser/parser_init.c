@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/02/05 18:12:23 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:12:23 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	how_much_cmd(t_shell *shell)
 	int		builtins;
 	int		ret;
 
+	if (!(shell->cmd->full_cmd[0]))
+		return (0);
 	builtins = 0;
 	tmp = *shell;
 	ret = 0;
