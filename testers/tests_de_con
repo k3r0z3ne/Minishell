@@ -30,3 +30,6 @@ attention au nb de signaux necessaires pour sortir des deux programmes
 
 segfault : <<< cat
 segfault : <cat | wc
+<< "" cat
+<<
+<<EOF

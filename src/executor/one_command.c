@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/05 18:57:55 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:15:39 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ pid_t	process1(t_shell *shell)
 		is_redir(shell, shell->cmd->redirs);
 		exec_cmd(shell);
 	}
-	else
-		close_files(shell);
 	return (ret);
 }
 
@@ -50,9 +48,7 @@ int	only_cmd(t_shell *shell)
 	{
 		shell->exec->pids[0] = process1(shell);
 		ignore_ctrl_c();
-		ignore_ctrl_c();
-		if (shell->cmd->flag_hd == false)
-			exit_status = wait_process(shell, shell->exec->builtin_less);
+		exit_status = wait_process(shell, shell->exec->builtin_less);
 	}
 	return (exit_status);
 }
@@ -69,7 +65,10 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 		if (tmp->type == REDIRIN)
 		{
 			if (shell->cmd->in_count)
+			{
+				fprintf(stderr, "HERE\n");
 				close(exec->infile);
+			}
 			exec->infile = open(tmp->file, O_RDONLY, 0664);
 			shell->cmd->in_count--;
 		}
@@ -93,8 +92,9 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 	tmp = redirs;
 	while (tmp)
 	{
-		if (tmp->type == REDIRIN && shell->cmd->flag_hd == false)
+		if (tmp->type == REDIRIN || tmp->type == HEREDOC)
 		{
+			fprintf(stderr, "dup heredocor infile\n");
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
 				err_exit("dup2 failed");
 			close(shell->exec->infile);

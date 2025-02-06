@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/05 15:18:53 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:51:58 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,8 @@ void	handle_here_doc(t_shell *shell)
 		ft_putendl_fd(line, shell->exec->infile);
 	}
 	get_next_line(-1);
+	close(shell->exec->infile);
+	shell->exec->infile = open(".tmp.txt", O_RDONLY, 0664);
+	if (shell->exec->infile < 0)
+		err_exit("error opening file");
 }

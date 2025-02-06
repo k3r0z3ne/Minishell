@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/05 18:57:32 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:01:56 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,12 @@ int	setup_old_pipe(t_exec *exec)
 {
 	if (exec->old_pipe != -1)
 	{
-		fprintf(stderr, "old_pipe = %d\n", is_fd_open(exec->old_pipe));
 		if (dup2(exec->old_pipe, STDIN_FILENO) < 0)
 			err_exit("dup2o failed");
 		close(exec->old_pipe);
-		fprintf(stderr, "old_pipe = %d\n", is_fd_open(exec->old_pipe));
 	}
 	if (exec->last_cmd == false && exec->pipe[1] != 0)
 	{
-		fprintf(stderr, "HERE\n");
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
 			err_exit("dup2p failed");
 		close(exec->pipe[1]);
