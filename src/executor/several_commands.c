@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/05 18:58:04 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:37:36 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ pid_t	process(t_shell *shell)
 		activate_ctrl_c();
 		activate_ctrl_backslash();
 		setup_old_pipe(shell->exec);
+		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		if (is_builtin(shell) == true)
 		{
 			exec_builtin(shell);
@@ -55,13 +56,10 @@ int	several_cmds(t_shell *shell)
 		count_fds(shell);
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		make_pipes(shell, i);
-		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		shell->exec->pids[i] = process(shell);
 		shell->cmd = shell->cmd->next;
-		close_files(shell);
 		i++;
 	}
-	ignore_ctrl_c();
 	ignore_ctrl_c();
 	exit_status = wait_process(shell, shell->exec->cmd_count);
 	return (exit_status);

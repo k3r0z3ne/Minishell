@@ -6,6 +6,7 @@
 // Token type
 typedef enum e_type
 {
+	UNKNOWN,
 	WORD,
 	PIPE,
 	SINGLEQ,
@@ -15,7 +16,6 @@ typedef enum e_type
 	REDIROUT,
 	APPEND,
 	HEREDOC,
-	UNKNOWN,
 	END,
 }		t_type;
 
@@ -42,13 +42,13 @@ typedef struct s_lexer
 typedef struct s_shell t_shell;
 
 /* lexer */
-t_token		*lexer(char *line, t_shell *shell);
+t_token	*lexer(char *line, t_shell *shell);
 
 /* lexer_input */
 void	append_char(t_shell *shell, t_lexer *lexer, char c);
 char	*add_spaces(t_shell *shell, t_lexer *lexer, char *input);
 
-/* lexer_illegal.c */
+/* lexer_illegal */
 int		is_illegal_single(char c);
 int		is_illegal_double(char c1, char c2);
 void	handle_illegal_single(char c, t_lexer *lexer);
@@ -70,8 +70,8 @@ void	print_tokens(t_token *head);
 
 /* lexer_utils */
 void	init_lexer(t_lexer *lexer);
-int	ft_isspace(char c);
-int	is_redirection(char c);
+int		ft_isspace(char c);
+int		is_redirection(char c);
 t_type	check_redirection(char c);
 t_type	check_double_ops(char *line, int i);
 
