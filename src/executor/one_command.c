@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/06 18:15:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:54:37 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,12 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 	tmp = shell->cmd->redirs;
 	if (tmp->type == END)
 		return (0);
-	while (tmp)
+	while (tmp) 
 	{
 		if (tmp->type == REDIRIN)
 		{
 			if (shell->cmd->in_count)
-			{
-				fprintf(stderr, "HERE\n");
 				close(exec->infile);
-			}
 			exec->infile = open(tmp->file, O_RDONLY, 0664);
 			shell->cmd->in_count--;
 		}
@@ -94,7 +91,6 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 	{
 		if (tmp->type == REDIRIN || tmp->type == HEREDOC)
 		{
-			fprintf(stderr, "dup heredocor infile\n");
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
 				err_exit("dup2 failed");
 			close(shell->exec->infile);
