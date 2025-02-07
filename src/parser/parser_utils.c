@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 10:23:35 by witong            #+#    #+#             */
-/*   Updated: 2025/01/15 11:27:40 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/06 17:18:46 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	is_redirection3(t_type type)
+{
+return (type == REDIRIN || type == REDIROUT || type == APPEND);
+}
 
 int	is_redirection2(t_type type)
 {

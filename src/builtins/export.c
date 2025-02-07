@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/02/03 16:01:19 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:05:25 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,21 @@ static void	handle_env_var(t_shell *shell, char *arg)
 	char	*var_name;
 	int		var_index;
 
+	if (!is_valid_var(arg))
+	{
+		ft_putstr_fd("minishell: export: '", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return ;
+	}
 	var_name = get_var_name(shell, arg);
 	var_index = find_env_var(shell->envp, var_name);
-	if (var_index >= 0)
+	if (ft_strchr(arg, '='))
 	{
-		if(ft_strchr(arg, '=') != NULL)
+		if (var_index >= 0)
 			update_env_var(shell, var_index, arg);
-	}
-	else
-	{
-		add_to_env(shell, arg);
+		else
+			add_to_env(shell, arg);
 	}
 }
 

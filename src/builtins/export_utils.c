@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:58:53 by witong            #+#    #+#             */
-/*   Updated: 2025/01/21 17:13:32 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/04 22:32:07 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,20 @@ char	**ft_realloc_array(char **old_envp, int new_size)
 		new_envp[i++] = NULL;
 	free(old_envp);
 	return (new_envp);
+}
+
+int	is_valid_var(char *str)
+{
+	int	i;
+
+	if (!str || (!ft_isalpha(str[0]) && str[0] != '_'))
+		return (0);
+	i = 1;
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
 }

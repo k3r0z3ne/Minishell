@@ -38,6 +38,7 @@ void	activate_ctrl_c(void);
 void	activate_ctrl_backslash(void);
 
 /* error */
-int	err_exit(char *err_message);
+int		err_exit(char *err_message);
+int		err_return(char *err_message);
 
 #endif

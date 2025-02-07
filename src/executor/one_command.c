@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/04 23:01:39 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/07 12:43:39 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ pid_t	process1(t_shell *shell)
 		activate_ctrl_backslash();
 		is_redir(shell, shell->cmd->redirs);
 		exec_cmd(shell);
-		// ignore_ctrl_c();
 	}
-	else
-		close_files(shell);
 	return (ret);
 }
 
@@ -50,33 +47,10 @@ int	only_cmd(t_shell *shell)
 	else
 	{
 		shell->exec->pids[0] = process1(shell);
-		if (shell->cmd->flag_hd == false)
-			exit_status = wait_process(shell, shell->exec->builtin_less);
+		ignore_ctrl_c();
+		exit_status = wait_process(shell, shell->exec->builtin_less);
 	}
 	return (exit_status);
-}
-
-void	is_redir(t_shell *shell, t_redir *redirs)
-{
-	t_redir	*tmp;
-
-	tmp = redirs;
-	while (tmp)
-	{
-		if (tmp->type == REDIRIN && shell->cmd->flag_hd == false)
-		{
-			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-				err_exit("dup2 failed");
-			close(shell->exec->infile);
-		}
-		else if (tmp->type == REDIROUT)
-		{
-			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
-				err_exit("dup2 failed");
-			close(shell->exec->outfile);
-		}
-		tmp = tmp->next;
-	}
 }
 
 int	redirection_check(t_shell *shell, t_exec *exec)
@@ -90,8 +64,11 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 	{
 		if (tmp->type == REDIRIN)
 		{
-			if (exec->infile)
+			if (shell->cmd->in_count)
+			{
+				fprintf(stderr, "HERE\n");
 				close(exec->infile);
+			}
 			exec->infile = open(tmp->file, O_RDONLY, 0664);
 			shell->cmd->in_count--;
 		}
@@ -106,6 +83,30 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+void	is_redir(t_shell *shell, t_redir *redirs)
+{
+	t_redir	*tmp;
+
+	tmp = redirs;
+	while (tmp)
+	{
+		if (tmp->type == REDIRIN || tmp->type == HEREDOC)
+		{
+			fprintf(stderr, "dup heredocor infile\n");
+			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
+				err_exit("dup2 failed");
+			close(shell->exec->infile);
+		}
+		else if (tmp->type == REDIROUT || tmp->type == APPEND)
+		{
+			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
+				err_exit("dup2 failed");
+			close(shell->exec->outfile);
+		}
+		tmp = tmp->next;
+	}
 }
 
 void	close_files(t_shell *shell)
