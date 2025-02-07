@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 19:39:08 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/04 23:01:39 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 	tmp = shell->cmd->redirs;
 	if (tmp->type == END)
 		return (0);
-	while (tmp)
+	while (tmp) 
 	{
 		if (tmp->type == REDIRIN)
 		{
