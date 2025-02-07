@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/05 18:55:35 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:50:55 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ int	main_exec(t_shell *shell)
 		exit_status = several_cmds(shell);
 	else if (shell->exec->cmd_count == 1)
 		exit_status = only_cmd(shell);
+	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
+		handle_here_doc(shell);
 	else
-		err_exit("No command found");
+		err_return("No command found");
 	unlink(".tmp.txt");
 	return (exit_status);
 }

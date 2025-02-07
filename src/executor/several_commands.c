@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/06 16:37:36 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:56:27 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	several_cmds(t_shell *shell)
 	{
 		count_fds(shell);
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
-		make_pipes(shell, i);
+		make_pipes(shell);
 		shell->exec->pids[i] = process(shell);
 		shell->cmd = shell->cmd->next;
 		i++;
@@ -65,9 +65,9 @@ int	several_cmds(t_shell *shell)
 	return (exit_status);
 }
 
-int	make_pipes(t_shell *shell, int i)
+int	make_pipes(t_shell *shell)
 {
-	if (i < shell->exec->cmd_count - 1)
+	if (shell->exec->last_cmd == false)
 	{
 		if (pipe(shell->exec->pipe) < 0)
 			err_exit("Creation pipe failed");

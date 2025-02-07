@@ -16,7 +16,7 @@ void	close_files(t_shell *shell);
 /* several_commands */
 pid_t	process(t_shell *shell);
 int		several_cmds(t_shell *shell);
-int		make_pipes(t_shell *shell, int i);
+int		make_pipes(t_shell *shell);
 
 /* path */
 char	*check_path(t_shell *shell, char **cmd, char *env);
@@ -25,10 +25,9 @@ char	*set_path(t_shell *shell, char **tab, char **cmd);
 
 /* redirection */
 int		redirection_check(t_shell *shell, t_exec *exec);
-int		redirect_setup(t_shell *shell, t_exec *exec, t_redir *redirs);
+int		redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir);
 int		if_infile(t_shell *shell, t_exec *exec, t_redir *redir);
 int		if_outfile(t_exec *exec, t_redir *redir);
-int		if_no_redirection(t_exec *exec);
 
 /* exec_utils */
 int		is_fd_open(int fd);
@@ -42,6 +41,7 @@ bool	is_builtin(t_shell *shell);
 void	count_fds(t_shell *shell);
 
 /* here_doc */
+char	*expand_heredoc(t_shell *shell, char *line);
 void	handle_here_doc(t_shell *shell);
 
 #endif
