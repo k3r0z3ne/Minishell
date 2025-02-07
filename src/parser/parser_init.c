@@ -32,6 +32,8 @@ int	how_much_cmd(t_shell *shell)
 	int		builtins;
 	int		ret;
 
+	if (!(shell->cmd->full_cmd[0]))
+		return (0);
 	builtins = 0;
 	tmp = *shell;
 	ret = 0;
