@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/07 13:50:55 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/08 09:54:28 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main_exec(t_shell *shell)
 	else if (shell->exec->cmd_count == 1)
 		exit_status = only_cmd(shell);
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
-		handle_here_doc(shell);
+		loop_here_doc(shell);
 	else
 		err_return("No command found");
 	unlink(".tmp.txt");
