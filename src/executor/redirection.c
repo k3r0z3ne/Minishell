@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/07 13:54:07 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/10 22:53:56 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
 	if (redir->type == HEREDOC)
-		handle_here_doc(shell);
+		process_heredoc(shell);
 	else if (redir->type == REDIRIN)
 	{
 		exec->infile = open(redir->file, O_RDONLY, 0664);

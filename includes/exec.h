@@ -43,6 +43,6 @@ void	count_fds(t_shell *shell);
 /* here_doc */
 char	*expand_heredoc(t_shell *shell, char *line);
 void	loop_here_doc(t_shell *shell);
-void	handle_here_doc(t_shell *shell);
+void	process_heredoc(t_shell *shell);
 
 #endif
