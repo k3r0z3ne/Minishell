@@ -44,11 +44,12 @@ typedef struct s_cmd
 	char			**full_cmd;
 	bool			is_quote;
 	bool			flag_hd;
+	int				i_hd;
+	int				hd_count;
 	int				cmd_len;
 	int				in_count;
 	int				out_count;
-	int				hd_count;
-	char			*limiter;
+	char			**limiter;
 	struct s_redir	*redirs;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;

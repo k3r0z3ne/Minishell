@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/07 13:54:37 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/11 14:15:41 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 		else if (tmp->type == APPEND)
 			exec->outfile = open(tmp->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
 		else if (tmp->type == HEREDOC)
-			handle_here_doc(shell);
+			process_heredoc(shell);
 		if (exec->infile < 0 || exec->outfile < 0)
 			err_exit("Invalid fd");
 		tmp = tmp->next;

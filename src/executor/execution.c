@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/07 13:50:55 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/11 17:18:08 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ void	exec_cmd(t_shell *shell)
 {
 	char	*path;
 	char	*tmp;
-
+ 
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
+	
 		err_exit("$PATH not found");
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
@@ -39,9 +40,9 @@ int	main_exec(t_shell *shell)
 	else if (shell->exec->cmd_count == 1)
 		exit_status = only_cmd(shell);
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
-		handle_here_doc(shell);
+		process_heredoc(shell);
 	else
 		err_return("No command found");
-	unlink(".tmp.txt");
+	// unlink(".tmp.txt");
 	return (exit_status);
 }

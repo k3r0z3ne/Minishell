@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/02/07 13:55:53 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/11 16:20:33 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,17 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 	cmd->full_cmd = malloc_full_cmd(shell, size);
 	cmd->is_quote = false;
 	cmd->flag_hd = false;
+	cmd->i_hd = 0;
 	cmd->in_count = 0;
 	cmd->out_count = 0;
-	cmd->hd_count = 0;
-	cmd->limiter = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;
+	cmd->hd_count = count_heredoc(shell);
+	if (cmd->hd_count > 0)
+		cmd->limiter = (char **)tracked_malloc(shell, sizeof(char *) * \
+			(cmd->hd_count + 1));
+	else
+		cmd->limiter = NULL;
 	return (cmd);
 }

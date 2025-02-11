@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/02/11 13:27:34 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/11 16:21:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ static void	parse_redirs(t_shell *shell)
 		return;
 	if (shell->token->type == HEREDOC)
 	{
-		shell->cmd->limiter = shell->token->next->value;
-		if (shell->token->next->type == SINGLEQ
-				|| shell->token->next->type == DOUBLEQ)
+		shell->cmd->limiter[shell->cmd->i_hd] = ft_strdup_track(shell, shell->token->next->value);
+		// fprintf(stderr, "limiter = %s\n", shell->cmd->limiter[shell->cmd->i_hd]);
+		if (shell->token->next->type == SINGLEQ || shell->token->next->type == DOUBLEQ)
 			shell->cmd->is_quote = true;
+		shell->cmd->i_hd++;
+		shell->cmd->limiter[shell->cmd->i_hd] = NULL;
 	}
 	new_redir = create_redir(shell, shell->token);
 	if (!new_redir)
@@ -102,6 +104,8 @@ void	parser(t_shell *shell)
 	shell->exec = init_exec(shell);
 	if (!shell->exec)
 		return ;
+	// if (shell->cmd && shell->cmd->hd_count > 0)
+	// 	process_heredoc(shell->cmd);
 	parse_tokens(shell);
 	if (shell->cmd)
 		shell->cmd = head;
