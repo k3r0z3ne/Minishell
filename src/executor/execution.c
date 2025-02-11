@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/10 22:53:44 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/11 17:18:08 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int	main_exec(t_shell *shell)
 		process_heredoc(shell);
 	else
 		err_return("No command found");
-	unlink(".tmp.txt");
+	// unlink(".tmp.txt");
 	return (exit_status);
 }

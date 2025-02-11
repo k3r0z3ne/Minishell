@@ -39,6 +39,7 @@ int		count_cmd(t_cmd *cmd);
 void	exec_builtin(t_shell *shell);
 bool	is_builtin(t_shell *shell);
 void	count_fds(t_shell *shell);
+int		count_heredoc(t_shell *shell);
 
 /* here_doc */
 char	*expand_heredoc(t_shell *shell, char *line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/02/10 23:13:50 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/11 16:21:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ static void	parse_redirs(t_shell *shell)
 
 	if (!shell || !shell->token || !shell->token->next)
 		return;
-	count_fds(shell);
 	if (shell->token->type == HEREDOC)
 	{
-		shell->cmd->limiter = tracked_malloc(shell, shell->cmd->hd_count + 1);
-		shell->cmd->limiter[shell->cmd->hd_count - 1] = shell->token->next->value;
-		shell->cmd->limiter[shell->cmd->hd_count] = NULL;
-		if (shell->token->next->type == SINGLEQ
-				|| shell->token->next->type == DOUBLEQ)
+		shell->cmd->limiter[shell->cmd->i_hd] = ft_strdup_track(shell, shell->token->next->value);
+		// fprintf(stderr, "limiter = %s\n", shell->cmd->limiter[shell->cmd->i_hd]);
+		if (shell->token->next->type == SINGLEQ || shell->token->next->type == DOUBLEQ)
 			shell->cmd->is_quote = true;
+		shell->cmd->i_hd++;
+		shell->cmd->limiter[shell->cmd->i_hd] = NULL;
 	}
 	new_redir = create_redir(shell, shell->token);
 	if (!new_redir)

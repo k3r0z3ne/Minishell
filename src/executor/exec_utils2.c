@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:16:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/07 13:26:00 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/11 15:42:13 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,23 @@ void	count_fds(t_shell *shell)
 			shell->cmd->out_count++;
 		else if (tmp->type == APPEND)
 			shell->cmd->out_count++;
-		else if(tmp->type == HEREDOC)
-			shell->cmd->hd_count++;
 		tmp = tmp->next;
 	}
+}
+
+int	count_heredoc(t_shell *shell)
+{
+	t_token	*tmp;
+	int		i;
+
+	tmp = shell->token;
+	i = 0;
+	while (tmp)
+	{
+		if (tmp->type == HEREDOC && tmp->next && is_word(tmp->next->type))
+			i++;
+		tmp = tmp->next;
+	}
+	// fprintf(stderr, "hd count = %d\n", i);
+	return (i);
 }
