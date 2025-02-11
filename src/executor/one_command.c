@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/06 18:15:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:24:16 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 		if (tmp->type == REDIRIN)
 		{
 			if (shell->cmd->in_count)
-			{
-				fprintf(stderr, "HERE\n");
 				close(exec->infile);
-			}
 			exec->infile = open(tmp->file, O_RDONLY, 0664);
 			shell->cmd->in_count--;
 		}
