@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/06 18:24:16 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:15:41 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 	tmp = shell->cmd->redirs;
 	if (tmp->type == END)
 		return (0);
-	while (tmp)
+	while (tmp) 
 	{
 		if (tmp->type == REDIRIN)
 		{
@@ -74,7 +74,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 		else if (tmp->type == APPEND)
 			exec->outfile = open(tmp->file, O_WRONLY | O_CREAT | O_APPEND, 0664);
 		else if (tmp->type == HEREDOC)
-			handle_here_doc(shell);
+			process_heredoc(shell);
 		if (exec->infile < 0 || exec->outfile < 0)
 			err_exit("Invalid fd");
 		tmp = tmp->next;
@@ -91,7 +91,6 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 	{
 		if (tmp->type == REDIRIN || tmp->type == HEREDOC)
 		{
-			fprintf(stderr, "dup heredocor infile\n");
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
 				err_exit("dup2 failed");
 			close(shell->exec->infile);

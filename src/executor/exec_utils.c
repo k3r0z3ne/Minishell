@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/06 15:01:56 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:00:46 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	wait_process(t_shell *shell, int n)
 				}
 				exit_status = 128 + WTERMSIG(status);
 			}
-			// shell->exec->pids[i] = -1;
 		}
 		i++;
 	}
@@ -77,7 +76,7 @@ int	count_cmd(t_cmd *cmd)
 	int		i;
 
 	tmp = cmd;
-	if (!tmp)
+	if (!tmp || !tmp->full_cmd[0])
 		return (0);
 	i = 1;
 	while (tmp->next)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/02/05 18:12:23 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:55:53 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ int	how_much_cmd(t_shell *shell)
 	int		builtins;
 	int		ret;
 
+	if (!(shell->cmd->full_cmd[0]))
+		return (0);
 	builtins = 0;
 	tmp = *shell;
 	ret = 0;
+	if (!(&tmp)->cmd->full_cmd[0])
+		return (ret);
 	while ((&tmp)->cmd)
 	{
 		if (is_builtin(&tmp) == true)
@@ -76,10 +80,10 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 	cmd->full_cmd = malloc_full_cmd(shell, size);
 	cmd->is_quote = false;
 	cmd->flag_hd = false;
-	cmd->limiter = NULL;
 	cmd->in_count = 0;
 	cmd->out_count = 0;
 	cmd->hd_count = 0;
+	cmd->limiter = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;

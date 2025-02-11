@@ -48,7 +48,7 @@ typedef struct s_cmd
 	int				in_count;
 	int				out_count;
 	int				hd_count;
-	char			*limiter;
+	char			**limiter;
 	struct s_redir	*redirs;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;

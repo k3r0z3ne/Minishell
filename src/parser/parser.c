@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/02/06 17:50:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/10 23:13:50 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ static void	parse_redirs(t_shell *shell)
 
 	if (!shell || !shell->token || !shell->token->next)
 		return;
+	count_fds(shell);
 	if (shell->token->type == HEREDOC)
 	{
-		shell->cmd->limiter = shell->token->next->value;
+		shell->cmd->limiter = tracked_malloc(shell, shell->cmd->hd_count + 1);
+		shell->cmd->limiter[shell->cmd->hd_count - 1] = shell->token->next->value;
+		shell->cmd->limiter[shell->cmd->hd_count] = NULL;
 		if (shell->token->next->type == SINGLEQ
 				|| shell->token->next->type == DOUBLEQ)
 			shell->cmd->is_quote = true;
@@ -102,6 +105,8 @@ void	parser(t_shell *shell)
 	shell->exec = init_exec(shell);
 	if (!shell->exec)
 		return ;
+	// if (shell->cmd && shell->cmd->hd_count > 0)
+	// 	process_heredoc(shell->cmd);
 	parse_tokens(shell);
 	if (shell->cmd)
 		shell->cmd = head;

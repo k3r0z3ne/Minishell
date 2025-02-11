@@ -3,65 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/06 16:50:41 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:53:56 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redirs)
+int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 {
-	// if (shell->cmd->redirs->type == END)
-	// 	if_no_redirection(shell->exec);
-	while (redirs)
+	while (redir)
 	{
-		if (redirs->type == REDIRIN || redirs->type == HEREDOC)
-			if_infile(shell, exec, redirs);
-		if_outfile(exec, redirs);
-		redirs = redirs->next;
+		if (redir->type == REDIRIN || redir->type == HEREDOC)
+			if_infile(shell, exec, redir);
+		if_outfile(exec, redir);
+		redir = redir->next;
 	}
 	return (0);
 }
 
-int	if_infile(t_shell *shell, t_exec *exec, t_redir *redirs)
+int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
-	if (redirs->type == HEREDOC)
-		handle_here_doc(shell);
-	else if (redirs->type == REDIRIN)
+	if (redir->type == HEREDOC)
+		process_heredoc(shell);
+	else if (redir->type == REDIRIN)
 	{
-		exec->infile = open(redirs->file, O_RDONLY, 0664);
+		exec->infile = open(redir->file, O_RDONLY, 0664);
 		if (exec->infile < 0)
 			err_exit("Invalid infile");
 	}
-		// shell->cmd->in_count--;
 	if (dup2(exec->infile, STDIN_FILENO) < 0)
 		err_exit("dup2a failed");
 	close(exec->infile);
 	return (0);
 }
-
-// int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
-// {
-// 	if (redir->type == REDIRIN)
-// 	{
-// 		if (shell->cmd->in_count)
-// 		{
-// 			exec->infile = open(redir->file, O_RDONLY, 0664);
-// 			if (exec->infile < 0)
-// 				err_exit("Invalid infile");
-// 			if (dup2(exec->infile, STDIN_FILENO) < 0)
-// 				err_exit("dup2a failed");
-// 		}
-// 		shell->cmd->in_count--;
-// 	}
-// 	else if (redir->type == HEREDOC)
-// 		handle_here_doc(shell);
-// 	close(exec->infile);
-// 	return (0);
-// }
 
 int	if_outfile(t_exec *exec, t_redir *redir)
 {
@@ -80,17 +57,3 @@ int	if_outfile(t_exec *exec, t_redir *redir)
 	exec->pipe[1] = 0;
 	return (0);
 }
-
-// int	if_no_redirection(t_exec *exec)
-// {
-// 	if (exec->last_cmd == false)
-// 	{
-// 		if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
-// 			err_exit("dup2e failed");
-// 		close(exec->pipe[0]);
-// 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
-// 			err_exit("dup2p failed");
-// 		close(exec->pipe[1]);
-// 	}
-// 	return (0);
-// }
