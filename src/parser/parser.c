@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/02/06 17:50:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:27:34 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	parse_tokens(t_shell *shell)
 	{
 		if (parser_error(&shell->token))
 		{
-			unexpected_token(&shell->token);
+			unexpected_token(shell, &shell->token);
 			shell->cmd = NULL;
 			return ;
 		}

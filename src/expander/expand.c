@@ -6,18 +6,21 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/01/16 15:12:29 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/11 12:50:21 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static void	case_return(t_shell *shell, char **result)
+{
+		char *exit_status_str;
 
-// A FAIRE PENDANT L'EXEC
-// static void	case_return(t_shell *shell)
-// {
-
-// }
+		exit_status_str = ft_itoa(shell->last_status);
+		if (!exit_status_str)
+			return;
+		*result = ft_strjoin_track(shell, *result, exit_status_str);
+}
 
 static int	get_var_len(char *value)
 {
@@ -72,7 +75,7 @@ static void	handle_dollar(t_shell *shell, char *line, int *i, char **result)
 	(*i)++;
 	if (line[*i] == '?')
 	{
-		// case_return(shell);
+		case_return(shell, result);
 		(*i)++;
 		return ;
 	}

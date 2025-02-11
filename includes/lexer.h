@@ -49,11 +49,7 @@ void	append_char(t_shell *shell, t_lexer *lexer, char c);
 char	*add_spaces(t_shell *shell, t_lexer *lexer, char *input);
 
 /* lexer_illegal */
-int		is_illegal_single(char c);
-int		is_illegal_double(char c1, char c2);
-void	handle_illegal_single(char c, t_lexer *lexer);
-void	handle_illegal_double(char c1, char c2, t_lexer *lexer);
-void	check_illegal(char *line, t_lexer *lexer);
+void	check_illegal(char *line, t_shell *shell, t_lexer *lexer);
 
 /* lexer_handler */
 void	handle_double_ops(char *line, t_shell *shell, t_lexer *lexer);
