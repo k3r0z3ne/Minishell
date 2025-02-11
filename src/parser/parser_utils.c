@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 10:23:35 by witong            #+#    #+#             */
-/*   Updated: 2025/02/06 17:18:46 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:28:43 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,18 @@ int	token_len(t_token *tokens)
 	return (i);
 }
 
-void	unexpected_token(t_token **tokens)
+void	unexpected_token(t_shell *shell, t_token **tokens)
 {
 	if (!tokens || !*tokens)
 	{
 		ft_putstr_fd("parser: syntax error near unexpected token 'newline'\n", 2);
+		shell->last_status = 2;
 		return ;
 	}
 	else if (is_redirection2((*tokens)->type) && (!(*tokens)->next || !(*tokens)->next->value))
 	{
 		ft_putstr_fd("parser: syntax error near unexpected token 'newline'\n", 2);
+		shell->last_status = 2;
 		return ;
 	}
 	ft_putstr_fd("parser: syntax error near unexpected token '", 2);
@@ -58,6 +60,7 @@ void	unexpected_token(t_token **tokens)
 	else
 		ft_putstr_fd((*tokens)->value, 2);
 	ft_putstr_fd("'\n", 2);
+	shell->last_status = 2;
 }
 
 bool	validate_command(t_shell *shell)
@@ -69,11 +72,11 @@ bool	validate_command(t_shell *shell)
 	i = 0;
 	while (shell->cmd->full_cmd[i])
 	{
-		if (!shell->cmd->full_cmd[i][0])  // Empty string check
+		if (!shell->cmd->full_cmd[i][0])
 			return (false);
 		i++;
 	}
-	if (i == 0)  // No command provided
+	if (i == 0)
 		return (false);
 	return (true);
 }
