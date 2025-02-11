@@ -75,13 +75,11 @@ typedef struct s_shell
 	char	**argv;
 	char	**envp;
 	char	*input;
+	int		last_status;
 	t_token	*token;
 	t_cmd	*cmd;
 	t_exec	*exec;
 	t_clean	*clean;
 }			t_shell;
-
-/* global variable */
-extern int	g_signal;
 
 #endif

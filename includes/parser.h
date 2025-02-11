@@ -29,7 +29,7 @@ int		is_redirection3(t_type type);
 int		is_redirection2(t_type type);
 int		is_word(t_type type);
 int		token_len(t_token *tokens);
-void 	unexpected_token(t_token **tokens);
+void 	unexpected_token(t_shell *shell, t_token **tokens);
 bool	validate_command(t_shell *shell);
 
 /* parser_error */
