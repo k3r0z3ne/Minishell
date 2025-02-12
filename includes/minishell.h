@@ -49,6 +49,7 @@ typedef struct s_cmd
 	int				cmd_len;
 	int				in_count;
 	int				out_count;
+	char			*last_file;
 	char			**limiter;
 	struct s_redir	*redirs;
 	struct s_cmd	*next;

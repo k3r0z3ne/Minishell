@@ -45,6 +45,6 @@ int		count_heredoc(t_shell *shell);
 char	*expand_heredoc(t_shell *shell, char *line);
 void	process_heredoc(t_shell *shell);
 void	loop_heredoc(t_shell *shell);
-void	redir_heredoc(t_shell *shell, char *last, char *file);
+void	redir_heredoc(t_shell *shell, char *file);
 
 #endif

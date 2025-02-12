@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/11 17:18:08 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:21:33 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	exec_cmd(t_shell *shell)
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
-	
 		err_exit("$PATH not found");
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
@@ -43,6 +42,5 @@ int	main_exec(t_shell *shell)
 		process_heredoc(shell);
 	else
 		err_return("No command found");
-	// unlink(".tmp.txt");
 	return (exit_status);
 }
