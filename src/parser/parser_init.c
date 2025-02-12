@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/02/11 16:20:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:13:23 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,19 @@ t_exec	*init_exec(t_shell *shell)
 t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 {
 	t_cmd	*cmd;
-	int		size;
 
 	if (!shell || !tokens)
 		return (NULL);
 	cmd = tracked_malloc(shell, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	size = token_len(tokens);
-	cmd->full_cmd = malloc_full_cmd(shell, size);
+	cmd->full_cmd = malloc_full_cmd(shell, token_len(tokens));
 	cmd->is_quote = false;
 	cmd->flag_hd = false;
 	cmd->i_hd = 0;
 	cmd->in_count = 0;
 	cmd->out_count = 0;
+	cmd->last_file = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;
