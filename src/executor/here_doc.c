@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/11 17:23:21 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 01:15:28 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,46 +41,48 @@ char	*expand_heredoc(t_shell *shell, char *line)
 
 void	process_heredoc(t_shell *shell)
 {
-	char	*heredoc;
+	char	*file_name;
+	char	*last_file;
 	char	*line;
 	int		i;
 
 	i = 0;
-	while (i < shell->cmd->hd_count - 1)
+	last_file = NULL;
+	while (i < shell->cmd->hd_count)
 	{
-		heredoc = ft_strjoin_track(shell, ".heredoc_", ft_itoa(i));
-		fprintf(stderr, "heredoc = %s\n", heredoc);
+		file_name = ft_strjoin2(".heredoc_", ft_itoa(i));
+		fprintf(stderr, "file_name = %s\n", file_name);
 		fprintf(stderr, "limiter[%d] = %s\n", i, shell->cmd->limiter[i]);
-		shell->exec->infile = open(heredoc, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+		shell->exec->infile = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 		if (shell->exec->infile < 0)
 			err_exit("error opening file");
-		free(heredoc);
-		i++;
-	}
-	i = 0;
-	while (1)
-	{
-		write(0, "> ", 3);
-		line = get_next_line(0);
-		if (!line)
-			break ;
-		if (shell->cmd->is_quote == false)
-			line = expand_heredoc(shell, line);
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		fprintf(stderr, "limiter[i] = %s\n", shell->cmd->limiter[i]);
-		if (ft_strcmp(line, shell->cmd->limiter[i]) == 0)
-			break ;
-		ft_putendl_fd(line, shell->exec->infile);
+		if (last_file)
+			free(last_file);
+		last_file = file_name;
+		while (1)
+		{
+			write(0, "> ", 3);
+			line = get_next_line(0);
+			if (!line)
+				break ;
+			if (shell->cmd->is_quote == false)
+				line = expand_heredoc(shell, line);
+			if (line[ft_strlen(line) - 1] == '\n')
+				line[ft_strlen(line) - 1] = '\0';
+			if (ft_strcmp(line, shell->cmd->limiter[i]) == 0)
+				break ;
+			ft_putendl_fd(line, shell->exec->infile);
+		}
 		i++;
 	}
 	if (i == shell->cmd->hd_count - 1)
 	{
 		if (shell->cmd->hd_count)
-			shell->exec->infile = open(heredoc, O_RDONLY, 0664);
+			shell->exec->infile = open(last_file, O_RDONLY, 0664);
 		if (shell->exec->infile < 0)
 			err_exit("error opening file");
+		unlink(last_file);
+		free(last_file);
 	}
 	get_next_line(-1);
-	unlink(heredoc);
 }
