@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/10 22:53:56 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/12 10:44:27 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 		exec->infile = open(redir->file, O_RDONLY, 0664);
 		if (exec->infile < 0)
 			err_exit("Invalid infile");
+		if (dup2(exec->infile, STDIN_FILENO) < 0)
+			err_exit("dup2a failed");
+		close(exec->infile);
 	}
-	if (dup2(exec->infile, STDIN_FILENO) < 0)
-		err_exit("dup2a failed");
-	close(exec->infile);
 	return (0);
 }
 

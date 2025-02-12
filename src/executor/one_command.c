@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/11 14:15:41 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:03:10 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 	tmp = shell->cmd->redirs;
 	if (tmp->type == END)
 		return (0);
-	while (tmp) 
+	while (tmp)
 	{
 		if (tmp->type == REDIRIN)
 		{
@@ -89,16 +89,16 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 	tmp = redirs;
 	while (tmp)
 	{
-		if (tmp->type == REDIRIN || tmp->type == HEREDOC)
+		if (tmp->type == REDIRIN)
 		{
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-				err_exit("dup2 failed");
+				err_exit("dup2a failed");
 			close(shell->exec->infile);
 		}
 		else if (tmp->type == REDIROUT || tmp->type == APPEND)
 		{
 			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
-				err_exit("dup2 failed");
+				err_exit("dup2b failed");
 			close(shell->exec->outfile);
 		}
 		tmp = tmp->next;

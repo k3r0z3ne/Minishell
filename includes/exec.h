@@ -43,7 +43,8 @@ int		count_heredoc(t_shell *shell);
 
 /* here_doc */
 char	*expand_heredoc(t_shell *shell, char *line);
-void	loop_here_doc(t_shell *shell);
 void	process_heredoc(t_shell *shell);
+void	loop_heredoc(t_shell *shell);
+void	redir_heredoc(t_shell *shell, char *last, char *file);
 
 #endif
