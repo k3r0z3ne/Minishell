@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/02/11 12:50:21 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/12 16:12:07 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ char	*expand_string(t_shell *shell, char *line)
 			i++;
 		}
 	}
+	free(line);
 	return (result);
 }
 

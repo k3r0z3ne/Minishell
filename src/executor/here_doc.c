@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 13:21:29 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:11:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	loop_heredoc(t_shell *shell)
 {
 	char	*line;
 
+	line = NULL;
 	while (1)
 	{
 		write(0, "> ", 3);
@@ -63,7 +64,6 @@ void	loop_heredoc(t_shell *shell)
 			line = expand_heredoc(shell, line);
 		ft_putendl_fd(line, shell->exec->infile);
 	}
-	get_next_line(-1);
 }
 
 void	redir_heredoc(t_shell *shell, char *file)
@@ -82,11 +82,8 @@ void	redir_heredoc(t_shell *shell, char *file)
 		close(shell->exec->infile);
 		unlink(shell->cmd->last_file);
 		free(shell->cmd->last_file);
-		get_next_line(-1);
 	}
 	else
-	{
 		unlink(file);
-		get_next_line(-1);
-	}
+	get_next_line(-1);
 }

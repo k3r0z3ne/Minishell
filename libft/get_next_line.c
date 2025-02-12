@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 13:07:08 by arotondo          #+#    #+#             */
-/*   Updated: 2024/10/07 13:37:53 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:19:10 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ char	*next_line(char *buffer)
 	len = ft_strlen(buffer);
 	while (buffer[i] != '\n' && buffer[i] != '\0')
 		i++;
+	if (!buffer[i])
+		return (free(buffer), NULL);
 	tmp = (char *)ft_calloc(sizeof(char), len - i + 1);
 	if (!tmp)
-		return (NULL);
+		return (free(buffer), NULL);
 	if (buffer[i] == '\n')
 		i++;
 	j = 0;
@@ -43,7 +45,7 @@ char	*set_line(char *buffer)
 	size_t	i;
 
 	i = 0;
-	if (!buffer[i])
+	if (!buffer || !buffer[i])
 		return (NULL);
 	while (buffer[i] != '\0' && buffer[i] != '\n')
 		i++;
@@ -74,7 +76,7 @@ char	*read_line(int fd, char *buffer)
 	}
 	tmp = (char *)ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	if (!tmp)
-		return (NULL);
+		return (free(buffer), NULL);
 	bytes_read = 1;
 	while (bytes_read > 0 && (!ft_strchr(buffer, '\n')))
 	{
@@ -107,6 +109,7 @@ char	*get_next_line(int fd)
 	if (!line || line[0] == '\0')
 	{
 		free (stat_buffer);
+		free (line);
 		stat_buffer = NULL;
 		return (NULL);
 	}

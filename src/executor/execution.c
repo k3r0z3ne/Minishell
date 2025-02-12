@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 12:21:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:27:06 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_cmd(t_shell *shell)
 		err_exit("$PATH not found");
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
-		err_exit("No command path found");
+		err_return("No command path found");
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 
@@ -39,7 +39,10 @@ int	main_exec(t_shell *shell)
 	else if (shell->exec->cmd_count == 1)
 		exit_status = only_cmd(shell);
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
-		process_heredoc(shell);
+	{
+		while (shell->cmd->hd_count--)
+			process_heredoc(shell);
+	}
 	else
 		err_return("No command found");
 	return (exit_status);

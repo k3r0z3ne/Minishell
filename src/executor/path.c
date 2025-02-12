@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/05 14:10:58 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:09:49 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*check_path(t_shell *shell, char **cmd, char *env)
 		return (NULL);
 	path = NULL;
 	path = set_path(shell, tab, cmd);
-	free(tab);
+	free_array(tab);
 	return (path);
 }
 
