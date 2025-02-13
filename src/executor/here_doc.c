@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 13:21:29 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:53:52 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	process_heredoc(t_shell *shell)
 void	loop_heredoc(t_shell *shell)
 {
 	char	*line;
+	char	*tmp;
 
 	while (1)
 	{
@@ -58,9 +59,16 @@ void	loop_heredoc(t_shell *shell)
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strcmp(line, shell->cmd->limiter[shell->cmd->i_hd]) == 0)
-			break ;
+		{
+			free(line);
+			break;
+		}
 		if (shell->cmd->is_quote == false)
-			line = expand_heredoc(shell, line);
+		{
+			tmp = expand_heredoc(shell, line);
+			free(line);
+			line = tmp;
+		}
 		ft_putendl_fd(line, shell->exec->infile);
 	}
 	get_next_line(-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 12:21:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:37:26 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	exec_cmd(t_shell *shell)
 {
 	char	*path;
 	char	*tmp;
- 
+
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
@@ -27,9 +27,9 @@ void	exec_cmd(t_shell *shell)
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 
-int	main_exec(t_shell *shell)
+int    main_exec(t_shell *shell)
 {
-	int	exit_status;
+	int    exit_status;
 
 	exit_status = 0;
 	shell->exec->cmd_count = count_cmd(shell->cmd);
@@ -42,5 +42,11 @@ int	main_exec(t_shell *shell)
 		process_heredoc(shell);
 	else
 		err_return("No command found");
+	int tty_fd = open("/dev/tty", O_RDONLY);
+	if (tty_fd != -1)
+	{
+		dup2(tty_fd, STDIN_FILENO);
+		close(tty_fd);
+	}
 	return (exit_status);
 }
