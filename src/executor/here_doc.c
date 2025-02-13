@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 16:11:17 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:52:34 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	loop_heredoc(t_shell *shell)
 		line = get_next_line(0);
 		if (!line)
 			break ;
-		fprintf(stderr, "limiter[%d] = %s\n", shell->cmd->i_hd, shell->cmd->limiter[shell->cmd->i_hd]);
+		// fprintf(stderr, "limiter[%d] = %s\n", shell->cmd->i_hd, shell->cmd->limiter[shell->cmd->i_hd]);
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strcmp(line, shell->cmd->limiter[shell->cmd->i_hd]) == 0)

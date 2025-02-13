@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/12 16:31:09 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:27:01 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ static void shell_main_loop(t_shell *shell)
 		shell->token = lexer(shell->input, shell);
 		if (shell->token)
 		{
-			// print_tokens(shell->token);
+			print_tokens(shell->token);
 			parser(shell);
 			if (shell->cmd)
 			{
-				// print_table(shell->cmd);
-				// print_redirs(shell->cmd);
+				print_table(shell->cmd);
+				print_redirs(shell->cmd);
 				shell->exec->exit_status = main_exec(shell);
 			}
 		}

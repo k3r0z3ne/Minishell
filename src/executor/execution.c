@@ -6,17 +6,17 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 16:27:06 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:02:25 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	exec_cmd(t_shell *shell)
+void exec_cmd(t_shell *shell)
 {
-	char	*path;
-	char	*tmp;
- 
+	char *path;
+	char *tmp;
+
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
@@ -29,9 +29,11 @@ void	exec_cmd(t_shell *shell)
 
 int	main_exec(t_shell *shell)
 {
-	int	exit_status;
+	int exit_status;
+	int	tty_fd;
 
 	exit_status = 0;
+	tty_fd = 0;
 	shell->exec->cmd_count = count_cmd(shell->cmd);
 	shell->exec->builtin_less = how_much_cmd(shell);
 	if (shell->exec->cmd_count > 1)
@@ -39,11 +41,14 @@ int	main_exec(t_shell *shell)
 	else if (shell->exec->cmd_count == 1)
 		exit_status = only_cmd(shell);
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
-	{
-		while (shell->cmd->hd_count--)
-			process_heredoc(shell);
-	}
+		process_heredoc(shell);
 	else
 		err_return("No command found");
+	tty_fd = open("/dev/tty", O_RDONLY);
+	if (tty_fd != -1)
+	{
+		dup2(tty_fd, STDIN_FILENO);
+		close(tty_fd);
+	}
 	return (exit_status);
 }
