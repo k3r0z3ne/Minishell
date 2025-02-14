@@ -6,11 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/11 13:25:01 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/14 13:51:25 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	g_signal = 0;
 
 // static char	*my_readline(t_shell *shell, char *prompt)
 // {

@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/13 20:53:52 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/14 15:10:58 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,20 @@ void	loop_heredoc(t_shell *shell)
 	{
 		write(0, "> ", 3);
 		line = get_next_line(0);
+		if (g_signal)
+		{
+			g_signal = 0;
+			close(shell->exec->infile);
+			shell->exec->infile = -1;
+			break;
+		}
 		if (!line)
+		{
+			ft_putstr_fd("warning: here-document delimited by end-of-file '", 2);
+			ft_putstr_fd(shell->cmd->limiter[shell->cmd->i_hd], 2);
+			ft_putstr_fd("'\n", 2);
 			break ;
+		}
 		fprintf(stderr, "limiter[%d] = %s\n", shell->cmd->i_hd, shell->cmd->limiter[shell->cmd->i_hd]);
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
