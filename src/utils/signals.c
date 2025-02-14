@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:55:04 by witong            #+#    #+#             */
-/*   Updated: 2025/02/11 14:40:40 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/14 14:31:46 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	handle_sigint(int sig)
 {
 	(void)sig;
+	g_signal = 1;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	ft_putstr_fd("\n", 1);
@@ -28,7 +29,7 @@ void	setup_signals(void)
 
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART;
+	sa_int.sa_flags = 0;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
 		err_exit("sigaction");
 	sa_quit.sa_handler = SIG_IGN;
