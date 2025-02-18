@@ -6,16 +6,16 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 16:25:13 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/18 18:01:31 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void exec_cmd(t_shell *shell)
+void	exec_cmd(t_shell *shell)
 {
-	char *path;
-	char *tmp;
+	char	*path;
+	char	*tmp;
 
 	path = NULL;
 	tmp = find_path(shell);
@@ -27,7 +27,7 @@ void exec_cmd(t_shell *shell)
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 
-int    main_exec(t_shell *shell)
+int	main_exec(t_shell *shell)
 {
 	int	exit_status;
 	int	tty_fd;
@@ -47,6 +47,7 @@ int    main_exec(t_shell *shell)
 	tty_fd = open("/dev/tty", O_RDONLY);
 	if (tty_fd != -1)
 	{
+		fprintf(stderr, "HERE\n");
 		dup2(tty_fd, STDIN_FILENO);
 		close(tty_fd);
 	}

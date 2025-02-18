@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 16:28:02 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:38:49 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	only_cmd(t_shell *shell)
 	exit_status = 0;
 	redirection_check(shell, shell->exec);
 	count_fds(shell);
+	if (g_signal < 0)
+		return (shell->last_status);
 	if (shell->exec->builtin_less != 0)
 	{
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));

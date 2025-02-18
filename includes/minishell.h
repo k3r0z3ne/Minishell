@@ -67,6 +67,7 @@ typedef struct s_exec
 	int		old_pipe;
 	pid_t	*pids;
 	bool	last_cmd;
+	bool	if_pipe;
 }			t_exec;
 
 /* global data structure */

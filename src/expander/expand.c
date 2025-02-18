@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/02/12 16:12:07 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:21:56 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	case_return(t_shell *shell, char **result)
 
 		exit_status_str = ft_itoa(shell->last_status);
 		if (!exit_status_str)
-			return;
+			return ;
 		*result = ft_strjoin_track(shell, *result, exit_status_str);
 }
 
