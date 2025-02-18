@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/14 15:10:58 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/18 16:03:59 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	loop_heredoc(t_shell *shell)
 
 	while (1)
 	{
-		write(0, "> ", 3);
+		write(1, "> ", 2);
 		line = get_next_line(0);
 		if (g_signal)
 		{
