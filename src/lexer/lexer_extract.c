@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2025/02/11 13:11:41 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/12 15:47:10 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ char	*extract_word(char *line, t_shell *shell, t_lexer *lexer)
 			lexer->j++;
 		if (line[lexer->j] == '\'' || line[lexer->j] == '"')
 		{
+			if (line[lexer->j] == '\'')
+				lexer->quote = '\'';
+			else
+				lexer->quote = '"';
 			tmp = extract_quote(line, shell, lexer);
 			if (!tmp)
 				return (NULL);

@@ -83,4 +83,6 @@ typedef struct s_shell
 	t_clean	*clean;
 }			t_shell;
 
+extern int	g_signal;
+
 #endif

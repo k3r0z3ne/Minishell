@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 15:47:21 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/18 16:25:13 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void exec_cmd(t_shell *shell)
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 
-int	main_exec(t_shell *shell)
+int    main_exec(t_shell *shell)
 {
 	int	exit_status;
 	int	tty_fd;

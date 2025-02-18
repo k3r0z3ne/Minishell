@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/07 16:58:00 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 16:15:16 by xenon            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/02/18 16:25:39 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/exec.h"
 
@@ -51,21 +52,34 @@ void	loop_heredoc(t_shell *shell)
 
 	while (1)
 	{
-		write(1, "> ", 3);
+		write(1, "> ", 2);
 		line = get_next_line(0);
-		if (!line)
+		if (g_signal)
+		{
+			g_signal = 0;
+			close(shell->exec->infile);
+			shell->exec->infile = -1;
 			break;
+		}
+		if (!line)
+		{
+			ft_putstr_fd("warning: here-document delimited by end-of-file '", 2);
+			ft_putstr_fd(shell->cmd->limiter[shell->cmd->i_hd], 2);
+			ft_putstr_fd("'\n", 2);
+			break ;
+		}
+		fprintf(stderr, "limiter[%d] = %s\n", shell->cmd->i_hd, shell->cmd->limiter[shell->cmd->i_hd]);
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strcmp(line, shell->cmd->limiter[shell->cmd->i_hd]) == 0)
 		{
 			free(line);
-			break ;
+			break;
 		}
 		if (shell->cmd->is_quote == false)
 		{
-			fprintf(stderr, "HERE\n");
 			tmp = expand_heredoc(shell, line);
+			free(line);
 			line = tmp;
 		}
 		ft_putendl_fd(line, shell->exec->infile);

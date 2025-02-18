@@ -6,11 +6,13 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/18 15:45:57 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/18 16:25:00 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	g_signal = 0;
 
 // static char	*my_readline(t_shell *shell, char *prompt)
 // {
