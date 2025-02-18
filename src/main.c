@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/18 16:25:00 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/18 17:23:26 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void shell_main_loop(t_shell *shell)
 		// shell->input = my_readline(shell, "minishell> ");
 		if (!shell->input)
 		{
+			fprintf(stderr, "%d\n", shell->last_status);
 			ft_putstr_fd("exit\n", 1);
 			break ;
 		}

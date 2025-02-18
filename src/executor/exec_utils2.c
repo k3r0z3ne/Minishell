@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:16:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/11 15:42:13 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:35:12 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	exec_builtin(t_shell *shell)
 		shell->exec->exit_status = ft_unset(shell);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "env"))
 		shell->exec->exit_status = ft_env(shell->envp);
-	// else if (!ft_strcmp(shell->cmd->full_cmd[0], "exit"))
-	// {
-	// 	shell->exec->exit_status = 0;
-	// 	ft_exit(shell->cmd->full_cmd, shell->exec->exit_status);
-	// }
+	else if (!ft_strcmp(shell->cmd->full_cmd[0], "exit"))
+	{
+		shell->exec->exit_status = 0;
+		ft_exit(shell, shell->cmd->full_cmd);
+	}
 }
 
 bool	is_builtin(t_shell *shell)
@@ -91,6 +91,5 @@ int	count_heredoc(t_shell *shell)
 			i++;
 		tmp = tmp->next;
 	}
-	// fprintf(stderr, "hd count = %d\n", i);
 	return (i);
 }

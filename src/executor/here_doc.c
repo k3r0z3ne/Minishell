@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/18 16:25:39 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/18 18:01:41 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,52 +52,38 @@ void	loop_heredoc(t_shell *shell)
 
 	while (1)
 	{
-		write(1, "> ", 2);
+		write(0, "> ", 3);
 		line = get_next_line(0);
-		if (g_signal)
-		{
-			g_signal = 0;
-			close(shell->exec->infile);
-			shell->exec->infile = -1;
-			break;
-		}
-		if (!line)
-		{
-			ft_putstr_fd("warning: here-document delimited by end-of-file '", 2);
-			ft_putstr_fd(shell->cmd->limiter[shell->cmd->i_hd], 2);
-			ft_putstr_fd("'\n", 2);
+		if (interrupt_heredoc(shell, line))
 			break ;
-		}
-		fprintf(stderr, "limiter[%d] = %s\n", shell->cmd->i_hd, shell->cmd->limiter[shell->cmd->i_hd]);
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strcmp(line, shell->cmd->limiter[shell->cmd->i_hd]) == 0)
-		{
-			free(line);
-			break;
-		}
+			break ;
 		if (shell->cmd->is_quote == false)
 		{
 			tmp = expand_heredoc(shell, line);
-			free(line);
 			line = tmp;
 		}
 		ft_putendl_fd(line, shell->exec->infile);
 	}
+	free(line);
 }
 
 void	redir_heredoc(t_shell *shell, char *file)
 {
-	if (shell->cmd->i_hd == shell->cmd->hd_count)
+	if (g_signal < 0)
+		unlink(file);
+	else if (shell->cmd->i_hd == shell->cmd->hd_count)
 	{
 		if (shell->exec->cmd_count)
 		{
 			if (shell->cmd->hd_count)
-				shell->exec->infile = open(shell->cmd->last_file, O_RDONLY, 0664);
+			shell->exec->infile = open(shell->cmd->last_file, O_RDONLY, 0664);
 			if (shell->exec->infile < 0)
-				err_exit("error opening file");
+			err_exit("error opening file");
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-				err_exit("dup2 failed");
+			err_exit("dup2 failed");
 		}
 		close(shell->exec->infile);
 		unlink(shell->cmd->last_file);
@@ -106,4 +92,23 @@ void	redir_heredoc(t_shell *shell, char *file)
 	else
 		unlink(file);
 	get_next_line(-1);
+}
+
+int	interrupt_heredoc(t_shell *shell, char *line)
+{
+	if (g_signal)
+	{
+		g_signal = -1;
+		shell->last_status = 130;
+		return (1);
+	}
+	else if (!line)
+	{
+		ft_putstr_fd("warning: here-document delimited by end-of-file '", 2);
+		ft_putstr_fd(shell->cmd->limiter[shell->cmd->i_hd], 2);
+		ft_putstr_fd("'\n", 2);
+		return (1);
+	}
+	else
+		return (0);
 }

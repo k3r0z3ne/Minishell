@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 16:32:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:35:26 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-int is_fd_open(int fd)
-{
-	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
-}
+// int is_fd_open(int fd)
+// {
+// 	return (fcntl(fd, F_GETFD) != -1 || errno != EBADF);
+// }
 
 int	setup_old_pipe(t_exec *exec)
 {

@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/07 13:56:27 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/18 18:51:24 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	make_pipes(t_shell *shell)
 	{
 		if (pipe(shell->exec->pipe) < 0)
 			err_exit("Creation pipe failed");
+		shell->exec->if_pipe = true;
 	}
 	return (0);
 }
