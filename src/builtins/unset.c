@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:43:06 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 16:01:51 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:59:35 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ int	ft_unset(t_shell *shell)
 	unset = false;
 	while(shell->cmd->full_cmd[i])
 	{
+		if (!is_valid_var(shell->cmd->full_cmd[i]))
+		{
+			ft_putstr_fd("minishell: unset: '", 2);
+			ft_putstr_fd(shell->cmd->full_cmd[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (1);
+		}
 		j = ft_strlen(shell->cmd->full_cmd[i]);
 		unset = unset_word(shell, shell->cmd->full_cmd[i], j);
 		i++;
