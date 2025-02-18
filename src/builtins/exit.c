@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/01/21 14:49:26 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/18 14:51:18 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,19 @@
 // 	return (status);
 // }
 
-// void	ft_exit(char **cmd, int status)
+// void	ft_exit(t_shell *shell, char **ag)
 // {
-// 	if (cmd[1])
+// 	int	ret;
+// 	int	err;
+
+// 	ret = 0;
+// 	err = 0;
+// 	if (ag[1])
 // 	{
-// 		if (check_status(status))
-// 			return ;
-// 		else if (ft_strlen(cmd[1]) == 0)
-// 			return (printf("wrong argument\n"));
-
+		
 // 	}
-// 	else
-// 		simple_exit();
-// }
-
-// void	simple_exit(void)
-// {
-// 	// fonction pour free avant de terminer le programme
-// 	exit(0);
+// 	else if (ag[1] && ag[2])
+// 	{
+		
+// 	}
 // }

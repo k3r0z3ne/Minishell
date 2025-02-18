@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/13 20:37:26 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/18 16:25:13 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	exec_cmd(t_shell *shell)
+void exec_cmd(t_shell *shell)
 {
-	char	*path;
-	char	*tmp;
+	char *path;
+	char *tmp;
 
 	path = NULL;
 	tmp = find_path(shell);
@@ -29,9 +29,11 @@ void	exec_cmd(t_shell *shell)
 
 int    main_exec(t_shell *shell)
 {
-	int    exit_status;
+	int	exit_status;
+	int	tty_fd;
 
 	exit_status = 0;
+	tty_fd = 0;
 	shell->exec->cmd_count = count_cmd(shell->cmd);
 	shell->exec->builtin_less = how_much_cmd(shell);
 	if (shell->exec->cmd_count > 1)
@@ -42,7 +44,7 @@ int    main_exec(t_shell *shell)
 		process_heredoc(shell);
 	else
 		err_return("No command found");
-	int tty_fd = open("/dev/tty", O_RDONLY);
+	tty_fd = open("/dev/tty", O_RDONLY);
 	if (tty_fd != -1)
 	{
 		dup2(tty_fd, STDIN_FILENO);
