@@ -40,5 +40,6 @@ void	activate_ctrl_backslash(t_shell *shell);
 /* error */
 int		err_exit(t_shell *shell, char *err_message);
 int		err_return(char *err_message);
+void	err_message(char *cmd, char *arg, char *mess);
 
 #endif

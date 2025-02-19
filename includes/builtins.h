@@ -22,7 +22,7 @@ int		ft_env(char **envp);
 
 /* exit */
 void	ft_exit(t_shell *shell, char **cmd);
-void	exit_err(t_shell *shell);
+void	exit_err(t_shell *shell, int code, char *mess);
 void	exit_code(t_shell *shell, char **args);
 void	exit_code_in_pipes(t_shell *shell, char *arg);
 int		is_exit_correct(t_shell *shell, char *arg, int i);

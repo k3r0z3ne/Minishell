@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:52:17 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:37:37 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ pid_t	process(t_shell *shell)
 		close(shell->exec->pipe[1]);
 		shell->exec->old_pipe = shell->exec->pipe[0];
 	}
-	fprintf(stderr, "old_pipe -> %d\n", is_fd_open(shell->exec->old_pipe));
 	return (ret);
 }
 
@@ -52,7 +51,6 @@ int	several_cmds(t_shell *shell)
 		count_fds(shell);
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		make_pipes(shell);
-		fprintf(stderr, "%d\n", i + 1);
 		shell->exec->pids[i] = process(shell);
 		shell->cmd = shell->cmd->next;
 		i++;

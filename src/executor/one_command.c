@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:51:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:26:26 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	only_cmd(t_shell *shell)
 		ignore_ctrl_c(shell);
 		shell->last_status = wait_process(shell, shell->exec->builtin_less);
 	}
+	
 	return (shell->last_status);
 }
 
