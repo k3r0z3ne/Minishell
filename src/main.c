@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/18 17:23:26 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 12:06:10 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void shell_main_loop(t_shell *shell)
 {
 	while (1)
 	{
-		setup_signals();
+		setup_signals(shell);
 		shell->input = readline("minishell> ");
 		// fprintf(stderr, "input = %s\n", shell->input);
 		// shell->input = my_readline(shell, "minishell> ");

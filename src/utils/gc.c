@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:12:07 by witong            #+#    #+#             */
-/*   Updated: 2025/02/01 17:52:04 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 12:03:56 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	*tracked_malloc(t_shell *shell, size_t size)
 		return (NULL);
 	ptr = malloc(size);
 	if (!ptr)
-		err_exit("Memory allocation failed");
+		err_exit(shell, "Memory allocation failed");
 	node = (t_clean *)malloc(sizeof(t_clean));
 	if (!node)
 	{
 		free(ptr);
-		err_exit("Cleanup node creation failed");
+		err_exit(shell, "Cleanup node creation failed");
 	}
 	node->ptr = ptr;
 	node->next = shell->clean;

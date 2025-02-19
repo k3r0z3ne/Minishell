@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 17:38:49 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 12:10:38 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ pid_t	process1(t_shell *shell)
 
 	ret = fork();
 	if (ret < 0)
-		err_exit("Fork failed");
+		err_exit(shell, "Fork failed");
 	else if (!ret)
 	{
-		activate_ctrl_c();
-		activate_ctrl_backslash();
+		activate_ctrl_c(shell);
+		activate_ctrl_backslash(shell);
 		is_redir(shell, shell->cmd->redirs);
 		exec_cmd(shell);
 	}
@@ -42,14 +42,14 @@ int	only_cmd(t_shell *shell)
 	{
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
 		if (!shell->exec->pids)
-			err_exit("Memory allocation failed");
+			err_exit(shell, "Memory allocation failed");
 	}
 	if (is_builtin(shell) == true)
 		exec_builtin(shell);
 	else
 	{
 		shell->exec->pids[0] = process1(shell);
-		ignore_ctrl_c();
+		ignore_ctrl_c(shell);
 		exit_status = wait_process(shell, shell->exec->builtin_less);
 	}
 	return (exit_status);
@@ -78,7 +78,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 		else if (tmp->type == HEREDOC)
 			process_heredoc(shell);
 		if (exec->infile < 0 || exec->outfile < 0)
-			err_exit("Invalid fd");
+			err_exit(shell, "Invalid fd");
 		tmp = tmp->next;
 	}
 	return (0);
@@ -94,13 +94,13 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 		if (tmp->type == REDIRIN)
 		{
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-				err_exit("dup2a failed");
+				err_exit(shell, "dup2a failed");
 			close(shell->exec->infile);
 		}
 		else if (tmp->type == REDIROUT || tmp->type == APPEND)
 		{
 			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
-				err_exit("dup2b failed");
+				err_exit(shell, "dup2b failed");
 			close(shell->exec->outfile);
 		}
 		tmp = tmp->next;
