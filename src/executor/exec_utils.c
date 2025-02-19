@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:50:09 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:36:18 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ int	setup_old_pipe(t_shell *shell, t_exec *exec)
 
 int	wait_process(t_shell *shell, int n)
 {
-	int		i;
-	int		status;
-	int		exit_status;
-	int		print_sigquit;
+	int	i;
+	int	status;
+	int	signal;
+	int	exit_status;
+	int	print_sigquit;
 
 	if (!shell || !shell->exec || !shell->exec->pids)
 		return (-1);
@@ -58,11 +59,14 @@ int	wait_process(t_shell *shell, int n)
 				shell->last_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
-				if (!print_sigquit && WTERMSIG(status) == SIGQUIT)
+				signal = WTERMSIG(status);
+				if (!print_sigquit && signal == SIGQUIT)
 				{
 					ft_putstr_fd("Quit (core dumped)\n", 2);
 					print_sigquit = 1;
 				}
+				if (signal == SIGINT)
+					write(2, "\n", 1);
 				shell->last_status = 128 + WTERMSIG(status);
 			}
 		}

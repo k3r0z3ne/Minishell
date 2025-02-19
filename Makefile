@@ -19,7 +19,7 @@ SRC =	main.c utils/init.c \
 		builtins/pwd.c builtins/unset.c builtins/env_utils.c \
 		parser/parser.c parser/parser_init.c parser/parser_redirs.c \
 		parser/parser_utils.c parser/parser_error.c \
-		expander/expand.c\
+		expander/expand.c \
 		utils/global_utils.c utils/gc.c utils/signals.c \
 		utils/error.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)

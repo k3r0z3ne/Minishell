@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:55:04 by witong            #+#    #+#             */
-/*   Updated: 2025/02/19 12:10:15 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:38:38 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_signal = 1;
+	ft_putstr_fd("\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
-	ft_putstr_fd("\n", 1);
 	rl_redisplay();
 }
 
@@ -38,6 +38,7 @@ void	setup_signals(t_shell *shell)
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
 		err_exit(shell, "sigaction");
 }
+
 void	ignore_ctrl_c(t_shell *shell)
 {
 	struct sigaction sa_int;
@@ -51,6 +52,7 @@ void	ignore_ctrl_c(t_shell *shell)
 
 void	activate_ctrl_c(t_shell *shell)
 {
+	(void)shell;
 	struct sigaction sa_int;
 
 	sa_int.sa_handler = SIG_DFL;

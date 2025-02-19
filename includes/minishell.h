@@ -26,7 +26,7 @@
 
 typedef struct	s_shell t_shell;
 typedef struct	s_token t_token;
-typedef enum 	e_type t_type;
+typedef enum	e_type t_type;
 typedef struct	s_clean t_clean;
 
 /* redirections structure */
