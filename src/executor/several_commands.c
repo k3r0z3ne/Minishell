@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:50:49 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:52:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	several_cmds(t_shell *shell)
 		shell->cmd = shell->cmd->next;
 		i++;
 	}
-	ignore_ctrl_c();
+	ignore_ctrl_c(shell);
 	shell->last_status = wait_process(shell, shell->exec->cmd_count);
 	return (shell->last_status);
 }
@@ -67,7 +67,7 @@ int	make_pipes(t_shell *shell)
 	if (shell->exec->last_cmd == false)
 	{
 		if (pipe(shell->exec->pipe) < 0)
-			err_exit("Creation pipe failed");
+			err_exit(shell, "Creation pipe failed");
 		fprintf(stderr, "pipe[0] = %d\n", shell->exec->pipe[0]);
 		fprintf(stderr, "pipe[1] = %d\n", shell->exec->pipe[1]);
 		shell->exec->if_pipe = true;

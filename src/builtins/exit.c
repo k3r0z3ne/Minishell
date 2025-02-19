@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:50:00 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:51:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	exit_code_in_pipes(t_shell *shell, char *arg)
 
 	code_str = ft_strdup_track(shell, arg);
 	if (!code_str)
-		err_exit("Memory allocation failed");
+		err_exit(shell, "Memory allocation failed");
 	if (!is_exit_correct(shell, arg, 0))
 		shell->last_status = ft_atoi(code_str);
 	else

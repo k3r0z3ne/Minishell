@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/19 12:01:36 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:54:41 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	loop_heredoc(t_shell *shell)
 			line = tmp;
 		}
 		ft_putendl_fd(line, shell->exec->infile);
+		if (shell->cmd->is_quote == true)
+			free(line);
 	}
 	free(line);
 }
