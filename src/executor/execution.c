@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 18:01:31 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 11:53:53 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	exec_cmd(t_shell *shell)
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
-		err_exit("$PATH not found");
+		err_exit(shell, "$PATH not found");
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
-		err_exit("No command path found");
+		err_exit(shell, "No command path found");
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 

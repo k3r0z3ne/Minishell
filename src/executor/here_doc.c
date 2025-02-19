@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/18 18:01:41 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 12:01:36 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	process_heredoc(t_shell *shell)
 	free(idx_tmp);
 	shell->exec->infile = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (shell->exec->infile < 0)
-		err_exit("error opening file");
+		err_exit(shell, "error opening file");
 	if (shell->cmd->last_file)
 		free(shell->cmd->last_file);
 	shell->cmd->last_file = file_name;
@@ -81,9 +81,9 @@ void	redir_heredoc(t_shell *shell, char *file)
 			if (shell->cmd->hd_count)
 			shell->exec->infile = open(shell->cmd->last_file, O_RDONLY, 0664);
 			if (shell->exec->infile < 0)
-			err_exit("error opening file");
+			err_exit(shell, "error opening file");
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-			err_exit("dup2 failed");
+			err_exit(shell, "dup2 failed");
 		}
 		close(shell->exec->infile);
 		unlink(shell->cmd->last_file);

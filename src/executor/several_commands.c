@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 18:51:24 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 12:10:46 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ pid_t	process(t_shell *shell)
 
 	ret = fork();
 	if (ret < 0)
-		err_exit("Fork failed");
+		err_exit(shell, "Fork failed");
 	else if (ret == 0)
 	{
-		activate_ctrl_c();
-		activate_ctrl_backslash();
-		setup_old_pipe(shell->exec);
+		activate_ctrl_c(shell);
+		activate_ctrl_backslash(shell);
+		setup_old_pipe(shell, shell->exec);
 		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		if (is_builtin(shell) == true)
 		{
@@ -60,7 +60,7 @@ int	several_cmds(t_shell *shell)
 		shell->cmd = shell->cmd->next;
 		i++;
 	}
-	ignore_ctrl_c();
+	ignore_ctrl_c(shell);
 	exit_status = wait_process(shell, shell->exec->cmd_count);
 	return (exit_status);
 }
@@ -70,7 +70,7 @@ int	make_pipes(t_shell *shell)
 	if (shell->exec->last_cmd == false)
 	{
 		if (pipe(shell->exec->pipe) < 0)
-			err_exit("Creation pipe failed");
+			err_exit(shell, "Creation pipe failed");
 		shell->exec->if_pipe = true;
 	}
 	return (0);

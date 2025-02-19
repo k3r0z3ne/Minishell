@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 19:33:29 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 12:03:16 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	exit_code(t_shell *shell, char **args)
 void	exit_code_in_pipes(t_shell *shell, char *arg)
 {
 	char	*code_str;
-	
+
 	code_str = ft_strdup_track(shell, arg);
 	if (!code_str)
-		err_exit("Memory allocation failed");\
+		err_exit(shell, "Memory allocation failed");
 	if (!is_exit_correct(shell, arg, 0))
 		shell->last_status = ft_atoi(code_str);
 	else

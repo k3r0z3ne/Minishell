@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 10:44:27 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:01:03 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 	{
 		if (redir->type == REDIRIN || redir->type == HEREDOC)
 			if_infile(shell, exec, redir);
-		if_outfile(exec, redir);
+		if_outfile(shell, exec, redir);
 		redir = redir->next;
 	}
 	return (0);
@@ -32,15 +32,15 @@ int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 	{
 		exec->infile = open(redir->file, O_RDONLY, 0664);
 		if (exec->infile < 0)
-			err_exit("Invalid infile");
+			err_exit(shell, "Invalid infile");
 		if (dup2(exec->infile, STDIN_FILENO) < 0)
-			err_exit("dup2a failed");
+			err_exit(shell, "dup2a failed");
 		close(exec->infile);
 	}
 	return (0);
 }
 
-int	if_outfile(t_exec *exec, t_redir *redir)
+int	if_outfile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
 	if (redir->type == REDIROUT)
 		exec->outfile = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
@@ -49,9 +49,9 @@ int	if_outfile(t_exec *exec, t_redir *redir)
 	else
 		return (0);
 	if (exec->outfile < 0)
-		err_exit("Invalid outfile");
+		err_exit(shell, "Invalid outfile");
 	if (dup2(exec->outfile, STDOUT_FILENO) < 0)
-		err_exit("dup2c failed");
+		err_exit(shell, "dup2c failed");
 	close(exec->outfile);
 	close(exec->pipe[1]);
 	exec->pipe[1] = 0;
