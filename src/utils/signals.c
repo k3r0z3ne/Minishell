@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:55:04 by witong            #+#    #+#             */
-/*   Updated: 2025/02/14 14:31:46 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:10:15 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-void	setup_signals(void)
+void	setup_signals(t_shell *shell)
 {
 	struct sigaction sa_int;
 	struct sigaction sa_quit;
@@ -31,24 +31,25 @@ void	setup_signals(void)
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = 0;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-		err_exit("sigaction");
+		err_exit(shell, "sigaction");
 	sa_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-		err_exit("sigaction");
+		err_exit(shell, "sigaction");
 }
-void	ignore_ctrl_c(void)
+void	ignore_ctrl_c(t_shell *shell)
 {
 	struct sigaction sa_int;
 
 	sa_int.sa_handler = SIG_IGN;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = 0;
-	sigaction(SIGINT, &sa_int, NULL);
+	if (sigaction(SIGINT, &sa_int, NULL) == -1)
+		err_exit(shell, "sigaction");
 }
 
-void	activate_ctrl_c(void)
+void	activate_ctrl_c(t_shell *shell)
 {
 	struct sigaction sa_int;
 
@@ -56,10 +57,10 @@ void	activate_ctrl_c(void)
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-		err_exit("sigaction");
+		err_exit(shell, "sigaction");
 }
 
-void	activate_ctrl_backslash(void)
+void	activate_ctrl_backslash(t_shell *shell)
 {
 	struct sigaction sa_quit;
 
@@ -67,7 +68,7 @@ void	activate_ctrl_backslash(void)
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-		err_exit("sigaction");
+		err_exit(shell, "sigaction");
 }
 // Ajouter activate_ctrl_backslash et activate_ctrl_c au debut des childs
 // A AJOUTER A LA FIN DES CHILDS

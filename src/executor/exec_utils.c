@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 11:28:24 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:50:09 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ int is_fd_open(int fd)
 	return fcntl(fd, F_GETFD) != -1;
 }
 
-int	setup_old_pipe(t_exec *exec)
+int	setup_old_pipe(t_shell *shell, t_exec *exec)
 {
 	if (exec->old_pipe != -1)
 	{
 		if (dup2(exec->old_pipe, STDIN_FILENO) < 0)
-			err_exit("dup2o failed");
+			err_exit(shell, "dup2o failed");
 		close(exec->old_pipe);
 	}
 	if (exec->last_cmd == false && exec->pipe[1] != 0)
 	{
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
-			err_exit("dup2p failed");
+			err_exit(shell, "dup2p failed");
 		close(exec->pipe[1]);
 	}
 	return (0);
@@ -53,7 +53,7 @@ int	wait_process(t_shell *shell, int n)
 		if (shell->exec->pids[i] > 0)
 		{
 			if (waitpid(shell->exec->pids[i], &status, 0) < 0)
-				err_exit("waitpid failed");
+				err_exit(shell, "waitpid failed");
 			if (WIFEXITED(status))
 				shell->last_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))

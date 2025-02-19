@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:34:29 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 11:08:49 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:50:59 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	init_pids(t_shell *shell)
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * shell->exec->cmd_count);
 		fprintf(stderr, "cmd_count = %d\n", shell->exec->cmd_count);
 		if (!shell->exec->pids)
-			err_exit("Memory allocation failed");
+			err_exit(shell, "Memory allocation failed");
 	}
 }

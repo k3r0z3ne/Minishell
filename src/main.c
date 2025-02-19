@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/19 12:34:51 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:35:54 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void shell_main_loop(t_shell *shell)
 {
 	while (1)
 	{
-		setup_signals();
+		setup_signals(shell);
 		shell->input = readline("minishell> ");
 		// fprintf(stderr, "input = %s\n", shell->input);
 		// shell->input = my_readline(shell, "minishell> ");

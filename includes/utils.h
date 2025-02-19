@@ -32,13 +32,13 @@ void	init_shell(t_shell *shell, int argc, char **argv, char **envp);
 void	init_pids(t_shell *shell);
 
 /* signals */
-void	setup_signals(void);
-void	ignore_ctrl_c(void);
-void	activate_ctrl_c(void);
-void	activate_ctrl_backslash(void);
+void	setup_signals(t_shell *shell);
+void	ignore_ctrl_c(t_shell *shell);
+void	activate_ctrl_c(t_shell *shell);
+void	activate_ctrl_backslash(t_shell *shell);
 
 /* error */
-int		err_exit(char *err_message);
+int		err_exit(t_shell *shell, char *err_message);
 int		err_return(char *err_message);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 11:30:16 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:50:49 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ pid_t	process(t_shell *shell)
 
 	ret = fork();
 	if (ret < 0)
-		err_exit("Fork failed");
+		err_exit(shell, "Fork failed");
 	else if (ret == 0)
 	{
-		activate_ctrl_c();
-		activate_ctrl_backslash();
-		setup_old_pipe(shell->exec);
+		activate_ctrl_c(shell);
+		activate_ctrl_backslash(shell);
+		setup_old_pipe(shell, shell->exec);
 		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		if (is_builtin(shell) == true)
 			exec_builtin(shell);
