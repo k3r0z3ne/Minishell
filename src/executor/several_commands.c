@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:10:46 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:52:17 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ pid_t	process(t_shell *shell)
 		setup_old_pipe(shell, shell->exec);
 		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		if (is_builtin(shell) == true)
-		{
 			exec_builtin(shell);
-			exit(shell->exec->exit_status);
-		}
 		else
 			exec_cmd(shell);
 	}
@@ -40,29 +37,29 @@ pid_t	process(t_shell *shell)
 		close(shell->exec->pipe[1]);
 		shell->exec->old_pipe = shell->exec->pipe[0];
 	}
+	fprintf(stderr, "old_pipe -> %d\n", is_fd_open(shell->exec->old_pipe));
 	return (ret);
 }
 
 int	several_cmds(t_shell *shell)
 {
 	int	i;
-	int	exit_status;
 
 	i = 0;
-	exit_status = 0;
 	init_pids(shell);
 	while (shell->cmd && i < shell->exec->cmd_count)
 	{
 		count_fds(shell);
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		make_pipes(shell);
+		fprintf(stderr, "%d\n", i + 1);
 		shell->exec->pids[i] = process(shell);
 		shell->cmd = shell->cmd->next;
 		i++;
 	}
 	ignore_ctrl_c(shell);
-	exit_status = wait_process(shell, shell->exec->cmd_count);
-	return (exit_status);
+	shell->last_status = wait_process(shell, shell->exec->cmd_count);
+	return (shell->last_status);
 }
 
 int	make_pipes(t_shell *shell)
@@ -71,6 +68,8 @@ int	make_pipes(t_shell *shell)
 	{
 		if (pipe(shell->exec->pipe) < 0)
 			err_exit(shell, "Creation pipe failed");
+		fprintf(stderr, "pipe[0] = %d\n", shell->exec->pipe[0]);
+		fprintf(stderr, "pipe[1] = %d\n", shell->exec->pipe[1]);
 		shell->exec->if_pipe = true;
 	}
 	return (0);

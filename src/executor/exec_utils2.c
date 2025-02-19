@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:16:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 19:35:12 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 11:52:21 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,27 @@
 void	exec_builtin(t_shell *shell)
 {
 	if (!ft_strcmp(shell->cmd->full_cmd[0], "echo"))
-		shell->exec->exit_status = ft_echo(count_line \
+		shell->last_status = ft_echo(count_line \
 		(shell->cmd->full_cmd), shell->cmd->full_cmd, shell->envp);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
 	{
 		if (!shell->cmd->full_cmd[1] || !shell->cmd->full_cmd[2])
-			shell->exec->exit_status = ft_cd(shell, shell->cmd->full_cmd[1]);
+			shell->last_status = ft_cd(shell, shell->cmd->full_cmd[1]);
 		else
 			ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 	}
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
-		shell->exec->exit_status = ft_pwd(shell->argc);
+		shell->last_status = ft_pwd(shell->argc);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "export"))
-		shell->exec->exit_status = ft_export(shell);
+		shell->last_status = ft_export(shell);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "unset"))
-		shell->exec->exit_status = ft_unset(shell);
+		shell->last_status = ft_unset(shell);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "env"))
-		shell->exec->exit_status = ft_env(shell->envp);
+		shell->last_status = ft_env(shell->envp);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "exit"))
-	{
-		shell->exec->exit_status = 0;
 		ft_exit(shell, shell->cmd->full_cmd);
-	}
+	if (shell->exec->cmd_count > 1)
+		ft_exit(shell, shell->cmd->full_cmd);
 }
 
 bool	is_builtin(t_shell *shell)

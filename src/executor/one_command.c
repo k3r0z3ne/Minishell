@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:10:38 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:51:26 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ pid_t	process1(t_shell *shell)
 
 int	only_cmd(t_shell *shell)
 {
-	int	exit_status;
-
-	exit_status = 0;
 	redirection_check(shell, shell->exec);
 	count_fds(shell);
 	if (g_signal < 0)
@@ -50,9 +47,9 @@ int	only_cmd(t_shell *shell)
 	{
 		shell->exec->pids[0] = process1(shell);
 		ignore_ctrl_c(shell);
-		exit_status = wait_process(shell, shell->exec->builtin_less);
+		shell->last_status = wait_process(shell, shell->exec->builtin_less);
 	}
-	return (exit_status);
+	return (shell->last_status);
 }
 
 int	redirection_check(t_shell *shell, t_exec *exec)
