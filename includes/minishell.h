@@ -62,7 +62,6 @@ typedef struct s_exec
 	int		outfile;
 	int		cmd_count;
 	int		builtin_less;
-	int		exit_status;
 	int		pipe[2];
 	int		old_pipe;
 	pid_t	*pids;

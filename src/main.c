@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/18 17:23:26 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 12:34:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void shell_main_loop(t_shell *shell)
 			{
 				// print_table(shell->cmd);
 				// print_redirs(shell->cmd);
-				shell->exec->exit_status = main_exec(shell);
+				shell->last_status = main_exec(shell);
 			}
 		}
 		cleanup_all(shell);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/18 19:33:29 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/19 12:28:16 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	ft_exit(t_shell *shell, char **cmd)
 		if (!ft_strcmp(cmd[0], "exit") && !cmd[1])
 		{
 			fprintf(stderr, "%d\n", shell->last_status);
+			cleanup_all(shell);
+			free(shell->input);
+			free_array(shell->envp);
+			free(shell);
 			exit(0);
 		}
 		if (!ft_strcmp(cmd[0], "exit") && !ft_strlen(cmd[1]))
@@ -32,9 +36,12 @@ void	ft_exit(t_shell *shell, char **cmd)
 
 void	exit_err(t_shell *shell)
 {
-	(void)shell;
-	ft_putendl_fd("empty argument", 2);
-	exit(255);
+	ft_putendl_fd("minishell: exit: : numeric argument required", 2);
+	cleanup_all(shell);
+	free(shell->input);
+	free_array(shell->envp);
+	free(shell);
+	exit(2);
 }
 
 void	exit_code(t_shell *shell, char **args)
@@ -47,9 +54,18 @@ void	exit_code(t_shell *shell, char **args)
 	{
 		code = 255;
 		fprintf(stderr, "%d\n", shell->last_status);
+		cleanup_all(shell);
+		free(shell->input);
+		free_array(shell->envp);
+		free(shell);
+		fprintf(stderr, "code = %d\n", code);
 		exit(code);
 	}
-	fprintf(stderr, "%d\n", shell->last_status);
+	cleanup_all(shell);
+	free(shell->input);
+	free_array(shell->envp);
+	free(shell);
+	fprintf(stderr, "code = %d\n", code);
 	exit(code);
 }
 
@@ -59,12 +75,16 @@ void	exit_code_in_pipes(t_shell *shell, char *arg)
 	
 	code_str = ft_strdup_track(shell, arg);
 	if (!code_str)
-		err_exit("Memory allocation failed");\
+		err_exit("Memory allocation failed");
 	if (!is_exit_correct(shell, arg, 0))
 		shell->last_status = ft_atoi(code_str);
 	else
 		shell->last_status = 255;
 	fprintf(stderr, "%d\n", shell->last_status);
+	cleanup_all(shell);
+	free(shell->input);
+	free_array(shell->envp);
+	free(shell);
 	exit(shell->last_status);
 }
 
