@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 18:48:41 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:05:21 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,54 @@
 
 void	ft_exit(t_shell *shell, char **cmd)
 {
+	int	code;
+
+	code = 0;
 	if (shell->exec->if_pipe == false)
 	{
 		if (!ft_strcmp(cmd[0], "exit") && !cmd[1])
 		{
 			fprintf(stderr, "%d\n", shell->last_status);
+			code = shell->last_status;
 			cleanup_all(shell);
 			free(shell->input);
 			free_array(shell->envp);
 			free(shell);
-			exit(0);
+			exit(code);
 		}
+		else if (count_line(cmd) > 2)
+			exit_err(shell);
 		else if (cmd[1] && !cmd[2])
 			exit_code(shell, cmd);
-		else if (cmd[1] && cmd[2])
-			exit_err(shell, 1, "too many arguments");
 	}
 	else if (cmd[1] && !cmd[2])
 		exit_code_in_pipes(shell, cmd[1]);
 }
 
-void	exit_err(t_shell *shell, int code, char *mess)
+void	exit_err(t_shell *shell)
 {
-	err_message(shell->cmd->full_cmd[0], shell->cmd->full_cmd[1], mess);
+	int	n;
+	int	code;
+
+	n = count_line(shell->cmd->full_cmd);
+	if (is_exit_correct(shell, shell->cmd->full_cmd[1], 0))
+	{
+		code = 2;
+		err_message(shell->cmd->full_cmd[0], shell->cmd->full_cmd[1], "numeric argument required");
+	}
+	else if (n > 2)
+	{
+		code = 1;
+		shell->last_status = code;
+		err_message(shell->cmd->full_cmd[0], NULL, "too many arguments");
+		fprintf(stderr, "code = %d\n", code);
+		return ;
+	}
 	cleanup_all(shell);
 	free(shell->input);
 	free_array(shell->envp);
 	free(shell);
+	fprintf(stderr, "code = %d\n", code);
 	exit(code);
 }
 
@@ -50,12 +71,9 @@ void	exit_code(t_shell *shell, char **args)
 
 	code = 0;
 	if (!is_exit_correct(shell, args[1], 0))
-	{
 		code = shell->last_status;
-		fprintf(stderr, "code = %d\n", code);
-	}
 	else
-		exit_err(shell, 2, "numeric argument required");
+		exit_err(shell);
 	cleanup_all(shell);
 	free(shell->input);
 	free_array(shell->envp);
@@ -67,20 +85,43 @@ void	exit_code(t_shell *shell, char **args)
 void	exit_code_in_pipes(t_shell *shell, char *arg)
 {
 	char	*code_str;
+	int		code;
 
 	code_str = ft_strdup_track(shell, arg);
 	if (!code_str)
 		err_exit(shell, "Memory allocation failed");
 	if (!is_exit_correct(shell, arg, 0))
-		shell->last_status = ft_atoi(code_str);
+		code = ft_atoi(code_str);
 	else
-		shell->last_status = 255;
-	fprintf(stderr, "%d\n", shell->last_status);
+		code = 255;
+	fprintf(stderr, "%d\n", code);
 	cleanup_all(shell);
 	free(shell->input);
 	free_array(shell->envp);
 	free(shell);
-	exit(shell->last_status);
+	exit(code);
+}
+
+int	test_max_min(char *arg)
+{
+	unsigned long long	max;
+	long long			min;
+
+	if (arg[0] == '-')
+	{
+		min = ft_atol(arg);
+		fprintf(stderr, "min = %lld\n", min);
+		if (min < LLONG_MIN)
+			return (1);
+	}
+	else
+	{
+		max = ft_atol(arg);
+		if (max > LLONG_MAX)
+			return (1);
+	}
+	perror("here");
+	return (0);
 }
 
 int	is_exit_correct(t_shell *shell, char *arg, int i)
@@ -90,13 +131,12 @@ int	is_exit_correct(t_shell *shell, char *arg, int i)
 
 	ret = 0;
 	sign = 0;
-	if (arg[i] == '+')
+	if (test_max_min(arg))
+		return (1);
+	if (arg[i] == '+' || arg[i] == '=')
 		i++;
-	if (arg[i] == '-')
-	{
-		i++;
+	if (arg[0] == '-')
 		sign = -1;
-	}
 	while (arg[i])
 	{
 		if (arg[i] < '0' || arg[i] > '9')
@@ -106,7 +146,7 @@ int	is_exit_correct(t_shell *shell, char *arg, int i)
 			ret %= 256;
 		i++;
 	}
-	if (sign == -1)
+	if (sign == -1 && ret)
 		ret = 256 - ret;
 	shell->last_status = ret;
 	return (0);
