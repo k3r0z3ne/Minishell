@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/20 14:05:21 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/20 20:37:03 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,36 +104,34 @@ void	exit_code_in_pipes(t_shell *shell, char *arg)
 
 int	test_max_min(char *arg)
 {
-	unsigned long long	max;
-	long long			min;
+	long	max;
+	long	min;
 
 	if (arg[0] == '-')
 	{
 		min = ft_atol(arg);
-		fprintf(stderr, "min = %lld\n", min);
-		if (min < LLONG_MIN)
+		if (min >= 0 && min <= LLONG_MAX)
 			return (1);
 	}
 	else
 	{
 		max = ft_atol(arg);
-		if (max > LLONG_MAX)
+		if (max <= 0 && max >= LLONG_MIN)
 			return (1);
 	}
-	perror("here");
 	return (0);
 }
 
 int	is_exit_correct(t_shell *shell, char *arg, int i)
 {
-	int	ret;
-	int	sign;
+	long	ret;
+	int		sign;
 
 	ret = 0;
 	sign = 0;
 	if (test_max_min(arg))
 		return (1);
-	if (arg[i] == '+' || arg[i] == '=')
+	if (arg[i] == '+' || arg[i] == '-')
 		i++;
 	if (arg[0] == '-')
 		sign = -1;
