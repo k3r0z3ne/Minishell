@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 20:03:58 by arotondo          #+#    #+#             */
+/*   Updated: 2025/02/21 20:04:20 by arotondo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTILS_H
 # define UTILS_H
 
@@ -6,7 +18,7 @@
 typedef struct s_clean
 {
 	void			*ptr;
-	struct	s_clean	*next;
+	struct s_clean	*next;
 }			t_clean;
 
 /* global utils */
@@ -22,7 +34,7 @@ void	free_array(char **array);
 
 /* gc */
 char	*ft_strdup_track(t_shell *shell, char *src);
-char	*ft_substr_track(t_shell *shell, char const *s, unsigned int start, size_t len);
+char	*ft_substr_track(t_shell *shell, char *s, unsigned int start, size_t n);
 char	*ft_strjoin_track(t_shell *shell, const char *s1, const char *s2);
 void	*tracked_malloc(t_shell *shell, size_t size);
 void	cleanup_all(t_shell *shell);

@@ -6,17 +6,17 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 16:47:33 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:38:41 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
 // renvoie 1 si ouvert et 0 si ferme ou invalide
-int is_fd_open(int fd)
-{
-	return fcntl(fd, F_GETFD) != -1;
-}
+// int	is_fd_open(int fd)
+// {
+// 	return (fcntl(fd, F_GETFD) != -1);
+// }
 
 int	setup_old_pipe(t_shell *shell, t_exec *exec)
 {
@@ -35,39 +35,45 @@ int	setup_old_pipe(t_shell *shell, t_exec *exec)
 	return (0);
 }
 
+static void	sig_handler(t_shell *shell, int *status, int print_sigquit)
+{
+	int	signal;
+
+	if (WIFEXITED(*status))
+		shell->last_status = WEXITSTATUS(*status);
+	else if (WIFSIGNALED(*status))
+	{
+		signal = WTERMSIG(*status);
+		if (!print_sigquit && signal == SIGQUIT)
+		{
+			ft_putstr_fd("Quit (core dumped)\n", 2);
+			print_sigquit = 1;
+		}
+		if (signal == SIGINT)
+			write(2, "\n", 1);
+		shell->last_status = 128 + WTERMSIG(*status);
+		fprintf(stderr, "last status = %d\n", shell->last_status);
+	}
+}
+
 int	wait_process(t_shell *shell, int n)
 {
 	int	i;
 	int	status;
-	int	signal;
-	int	print_sigquit;
+	int	print_siqguit;
 
 	if (!shell || !shell->exec || !shell->exec->pids)
 		return (-1);
 	i = 0;
 	status = 0;
-	print_sigquit = 0;
+	print_siqguit = 0;
 	while (i < n)
 	{
 		if (shell->exec->pids[i] > 0)
 		{
 			if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 				err_exit(shell, "waitpid failed");
-			if (WIFEXITED(status))
-				shell->last_status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-			{
-				signal = WTERMSIG(status);
-				if (!print_sigquit && signal == SIGQUIT)
-				{
-					ft_putstr_fd("Quit (core dumped)\n", 2);
-					print_sigquit = 1;
-				}
-				if (signal == SIGINT)
-					write(2, "\n", 1);
-				shell->last_status = 128 + WTERMSIG(status);
-				fprintf(stderr, "last status = %d\n", shell->last_status);
-			}
+			sig_handler(shell, &status, print_siqguit);
 		}
 		i++;
 	}

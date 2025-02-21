@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/12 15:09:49 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:26:38 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ char	*find_path(t_shell *shell)
 	int	i;
 
 	i = 0;
-	if (!shell->envp || shell->envp[0] == NULL || ft_strlen(shell->envp[0]) == 0)
+	if (!shell->envp || shell->envp[0] == NULL || \
+	ft_strlen(shell->envp[0]) == 0)
 		return ("");
 	while (ft_strnstr(shell->envp[i], "PATH=", 5) == NULL)
 		i++;

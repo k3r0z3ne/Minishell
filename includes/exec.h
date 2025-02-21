@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 20:03:23 by arotondo          #+#    #+#             */
+/*   Updated: 2025/02/21 20:03:48 by arotondo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXEC_H
 # define EXEC_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 /* execution */
 void	exec_cmd(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 18:34:23 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:15:32 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_exit(t_shell *shell, char **cmd)
 	int	code;
 
 	code = 0;
-	// fprintf(stderr, "cmd[0] = %s\n", shell->cmd->full_cmd[0]);
 	if (!ft_strcmp(cmd[0], "exit") && !cmd[1])
 	{
 		code = shell->last_status;
@@ -25,7 +24,6 @@ void	ft_exit(t_shell *shell, char **cmd)
 		free(shell->input);
 		free_array(shell->envp);
 		free(shell);
-		fprintf(stderr, "%d\n", code);
 		exit(code);
 	}
 	if (shell->exec->if_pipe == false)
@@ -52,7 +50,6 @@ void	exit_code(t_shell *shell, char **args)
 	free(shell->input);
 	free_array(shell->envp);
 	free(shell);
-	fprintf(stderr, "code = %d\n", code);
 	exit(code);
 }
 
@@ -73,6 +70,5 @@ void	exit_code_in_pipes(t_shell *shell, char **arg)
 	free(shell->input);
 	free_array(shell->envp);
 	free(shell);
-	fprintf(stderr, "%d\n", code);
 	exit(code);
 }

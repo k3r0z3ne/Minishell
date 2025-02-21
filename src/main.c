@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 16:47:21 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:07:22 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	shell_main_loop(t_shell *shell)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_shell *shell;
+	t_shell	*shell;
 
 	shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!shell)

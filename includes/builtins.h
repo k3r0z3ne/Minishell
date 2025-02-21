@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 20:04:33 by arotondo          #+#    #+#             */
+/*   Updated: 2025/02/21 20:04:42 by arotondo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include "minishell.h"
-#include "exec.h"
+# include "minishell.h"
+# include "exec.h"
 
 /* cd */
 int		ft_cd(t_shell *shell, char *path);
@@ -10,7 +22,6 @@ int		ft_cd(t_shell *shell, char *path);
 /* cd_utils */
 void	go_prev_dir(char **envp);
 void	update_pwd(t_shell *shell);
-
 
 /* echo */
 void	apply_flag(bool flag);
@@ -37,6 +48,7 @@ int		ft_export(t_shell *shell);
 void	sort_array(char **array);
 void	ft_env_export(char **envp);
 char	**ft_realloc_array(char **old_envp, int new_size);
+char	*get_var_name(t_shell *shell, char *str);
 int		is_valid_var(char *str);
 
 /* pwd */

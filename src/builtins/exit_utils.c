@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:38:23 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/21 17:25:10 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:22:03 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	exit_err(t_shell *shell)
 	if (is_exit_correct(shell, shell->cmd->full_cmd[1], 0))
 	{
 		code = 2;
-		err_message(shell->cmd->full_cmd[0], shell->cmd->full_cmd[1], "numeric argument required");
+		err_message(shell->cmd->full_cmd[0], shell->cmd->full_cmd[1], \
+		"numeric argument required");
 	}
 	else if (n > 2)
 	{

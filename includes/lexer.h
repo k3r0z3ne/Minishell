@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 19:59:28 by arotondo          #+#    #+#             */
+/*   Updated: 2025/02/21 20:00:00 by arotondo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LEXER_H
 # define LEXER_H
 
@@ -39,7 +51,7 @@ typedef struct s_lexer
 	char	quote;
 }	t_lexer;
 
-typedef struct s_shell t_shell;
+typedef struct s_shell	t_shell;
 
 /* lexer */
 t_token	*lexer(char *line, t_shell *shell);

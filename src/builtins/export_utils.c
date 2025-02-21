@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:58:53 by witong            #+#    #+#             */
-/*   Updated: 2025/02/04 22:32:07 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:24:24 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ void	sort_array(char **array)
 
 void	ft_env_export(char **envp)
 {
-	int	i;
-	char **tmp;
+	int		i;
+	char	**tmp;
 
 	i = 0;
-
 	tmp = arraydup(envp);
 	sort_array(tmp);
 	while (tmp[i])
@@ -78,6 +77,18 @@ char	**ft_realloc_array(char **old_envp, int new_size)
 		new_envp[i++] = NULL;
 	free(old_envp);
 	return (new_envp);
+}
+
+char	*get_var_name(t_shell *shell, char *str)
+{
+	int		i;
+	char	*name;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	name = ft_substr_track(shell, str, 0, i);
+	return (name);
 }
 
 int	is_valid_var(char *str)

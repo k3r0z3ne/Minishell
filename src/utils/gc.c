@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:12:07 by witong            #+#    #+#             */
-/*   Updated: 2025/02/19 12:03:56 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:56:40 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_strdup_track(t_shell *shell, char *src)
 	return (dup);
 }
 
-char	*ft_substr_track(t_shell *shell, char const *s, unsigned int start, size_t len)
+char	*ft_substr_track(t_shell *shell, char *s, unsigned int start, size_t n)
 {
 	char	*str;
 	size_t	i;
@@ -85,15 +85,15 @@ char	*ft_substr_track(t_shell *shell, char const *s, unsigned int start, size_t 
 		return (NULL);
 	if (start >= ft_strlen(s))
 		return (ft_strdup_track(shell, ""));
-	if (len >= ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	str = tracked_malloc(shell, sizeof(char) * (len + 1));
+	if (n >= ft_strlen(s) - start)
+		n = ft_strlen(s) - start;
+	str = tracked_malloc(shell, sizeof(char) * (n + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (i < len)
+	while (i < n)
 		str[i++] = s[start++];
-	str[len] = '\0';
+	str[n] = '\0';
 	return (str);
 }
 
@@ -105,7 +105,8 @@ char	*ft_strjoin_track(t_shell *shell, const char *s1, const char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = (char *)tracked_malloc(shell, sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = (char *)tracked_malloc(shell, sizeof(char) * \
+	(ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
