@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/19 12:35:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:18:10 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ static void shell_main_loop(t_shell *shell)
 		shell->input = readline("minishell> ");
 		// fprintf(stderr, "input = %s\n", shell->input);
 		// shell->input = my_readline(shell, "minishell> ");
+		if (g_signal)
+		{
+			shell->last_status = 128 + g_signal;
+			g_signal = 0;
+		}
 		if (!shell->input)
 		{
 			fprintf(stderr, "%d\n", shell->last_status);

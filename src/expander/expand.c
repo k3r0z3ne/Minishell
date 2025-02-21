@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/02/18 17:21:56 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/21 16:40:00 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	case_return(t_shell *shell, char **result)
 		if (!exit_status_str)
 			return ;
 		*result = ft_strjoin_track(shell, *result, exit_status_str);
+		free(exit_status_str);
 }
 
 static int	get_var_len(char *value)
