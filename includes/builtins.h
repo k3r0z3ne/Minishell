@@ -13,8 +13,8 @@ void	update_pwd(t_shell *shell);
 
 
 /* echo */
-void	apply_flag(int flag);
-int		check_flag(char **flag, int *idx);
+void	apply_flag(bool flag);
+bool	check_flag(char **flag, int *idx);
 int		ft_echo(int nb, char **arg, char **envp);
 
 /* env */
@@ -23,7 +23,7 @@ int		ft_env(char **envp);
 /* exit */
 void	ft_exit(t_shell *shell, char **cmd);
 void	exit_code(t_shell *shell, char **args);
-void	exit_code_in_pipes(t_shell *shell, char *arg);
+void	exit_code_in_pipes(t_shell *shell, char **arg);
 
 /* exit_utils */
 int		test_max_min(char *arg);

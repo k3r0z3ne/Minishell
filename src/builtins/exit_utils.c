@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:38:23 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/21 16:32:20 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:25:10 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	exit_err(t_shell *shell)
 	int	code;
 
 	n = count_line(shell->cmd->full_cmd);
+	fprintf(stderr, "n = %d\n", n);
 	code = 0;
 	if (is_exit_correct(shell, shell->cmd->full_cmd[1], 0))
 	{
