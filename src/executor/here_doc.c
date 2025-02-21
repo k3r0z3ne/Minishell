@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/21 16:26:18 by witong           ###   ########.fr       */
+/*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
+/*   Updated: 2025/02/21 19:39:50 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/exec.h"
 
@@ -81,11 +80,11 @@ void	redir_heredoc(t_shell *shell, char *file)
 		if (shell->exec->cmd_count)
 		{
 			if (shell->cmd->hd_count)
-			shell->exec->infile = open(shell->cmd->last_file, O_RDONLY, 0664);
+				shell->exec->infile = open(shell->cmd->last_file, 00, 0664);
 			if (shell->exec->infile < 0)
-			err_exit(shell, "error opening file");
+				err_exit(shell, "error opening file");
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-			err_exit(shell, "dup2 failed");
+				err_exit(shell, "dup2 failed");
 		}
 		close(shell->exec->infile);
 		unlink(shell->cmd->last_file);

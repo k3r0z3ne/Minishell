@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:57:25 by witong            #+#    #+#             */
-/*   Updated: 2025/02/02 14:25:29 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:21:07 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ static char	*join_path_to_env(char *env_var, char *new_path)
 
 static int	find_replace_entry(t_shell *shell, char *env_var, char *new_entry)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (shell->envp[i])
 	{
-		if (ft_strncmp(shell->envp[i], env_var, ft_strlen(env_var)) == 0
-				&& shell->envp[i][ft_strlen(env_var)] == '=')
+		if (ft_strncmp(shell->envp[i], env_var, ft_strlen(env_var)) == 0 \
+			&& shell->envp[i][ft_strlen(env_var)] == '=')
 		{
 			free(shell->envp[i]);
 			shell->envp[i] = new_entry;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   lexer_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2025/01/14 15:32:03 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:12:37 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_token	*create_token(t_shell *shell, t_type type, char *value)
 
 void	token_add_back(t_token **list, t_token *new_token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!list || !new_token)
 		return ;
@@ -53,7 +53,7 @@ void	token_add_back(t_token **list, t_token *new_token)
 
 void	print_tokens(t_token *head)
 {
-	t_token *current;
+	t_token	*current;
 
 	if (!head)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 18:37:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:29:56 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	make_pipes(t_shell *shell)
 	{
 		if (pipe(shell->exec->pipe) < 0)
 			err_exit(shell, "Creation pipe failed");
-		fprintf(stderr, "pipe[0] = %d\n", shell->exec->pipe[0]);
-		fprintf(stderr, "pipe[1] = %d\n", shell->exec->pipe[1]);
+		// fprintf(stderr, "pipe[0] = %d\n", shell->exec->pipe[0]);
+		// fprintf(stderr, "pipe[1] = %d\n", shell->exec->pipe[1]);
 		shell->exec->if_pipe = true;
 	}
 	return (0);

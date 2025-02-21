@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 20:00:09 by arotondo          #+#    #+#             */
+/*   Updated: 2025/02/21 20:01:00 by arotondo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
-typedef struct s_shell t_shell;
-typedef struct s_cmd t_cmd;
-typedef struct s_exec t_exec;
-typedef struct s_redir t_redir;
+# include "minishell.h"
 
-#include "minishell.h"
+typedef struct s_shell	t_shell;
+typedef struct s_cmd	t_cmd;
+typedef struct s_exec	t_exec;
+typedef struct s_redir	t_redir;
 
 /* parser */
 void	parser(t_shell *shell);
@@ -29,10 +41,10 @@ int		is_redirection3(t_type type);
 int		is_redirection2(t_type type);
 int		is_word(t_type type);
 int		token_len(t_token *tokens);
-void 	unexpected_token(t_shell *shell, t_token **tokens);
-bool	validate_command(t_shell *shell);
+void	unexpected_token(t_shell *shell, t_token **tokens);
 
 /* parser_error */
 bool	parser_error(t_token **tokens);
+bool	validate_command(t_shell *shell);
 
 #endif
