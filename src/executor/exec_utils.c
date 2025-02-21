@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 18:36:18 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:16:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ int	wait_process(t_shell *shell, int n)
 	int	i;
 	int	status;
 	int	signal;
-	int	exit_status;
 	int	print_sigquit;
 
 	if (!shell || !shell->exec || !shell->exec->pids)
 		return (-1);
 	i = 0;
 	status = 0;
-	exit_status = 0;
 	print_sigquit = 0;
 	while (i < n)
 	{
@@ -68,11 +66,12 @@ int	wait_process(t_shell *shell, int n)
 				if (signal == SIGINT)
 					write(2, "\n", 1);
 				shell->last_status = 128 + WTERMSIG(status);
+				fprintf(stderr, "last status = %d\n", shell->last_status);
 			}
 		}
 		i++;
 	}
-	return (exit_status);
+	return (shell->last_status);
 }
 
 int	count_cmd(t_cmd *cmd)

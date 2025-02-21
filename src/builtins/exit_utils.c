@@ -3,12 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:38:23 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/20 20:38:31 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/21 16:32:20 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+int	test_max_min(char *arg)
+{
+	long	max;
+	long	min;
+
+	if (arg[0] == '-')
+	{
+		if (ft_strlen(arg) > 20)
+			return (1);
+		min = ft_atol(arg);
+		if (min >= 0 && min <= LLONG_MAX)
+			return (1);
+	}
+	else
+	{
+		if (ft_strlen(arg) > 19)
+			return (1);
+		max = ft_atol(arg);
+		if (max <= 0 && max >= LLONG_MIN)
+			return (1);
+	}
+	return (0);
+}
+
+int	is_exit_correct(t_shell *shell, char *arg, int i)
+{
+	long	ret;
+	int		sign;
+
+	ret = 0;
+	sign = 0;
+	if (test_max_min(arg))
+		return (1);
+	if (arg[i] == '+' || arg[i] == '-')
+		i++;
+	if (arg[0] == '-')
+		sign = -1;
+	while (arg[i])
+	{
+		if (arg[i] < '0' || arg[i] > '9')
+			return (1);
+		ret = (ret * 10) + arg[i] - 48;
+		if (ret > 255)
+			ret %= 256;
+		i++;
+	}
+	if (sign == -1 && ret)
+		ret = 256 - ret;
+	shell->last_status = ret;
+	return (0);
+}
+
+void	exit_err(t_shell *shell)
+{
+	int	n;
+	int	code;
+
+	n = count_line(shell->cmd->full_cmd);
+	code = 0;
+	if (is_exit_correct(shell, shell->cmd->full_cmd[1], 0))
+	{
+		code = 2;
+		err_message(shell->cmd->full_cmd[0], shell->cmd->full_cmd[1], "numeric argument required");
+	}
+	else if (n > 2)
+	{
+		code = 1;
+		shell->last_status = code;
+		err_message(shell->cmd->full_cmd[0], NULL, "too many arguments");
+		return ;
+	}
+	cleanup_all(shell);
+	free(shell->input);
+	free_array(shell->envp);
+	free(shell);
+	exit(code);
+}
