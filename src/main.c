@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 15:45:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:47:21 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ static void	shell_main_loop(t_shell *shell)
 		setup_signals(shell);
 		shell->input = readline("minishell> ");
 		// shell->input = my_readline(shell, "minishell> ");
+		if (g_signal)
+		{
+			shell->last_status = 128 + g_signal;
+			g_signal = 0;
+		}
 		if (!shell->input)
 		{
 			fprintf(stderr, "%d\n", shell->last_status);

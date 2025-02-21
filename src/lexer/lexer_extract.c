@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2025/02/12 15:47:10 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:47:04 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static char	*extract_quote(char *line, t_shell *shell, t_lexer *lexer)
 	if (!line[lexer->j] || line[lexer->j] != quote)
 	{
 		if (start == 1)
-			ft_putstr_fd("lexer: : command not found\n", 2);
+			ft_putstr_fd("minishell: : command not found\n", 2);
 		else
-			ft_putstr_fd("lexer: unclosed quotes\n", 2);
+			ft_putstr_fd("minishell: unclosed quotes\n", 2);
 		shell->last_status = 127;
 		lexer->error = 1;
 		return (NULL);
@@ -50,10 +50,7 @@ char	*extract_word(char *line, t_shell *shell, t_lexer *lexer)
 			lexer->j++;
 		if (line[lexer->j] == '\'' || line[lexer->j] == '"')
 		{
-			if (line[lexer->j] == '\'')
-				lexer->quote = '\'';
-			else
-				lexer->quote = '"';
+			lexer->quote = line[lexer->j];
 			tmp = extract_quote(line, shell, lexer);
 			if (!tmp)
 				return (NULL);

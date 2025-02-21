@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/19 12:54:41 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:26:18 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ int	interrupt_heredoc(t_shell *shell, char *line)
 {
 	if (g_signal)
 	{
+		shell->last_status = 128 + g_signal;
 		g_signal = -1;
-		shell->last_status = 130;
 		return (1);
 	}
 	else if (!line)
