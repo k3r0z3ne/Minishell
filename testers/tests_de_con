@@ -16,8 +16,8 @@ OK echo '"$USER"' should print "$USER". // bonus pour 101/100
 OK echo $USER$USER
 OK echo $USER"$USER"
 OK echo $USER'$USER'
-KO "'"$HOME"'"
-KO eee"$HOME     "eee
+OK "'"$HOME"'"
+OK eee"$HOME     "eee
 
 "echo hello" -> command not found
 echo -nnnnnnnnnnnnnnnnnnnnnnnnnn asdasdasdas --> asdasdasdas
@@ -33,3 +33,5 @@ segfault : <cat | wc
 << "" cat
 <<
 <<EOF
+
+^C return exit code 0 instead of 130

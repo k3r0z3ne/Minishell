@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:53:17 by witong            #+#    #+#             */
-/*   Updated: 2025/02/11 13:16:08 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:44:11 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_illegal_double(char c1, char c2)
 }
 static void	handle_illegal_single(char c, t_shell *shell, t_lexer *lexer)
 {
-	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
+	ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c, 2);
 	ft_putstr_fd("'\n", 2);
 	shell->last_status = 2;
@@ -39,7 +39,7 @@ static void	handle_illegal_single(char c, t_shell *shell, t_lexer *lexer)
 
 static void	handle_illegal_double(char c1, char c2, t_shell *shell, t_lexer *lexer)
 {
-	ft_putstr_fd("lexer: syntax error near unexpected token '", 2);
+	ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c1, 2);
 	ft_putchar_fd(c2, 2);
 	ft_putstr_fd("'\n", 2);
