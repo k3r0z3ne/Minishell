@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/02/11 13:12:49 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:42:44 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void check_special_cases(char *line, t_shell *shell, t_lexer *lexer)
 	if (((line[0] == '\'' && line[1] == '\'')
 			|| (line[0] == '"' && line[1] == '"')) && line[2] == '\0')
 	{
-		ft_putstr_fd("lexer: : command not found\n", 2);
+		ft_putstr_fd("minishell: : command not found\n", 2);
 		shell->last_status = 127;
 		lexer->error = 1;
 	}
@@ -33,9 +33,7 @@ static void check_special_cases(char *line, t_shell *shell, t_lexer *lexer)
 	}
 	else if (line[0] == '/')
 	{
-		ft_putstr_fd("lexer: ", 2);
-		write(2, line, ft_strlen(line));
-		ft_putstr_fd(": Is a directory\n", 2);
+		err_message(line, NULL, "Is a directory");
 		shell->last_status = 126;
 		lexer->error = 1;
 	}
