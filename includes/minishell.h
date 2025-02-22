@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 20:01:11 by arotondo          #+#    #+#             */
+/*   Updated: 2025/02/21 20:03:20 by arotondo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -24,10 +36,10 @@
 # include "builtins.h"
 # include "utils.h"
 
-typedef struct	s_shell t_shell;
-typedef struct	s_token t_token;
-typedef enum	e_type t_type;
-typedef struct	s_clean t_clean;
+typedef struct s_shell	t_shell;
+typedef struct s_token	t_token;
+typedef enum e_type		t_type;
+typedef struct s_clean	t_clean;
 
 /* redirections structure */
 typedef struct s_redir
@@ -83,6 +95,6 @@ typedef struct s_shell
 	t_clean	*clean;
 }			t_shell;
 
-extern int	g_signal;
+extern int				g_signal;
 
 #endif

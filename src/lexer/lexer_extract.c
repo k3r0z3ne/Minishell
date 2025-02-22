@@ -42,7 +42,7 @@ char	*extract_word(char *line, t_shell *shell, t_lexer *lexer)
 	char	*tmp;
 
 	ret = ft_strdup_track(shell, "");
-	while (line[lexer->j] && !ft_isspace(line[lexer->j])
+	while (line[lexer->j] && !ft_isspace(line[lexer->j]) \
 		&& !is_redirection(line[lexer->j]))
 	{
 		if (line[lexer->j] == '$' && line[lexer->j + 1]

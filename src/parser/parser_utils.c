@@ -12,6 +12,17 @@
 
 #include "../../includes/minishell.h"
 
+int	is_redirection3(t_type type)
+{
+	return (type == REDIRIN || type == REDIROUT || type == APPEND);
+}
+
+int	is_redirection2(t_type type)
+{
+	return (type == REDIRIN || type == REDIROUT || \
+	type == HEREDOC || type == APPEND);
+}
+
 int	is_word(t_type type)
 {
 	return (type == WORD || type == SINGLEQ || type == DOUBLEQ);
@@ -36,16 +47,16 @@ void	unexpected_token(t_shell *shell, t_token **tokens)
 {
 	if (!tokens || !*tokens)
 	{
-		ft_putstr_fd("minishell: syntax error \
-near unexpected token 'newline'\n", 2);
+		ft_putstr_fd \
+		("minishell: syntax error near unexpected token 'newline'\n", 2);
 		shell->last_status = 2;
 		return ;
 	}
-	else if (is_redirection2((*tokens)->type)
-		&& (!(*tokens)->next || !(*tokens)->next->value))
+	else if (is_redirection2((*tokens)->type) && (!(*tokens)->next \
+	|| !(*tokens)->next->value))
 	{
-		ft_putstr_fd("minishell: syntax error \
-near unexpected token 'newline'\n", 2);
+		ft_putstr_fd \
+		("minishell: syntax error near unexpected token 'newline'\n", 2);
 		shell->last_status = 2;
 		return ;
 	}
@@ -56,22 +67,4 @@ near unexpected token 'newline'\n", 2);
 		ft_putstr_fd((*tokens)->value, 2);
 	ft_putstr_fd("'\n", 2);
 	shell->last_status = 2;
-}
-
-bool	validate_command(t_shell *shell)
-{
-	int	i;
-
-	if (!shell || !shell->cmd || !shell->cmd->full_cmd)
-		return (false);
-	i = 0;
-	while (shell->cmd->full_cmd[i])
-	{
-		if (!shell->cmd->full_cmd[i][0])
-			return (false);
-		i++;
-	}
-	if (i == 0)
-		return (false);
-	return (true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 16:18:10 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:07:22 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,12 @@ int	g_signal = 0;
 // 	return (ret);
 // }
 
-static void shell_main_loop(t_shell *shell)
+static void	shell_main_loop(t_shell *shell)
 {
 	while (1)
 	{
 		setup_signals(shell);
 		shell->input = readline("minishell> ");
-		// fprintf(stderr, "input = %s\n", shell->input);
 		// shell->input = my_readline(shell, "minishell> ");
 		if (g_signal)
 		{
@@ -94,9 +93,9 @@ static void shell_main_loop(t_shell *shell)
 	}
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	t_shell *shell;
+	t_shell	*shell;
 
 	shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!shell)

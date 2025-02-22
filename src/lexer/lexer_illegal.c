@@ -14,8 +14,8 @@
 
 static int	is_illegal_single(char c)
 {
-	if (c == '\\' || c == ';' || c == '(' || c == ')'
-		|| c == '&' || c == '#' || c == '*' || c == '`'
+	if (c == '\\' || c == ';' || c == '(' || c == ')' \
+		|| c == '&' || c == '#' || c == '*' || c == '`' \
 		|| c == '{' || c == '}')
 		return (1);
 	return (0);
@@ -23,8 +23,8 @@ static int	is_illegal_single(char c)
 
 static int	is_illegal_double(char c1, char c2)
 {
-	if ((c1 == '&' && c2 == '&') || (c1 == '|' && c2 == '|')
-		|| (c1 == '$' && c2 == '$'))
+	if ((c1 == '&' && c2 == '&') || (c1 == '|' && c2 == '|') \
+	|| (c1 == '$' && c2 == '$'))
 		return (1);
 	return (0);
 }
@@ -58,8 +58,8 @@ void	check_illegal(char *line, t_shell *shell, t_lexer *lexer)
 		if (line[lexer->i + 1]
 			&& is_illegal_double(line[lexer->i], line[lexer->i + 1]))
 		{
-			handle_illegal_double(line[lexer->i],
-				line[lexer->i + 1], shell, lexer);
+			handle_ill_double(line[lexer->i], \
+			line[lexer->i + 1], shell, lexer);
 			break ;
 		}
 		else if (is_illegal_single(line[lexer->i]))

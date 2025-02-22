@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/14 14:37:11 by arotondo          #+#    #+#             */
+/*   Created: 2024/12/14 14:37:11 by witong            #+#    #+#             */
 /*   Updated: 2025/02/22 01:36:27 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -40,4 +40,22 @@ bool	parser_error(t_token **tokens)
 			|| !is_word((*tokens)->next->type)))
 		return (true);
 	return (false);
+}
+
+bool	validate_command(t_shell *shell)
+{
+	int	i;
+
+	if (!shell || !shell->cmd || !shell->cmd->full_cmd)
+		return (false);
+	i = 0;
+	while (shell->cmd->full_cmd[i])
+	{
+		if (!shell->cmd->full_cmd[i][0])
+			return (false);
+		i++;
+	}
+	if (i == 0)
+		return (false);
+	return (true);
 }

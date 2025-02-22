@@ -3,31 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 14:53:42 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:24:05 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*get_var_name(t_shell *shell, char *str)
-{
-	int	i;
-	char *name;
-
-	i = 0;
-	while(str[i] && str[i] != '=')
-		i++;
-	name = ft_substr_track(shell, str, 0, i);
-	return (name);
-}
-
 static int	find_env_var(char **envp, char *var_name)
 {
 	int	i;
-	int var_len;
+	int	var_len;
 
 	if (!envp || !var_name)
 		return (-1);
@@ -35,11 +23,9 @@ static int	find_env_var(char **envp, char *var_name)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], var_name, var_len) == 0
-				&& (envp[i][var_len] == '=' || envp[i][var_len] == '\0'))
-		{
+		if (ft_strncmp(envp[i], var_name, var_len) == 0 \
+		&& (envp[i][var_len] == '=' || envp[i][var_len] == '\0'))
 			return (i);
-		}
 		i++;
 	}
 	return (-1);
@@ -47,7 +33,7 @@ static int	find_env_var(char **envp, char *var_name)
 
 static void	add_to_env(t_shell *shell, char *arg)
 {
-	int env_size;
+	int		env_size;
 	char	**new_env;
 
 	env_size = 0;

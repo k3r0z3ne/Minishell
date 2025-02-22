@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:43:06 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 14:01:00 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:25:48 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static bool create_new_env(t_shell *shell, char **new_env, char *word, int wlen)
+static bool	create_new_env(t_shell *shell, char **new_env, char *word, int wlen)
 {
 	int		i;
 	int		j;
@@ -33,7 +33,7 @@ static bool create_new_env(t_shell *shell, char **new_env, char *word, int wlen)
 	return (unset);
 }
 
-static void free_env_array(char **env)
+static void	free_env_array(char **env)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ static void free_env_array(char **env)
 	free(env);
 }
 
-static bool unset_word(t_shell *shell, char *word, int wlen)
+static bool	unset_word(t_shell *shell, char *word, int wlen)
 {
 	char	**new_env;
 	bool	unset;
@@ -66,8 +66,8 @@ static bool unset_word(t_shell *shell, char *word, int wlen)
 
 int	ft_unset(t_shell *shell)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	bool	unset;
 
 	if (!shell || !shell->envp || !shell->cmd || !shell->cmd->full_cmd)
@@ -75,7 +75,7 @@ int	ft_unset(t_shell *shell)
 	i = 1;
 	j = 0;
 	unset = false;
-	while(shell->cmd->full_cmd[i])
+	while (shell->cmd->full_cmd[i])
 	{
 		// if (!is_valid_var(shell->cmd->full_cmd[i]))
 		// {
