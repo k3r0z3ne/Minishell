@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:02:33 by witong            #+#    #+#             */
-/*   Updated: 2025/01/18 10:58:05 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/22 01:17:38 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ t_type	check_double_ops(char *line, int i)
 		return (UNKNOWN);
 	return (UNKNOWN);
 }
-

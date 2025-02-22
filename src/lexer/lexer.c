@@ -6,13 +6,13 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 12:42:44 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/22 01:12:11 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void check_special_cases(char *line, t_shell *shell, t_lexer *lexer)
+static void	check_special_cases(char *line, t_shell *shell, t_lexer *lexer)
 {
 	if (((line[0] == '\'' && line[1] == '\'')
 			|| (line[0] == '"' && line[1] == '"')) && line[2] == '\0')
@@ -51,9 +51,9 @@ static void	process_token(char *line, t_shell *shell, t_lexer *lexer)
 		handle_word(line, shell, lexer);
 }
 
-t_token *lexer(char *line, t_shell *shell)
+t_token	*lexer(char *line, t_shell *shell)
 {
-	t_lexer lexer;
+	t_lexer	lexer;
 
 	if (!line || !*line)
 		return (NULL);
@@ -66,7 +66,7 @@ t_token *lexer(char *line, t_shell *shell)
 	{
 		process_token(lexer.expand_input, shell, &lexer);
 		if (lexer.error)
-			break;
+			break ;
 	}
 	if (lexer.error || !lexer.tokens)
 		return (NULL);

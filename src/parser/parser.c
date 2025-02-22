@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/02/12 15:49:32 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/22 12:57:29 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ static void	parse_redirs(t_shell *shell)
 	t_redir	*new_redir;
 
 	if (!shell || !shell->token || !shell->token->next)
-		return;
+		return ;
 	if (shell->token->type == HEREDOC)
 	{
-		shell->cmd->limiter[shell->cmd->i_hd] = ft_strdup_track(shell, shell->token->next->value);
-		// fprintf(stderr, "limiter = %s\n", shell->cmd->limiter[shell->cmd->i_hd]);
-		if (shell->token->next->type == SINGLEQ || shell->token->next->type == DOUBLEQ)
+		shell->cmd->limiter[shell->cmd->i_hd] \
+			= ft_strdup_track(shell, shell->token->next->value);
+		if (shell->token->next->type == SINGLEQ
+			|| shell->token->next->type == DOUBLEQ)
 			shell->cmd->is_quote = true;
 		shell->cmd->i_hd++;
 		shell->cmd->limiter[shell->cmd->i_hd] = NULL;

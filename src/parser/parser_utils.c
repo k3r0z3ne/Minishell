@@ -6,25 +6,17 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 10:23:35 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 13:24:34 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/22 01:41:08 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_redirection3(t_type type)
-{
-return (type == REDIRIN || type == REDIROUT || type == APPEND);
-}
-
-int	is_redirection2(t_type type)
-{
-	return (type == REDIRIN || type == REDIROUT || type == HEREDOC || type == APPEND);
-}
 int	is_word(t_type type)
 {
 	return (type == WORD || type == SINGLEQ || type == DOUBLEQ);
 }
+
 int	token_len(t_token *tokens)
 {
 	int		i;
@@ -44,13 +36,16 @@ void	unexpected_token(t_shell *shell, t_token **tokens)
 {
 	if (!tokens || !*tokens)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
+		ft_putstr_fd("minishell: syntax error \
+near unexpected token 'newline'\n", 2);
 		shell->last_status = 2;
 		return ;
 	}
-	else if (is_redirection2((*tokens)->type) && (!(*tokens)->next || !(*tokens)->next->value))
+	else if (is_redirection2((*tokens)->type)
+		&& (!(*tokens)->next || !(*tokens)->next->value))
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
+		ft_putstr_fd("minishell: syntax error \
+near unexpected token 'newline'\n", 2);
 		shell->last_status = 2;
 		return ;
 	}
