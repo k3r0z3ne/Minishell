@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:53:17 by witong            #+#    #+#             */
-/*   Updated: 2025/02/22 12:55:16 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/22 13:20:57 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	check_illegal(char *line, t_shell *shell, t_lexer *lexer)
 		if (line[lexer->i + 1]
 			&& is_illegal_double(line[lexer->i], line[lexer->i + 1]))
 		{
-			handle_ill_double(line[lexer->i], \
+			handle_illegal_double(line[lexer->i], \
 			line[lexer->i + 1], shell, lexer);
 			break ;
 		}

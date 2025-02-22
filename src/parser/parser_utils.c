@@ -6,22 +6,11 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 10:23:35 by witong            #+#    #+#             */
-/*   Updated: 2025/02/22 01:41:08 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/22 13:21:27 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_redirection3(t_type type)
-{
-	return (type == REDIRIN || type == REDIROUT || type == APPEND);
-}
-
-int	is_redirection2(t_type type)
-{
-	return (type == REDIRIN || type == REDIROUT || \
-	type == HEREDOC || type == APPEND);
-}
 
 int	is_word(t_type type)
 {
