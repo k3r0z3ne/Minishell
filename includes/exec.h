@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 20:03:48 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:56:07 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		count_heredoc(t_shell *shell);
 /* here_doc */
 char	*expand_heredoc(t_shell *shell, char *line);
 void	process_heredoc(t_shell *shell);
-void	loop_heredoc(t_shell *shell);
+int		loop_heredoc(t_shell *shell);
 void	redir_heredoc(t_shell *shell, char *file);
 int		interrupt_heredoc(t_shell *shell, char *line);
 
