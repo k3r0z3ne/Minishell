@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:25:07 by witong            #+#    #+#             */
-/*   Updated: 2025/02/05 12:41:22 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/22 01:39:18 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,49 +69,50 @@ void	end_redir(t_shell *shell)
 	}
 }
 
-void	print_redirs(t_cmd *cmd)
-{
-	t_cmd	*current;
-	t_redir	*redir;
-	int		j;
+// void	print_redirs(t_cmd *cmd)
+// {
+// 	t_cmd	*current;
+// 	t_redir	*redir;
+// 	int		j;
 
-	j = 0;
-	current = cmd;
-	while (current)
-	{
-		printf("Command[%d] Redirections:\n", j);
-		redir = current->redirs;
-		while (redir)
-		{
-			if (redir->type || redir->file)
-				printf("  Redir Type: %d, File: %s\n", redir->type, redir->file ? redir->file : "NULL");
-			else
-				printf("  Redir Type: NULL, File: NULL\n");
-			redir = redir->next;
-		}
-		current = current->next;
-		j++;
-	}
-}
+// 	j = 0;
+// 	current = cmd;
+// 	while (current)
+// 	{
+// 		printf("Command[%d] Redirections:\n", j);
+// 		redir = current->redirs;
+// 		while (redir)
+// 		{
+// 			if (redir->type || redir->file)
+// 				printf("  Redir Type: %d, File: %s\n", redir->type,
+// 				redir->file ? redir->file : "NULL");
+// 			else
+// 				printf("  Redir Type: NULL, File: NULL\n");
+// 			redir = redir->next;
+// 		}
+// 		current = current->next;
+// 		j++;
+// 	}
+// }
 
-void	print_table(t_cmd *cmd)
-{
-	t_cmd	*current;
-	int		i;
-	int		j;
+// void	print_table(t_cmd *cmd)
+// {
+// 	t_cmd	*current;
+// 	int		i;
+// 	int		j;
 
-	j = 0;
-	current = cmd;
-	while (current)
-	{
-		i = 0;
-		printf("Command[%d]:\n", j);
-		while (current->full_cmd[i])
-		{
-			printf("  Arg[%d]: %s\n", i, current->full_cmd[i]);
-			i++;
-		}
-		current = current->next;
-		j++;
-	}
-}
+// 	j = 0;
+// 	current = cmd;
+// 	while (current)
+// 	{
+// 		i = 0;
+// 		printf("Command[%d]:\n", j);
+// 		while (current->full_cmd[i])
+// 		{
+// 			printf("  Arg[%d]: %s\n", i, current->full_cmd[i]);
+// 			i++;
+// 		}
+// 		current = current->next;
+// 		j++;
+// 	}
+// }

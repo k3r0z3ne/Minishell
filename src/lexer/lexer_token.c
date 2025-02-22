@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:15 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:12:37 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 01:11:12 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ void	token_add_back(t_token **list, t_token *new_token)
 	new_token->prev = tmp;
 }
 
-void	print_tokens(t_token *head)
-{
-	t_token	*current;
-
-	if (!head)
-		return ;
-	current = head;
-	while (current)
-	{
-		printf("[%d:%s] -> ", current->type, current->value);
-		current = current->next;
-	}
-	printf("END\n");
-}
+// void	print_tokens(t_token *head)
+// {
+// 	t_token	*current;
+//
+// 	if (!head)
+// 		return ;
+// 	current = head;
+// 	while (current)
+// 	{
+// 		printf("[%d:%s] -> ", current->type, current->value);
+// 		current = current->next;
+// 	}
+// 	printf("END\n");
+// }

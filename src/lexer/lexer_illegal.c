@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_illegal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:53:17 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:18:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:55:16 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	handle_illegal_single(char c, t_shell *shell, t_lexer *lexer)
 	lexer->i++;
 }
 
-static void	handle_ill_double(char c1, char c2, t_shell *shell, t_lexer *lexer)
+static void	handle_illegal_double(char c1, char c2,
+	t_shell *shell, t_lexer *lexer)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 	ft_putchar_fd(c1, 2);
@@ -54,8 +55,8 @@ void	check_illegal(char *line, t_shell *shell, t_lexer *lexer)
 {
 	while (line[lexer->i])
 	{
-		if (line[lexer->i + 1] && \
-		is_illegal_double(line[lexer->i], line[lexer->i + 1]))
+		if (line[lexer->i + 1]
+			&& is_illegal_double(line[lexer->i], line[lexer->i + 1]))
 		{
 			handle_ill_double(line[lexer->i], \
 			line[lexer->i + 1], shell, lexer);

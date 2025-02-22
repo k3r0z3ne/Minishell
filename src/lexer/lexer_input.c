@@ -74,10 +74,7 @@ char	*add_spaces(t_shell *shell, t_lexer *lexer, char *line)
 			if (line[lexer->i] == '$' && !lexer->is_heredoc && lexer->quote != '\'')
 				expand_lexer(shell, lexer, line);
 			else
-			{
-				append_char(shell, lexer, line[lexer->i]);
-				lexer->i++;
-			}
+				append_char(shell, lexer, line[lexer->i++]);
 		}
 	}
 	return (lexer->expand_input);

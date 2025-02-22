@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:34:31 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:50:59 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:57:29 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static void	parse_redirs(t_shell *shell)
 		return ;
 	if (shell->token->type == HEREDOC)
 	{
-		shell->cmd->limiter[shell->cmd->i_hd] = \
-		ft_strdup_track(shell, shell->token->next->value);
-		if (shell->token->next->type == SINGLEQ || \
-			shell->token->next->type == DOUBLEQ)
+		shell->cmd->limiter[shell->cmd->i_hd] \
+			= ft_strdup_track(shell, shell->token->next->value);
+		if (shell->token->next->type == SINGLEQ
+			|| shell->token->next->type == DOUBLEQ)
 			shell->cmd->is_quote = true;
 		shell->cmd->i_hd++;
 		shell->cmd->limiter[shell->cmd->i_hd] = NULL;

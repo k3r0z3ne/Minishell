@@ -37,13 +37,13 @@ void	print_redirs(t_cmd *cmd);
 void	print_table(t_cmd *cmd);
 
 /* parser_utils */
-int		is_redirection3(t_type type);
-int		is_redirection2(t_type type);
 int		is_word(t_type type);
 int		token_len(t_token *tokens);
 void	unexpected_token(t_shell *shell, t_token **tokens);
 
 /* parser_error */
+int		is_redirection3(t_type type);
+int		is_redirection2(t_type type);
 bool	parser_error(t_token **tokens);
 bool	validate_command(t_shell *shell);
 
