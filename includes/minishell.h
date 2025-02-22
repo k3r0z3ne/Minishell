@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:01:11 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 20:03:20 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:00:29 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ typedef struct s_shell
 	t_clean	*clean;
 }			t_shell;
 
-extern int				g_signal;
+extern volatile sig_atomic_t	g_signal;
 
 #endif
