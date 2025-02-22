@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 16:29:56 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:06:21 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
+
+void	parent_pr(t_shell *shell)
+{
+	if (shell->exec->old_pipe != -1)
+		close(shell->exec->old_pipe);
+	if (shell->exec->last_cmd == false)
+	{	
+		close(shell->exec->pipe[1]);
+		shell->exec->old_pipe = shell->exec->pipe[0];
+	}
+	ft_exit(shell, shell->cmd->full_cmd);
+}
 
 pid_t	process(t_shell *shell)
 {

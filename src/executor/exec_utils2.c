@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:16:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 13:09:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 14:49:27 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_builtin(t_shell *shell)
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "exit"))
 		ft_exit(shell, shell->cmd->full_cmd);
 	if (shell->exec->cmd_count > 1)
-		exit(shell->last_status);
+		parent_pr(shell);
 }
 
 bool	is_builtin(t_shell *shell)

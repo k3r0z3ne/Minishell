@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:50:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:32:45 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,16 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 {
 	while (redir)
 	{
+		perror("redirection");
 		if (redir->type == REDIRIN || redir->type == HEREDOC)
 			if_infile(shell, exec, redir);
 		if_outfile(shell, exec, redir);
+		if (exec->last_cmd == false)
+		{
+			if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
+				err_exit(shell, "dup2j failed");
+			close(exec->pipe[0]);
+		}
 		redir = redir->next;
 	}
 	return (0);
@@ -26,6 +33,7 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 
 int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
+	perror("infile");
 	if (redir->type == HEREDOC)
 		process_heredoc(shell);
 	else if (redir->type == REDIRIN)

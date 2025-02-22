@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 19:15:32 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:41:48 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_exit(t_shell *shell, char **cmd)
 	int	code;
 
 	code = 0;
-	if (!ft_strcmp(cmd[0], "exit") && !cmd[1])
+	if (!cmd[1])
 	{
 		code = shell->last_status;
 		cleanup_all(shell);
@@ -57,7 +57,6 @@ void	exit_code_in_pipes(t_shell *shell, char **arg)
 {
 	int	code;
 
-	perror("here");
 	code = 0;
 	if (count_line(arg) > 2)
 		exit_err(shell);
