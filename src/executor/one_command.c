@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 19:27:36 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:26:47 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ pid_t	process1(t_shell *shell)
 		err_exit(shell, "Fork failed");
 	else if (!ret)
 	{
-		activate_ctrl_c(shell);
-		activate_ctrl_backslash(shell);
+		setup_child_signals(shell);
 		is_redir(shell, shell->cmd->redirs);
 		exec_cmd(shell);
 	}
