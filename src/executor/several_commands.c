@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/22 16:06:21 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/23 20:52:14 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	parent_pr(t_shell *shell)
 {
+	perror("parent");
 	if (shell->exec->old_pipe != -1)
 		close(shell->exec->old_pipe);
 	if (shell->exec->last_cmd == false)

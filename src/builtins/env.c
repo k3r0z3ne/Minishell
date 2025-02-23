@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:35:41 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 16:01:06 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:02:20 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_env(char **envp)
 	int	i;
 
 	if (!envp)
-		return (-1);
+		return (1);
 	i = 0;
 	while (envp[i])
 	{

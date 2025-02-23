@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/22 17:00:40 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/23 21:53:37 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ pid_t	process1(t_shell *shell)
 		err_exit(shell, "Fork failed");
 	else if (!ret)
 	{
-		activate_ctrl_c(shell);
-		activate_ctrl_backslash(shell);
 		redirection_check(shell, shell->exec);
 		is_redir(shell, shell->cmd->redirs);
+		activate_ctrl_c(shell);
+		activate_ctrl_backslash(shell);
 		if (is_builtin(shell) == true)
+		{
 			exec_builtin(shell);
+			// exit(shell->last_status);
+			ft_exit(shell, shell->cmd->full_cmd);
+		}
 		else
 			exec_cmd(shell);
 	}
@@ -40,6 +44,7 @@ int	only_cmd(t_shell *shell)
 		return (shell->last_status);
 	if (shell->exec->cmd_count != 0)
 	{
+		perror("pid");
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
 		if (!shell->exec->pids)
 			err_exit(shell, "Memory allocation failed");
@@ -88,6 +93,8 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 	{
 		if (tmp->type == REDIRIN)
 		{
+			if (shell->exec->infile <= 0)
+				err_exit(shell, "infile failed");
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
 				err_exit(shell, "dup2a failed");
 			close(shell->exec->infile);
@@ -95,6 +102,8 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 		else if (tmp->type == REDIROUT || tmp->type == APPEND)
 		{
 			perror("outfile");
+			if (shell->exec->outfile <= 0)
+				err_exit(shell, "infile failed");
 			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
 				err_exit(shell, "dup2b failed");
 			close(shell->exec->outfile);

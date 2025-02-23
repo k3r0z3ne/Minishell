@@ -29,16 +29,16 @@ GSETTINGS_SCHEMA_DIR_VSCODE_SNAP_ORIG=
 PAGER=less
 VSCODE_GIT_ASKPASS_MAIN=/snap/code/184/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
 LC_MONETARY=fr_FR.UTF-8
-MANAGERPID=3065
+MANAGERPID=2957
 VSCODE_GIT_ASKPASS_NODE=/snap/code/184/usr/share/code/code
-SYSTEMD_EXEC_PID=3520
+SYSTEMD_EXEC_PID=3465
 GSM_SKIP_SSH_AGENT_WORKAROUND=true
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-GIO_LAUNCHED_DESKTOP_FILE_PID=5110
+GIO_LAUNCHED_DESKTOP_FILE_PID=12410
 COLORTERM=truecolor
 DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
 LOGNAME=xenon
-JOURNAL_STREAM=9:43097
+JOURNAL_STREAM=9:25403
 _=/usr/bin/valgrind
 XDG_CONFIG_DIRS_VSCODE_SNAP_ORIG=/etc/xdg/xdg-ubuntu:/etc/xdg
 MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure
@@ -49,10 +49,10 @@ USERNAME=xenon
 TERM=xterm-256color
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
 WINDOWPATH=2
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/xenon/.local/bin
-SESSION_MANAGER=local/xenopc:@/tmp/.ICE-unix/3477,unix/xenopc:/tmp/.ICE-unix/3477
+PATH=/home/xenon/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/xenon/.local/bin:/home/xenon/.local/bin:/home/xenon/.local/bin
+SESSION_MANAGER=local/xenopc:@/tmp/.ICE-unix/3434,unix/xenopc:/tmp/.ICE-unix/3434
 GTK_EXE_PREFIX=/snap/code/184/usr
-INVOCATION_ID=b4e606544728479f9b5fe4b3b8abecee
+INVOCATION_ID=b3f1d498b8774c7db289d5e7846220ab
 PAPERSIZE=a4
 XDG_MENU_PREFIX=gnome-
 LC_ADDRESS=fr_FR.UTF-8
@@ -99,7 +99,3 @@ LC_PAPER=fr_FR.UTF-8
 MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
 GLIBCXX_FORCE_NEW=1
 LD_PRELOAD=/usr/libexec/valgrind/vgpreload_core-amd64-linux.so:/usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
-[?2004hminishell> ^C[?2004l
-
-[?2004hminishell> m[?2004l
-exit
