@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:04:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 20:04:42 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:10:12 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		ft_env(char **envp);
 
 /* exit */
 void	ft_exit(t_shell *shell, char **cmd);
+void	simple_exit(t_shell *shell, int code);
 void	exit_code(t_shell *shell, char **args);
 void	exit_code_in_pipes(t_shell *shell, char **arg);
 

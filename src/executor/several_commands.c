@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/23 20:52:14 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/24 21:13:28 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	parent_pr(t_shell *shell)
 {
-	perror("parent");
 	if (shell->exec->old_pipe != -1)
 		close(shell->exec->old_pipe);
-	if (shell->exec->last_cmd == false)
-	{	
+	if (shell->exec->last_cmd == false && shell->exec->pipe[1] != 0)
+	{
 		close(shell->exec->pipe[1]);
 		shell->exec->old_pipe = shell->exec->pipe[0];
 	}
@@ -36,8 +35,8 @@ pid_t	process(t_shell *shell)
 	{
 		activate_ctrl_c(shell);
 		activate_ctrl_backslash(shell);
-		setup_old_pipe(shell, shell->exec);
 		redirect_setup(shell, shell->exec, shell->cmd->redirs);
+		setup_old_pipe(shell, shell->exec);
 		if (is_builtin(shell) == true)
 			exec_builtin(shell);
 		else
@@ -47,7 +46,8 @@ pid_t	process(t_shell *shell)
 		close(shell->exec->old_pipe);
 	if (shell->exec->last_cmd == false)
 	{
-		close(shell->exec->pipe[1]);
+		if (close(shell->exec->pipe[1]) < 0)
+			perror("ERROR HERE2");
 		shell->exec->old_pipe = shell->exec->pipe[0];
 	}
 	return (ret);
@@ -79,8 +79,6 @@ int	make_pipes(t_shell *shell)
 	{
 		if (pipe(shell->exec->pipe) < 0)
 			err_exit(shell, "Creation pipe failed");
-		// fprintf(stderr, "pipe[0] = %d\n", shell->exec->pipe[0]);
-		// fprintf(stderr, "pipe[1] = %d\n", shell->exec->pipe[1]);
 		shell->exec->if_pipe = true;
 	}
 	return (0);

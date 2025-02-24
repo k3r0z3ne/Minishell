@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:01:11 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 20:03:20 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:29:16 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_exec
 	int		infile;
 	int		outfile;
 	int		cmd_count;
-	int		builtin_less;
 	int		pipe[2];
 	int		old_pipe;
 	pid_t	*pids;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/23 21:53:37 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/24 17:24:50 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ pid_t	process1(t_shell *shell)
 		if (is_builtin(shell) == true)
 		{
 			exec_builtin(shell);
-			// exit(shell->last_status);
 			ft_exit(shell, shell->cmd->full_cmd);
 		}
 		else
@@ -44,14 +43,14 @@ int	only_cmd(t_shell *shell)
 		return (shell->last_status);
 	if (shell->exec->cmd_count != 0)
 	{
-		perror("pid");
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
 		if (!shell->exec->pids)
 			err_exit(shell, "Memory allocation failed");
 	}
 	shell->exec->pids[0] = process1(shell);
 	ignore_ctrl_c(shell);
-	shell->last_status = wait_process(shell, shell->exec->builtin_less);
+	fprintf(stderr, "pid = %d\n", shell->exec->pids[0]);
+	shell->last_status = wait_process(shell, shell->exec->cmd_count);
 	return (shell->last_status);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:16:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/23 21:55:48 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/24 21:04:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ void	exec_builtin(t_shell *shell)
 		shell->last_status = ft_echo(count_line \
 		(shell->cmd->full_cmd), shell->cmd->full_cmd, shell->envp);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
-	{
-		if (!shell->cmd->full_cmd[1] || !shell->cmd->full_cmd[2])
-			shell->last_status = ft_cd(shell, shell->cmd->full_cmd[1]);
-		else
-			ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-	}
+		shell->last_status = ft_cd(shell, shell->cmd->full_cmd[1]);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
 		shell->last_status = ft_pwd(shell->argc);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "export"))

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 17:48:41 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:29:47 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	main_exec(t_shell *shell)
 
 	tty_fd = 0;
 	shell->exec->cmd_count = count_cmd(shell->cmd);
-	shell->exec->builtin_less = how_much_cmd(shell);
 	if (shell->exec->cmd_count > 1)
 		shell->last_status = several_cmds(shell);
 	else if (shell->exec->cmd_count == 1)
