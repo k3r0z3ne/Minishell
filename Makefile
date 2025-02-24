@@ -22,7 +22,7 @@ SRC =	main.c utils/init.c \
 		parser/parser_utils.c parser/parser_error.c \
 		expander/expand.c expander/expand_utils.c \
 		utils/global_utils.c utils/gc.c utils/signals.c \
-		utils/signals2.c utils/error.c
+		utils/error.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
