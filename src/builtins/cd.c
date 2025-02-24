@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 15:56:27 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:36:44 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	expand_tilde(char *path, char **envp)
+static int	expand_tilde(char *path, char **envp)
 {
 	char	*home;
 	char	*expanded_path;
@@ -20,26 +20,26 @@ static void	expand_tilde(char *path, char **envp)
 	home = ft_getenv("HOME", envp);
 	if (!home)
 	{
-		ft_putstr_fd("cd: HOME not set\n", 2);
-		return ;
+		err_message("cd", home, "HOME not set");
+		return (1);
 	}
 	else if (home && path[1] == '\0')
 	{
 		if (chdir(home) != 0)
-			perror("cd failed");
+			err_message("cd", path, strerror(errno));
 		printf("%s\n", home);
 	}
 	else
 	{
 		expanded_path = ft_strjoin2(home, &path[1]);
-		free(home);
 		if (chdir(expanded_path) != 0)
-			perror("cd failed");
+			err_message("cd", path, strerror(errno));
 		free(expanded_path);
 	}
+	return (0);
 }
 
-static void	relative_path(char *path, char **envp)
+static int	relative_path(char *path, char **envp)
 {
 	char	*tmp;
 	char	*go_path;
@@ -47,45 +47,62 @@ static void	relative_path(char *path, char **envp)
 	go_path = NULL;
 	tmp = ft_strjoin2(ft_getenv("PWD", envp), "/");
 	if (!tmp)
-		return ;
+		return (1);
 	go_path = ft_strjoin2(tmp, path);
 	if (!go_path)
-		return ;
+		return (1);
 	free(tmp);
 	if (chdir(go_path) != 0)
-		printf("minishell: cd: %s: %s\n", path, strerror(errno));
+	{
+		err_message("cd", path, strerror(errno));
+		free(go_path);
+		return (1);
+	}
 	free(go_path);
+	return (0);
 }
 
-static void	go_home(char **envp)
+static int	go_home(char **envp)
 {
 	char	*home;
 
 	home = ft_getenv("HOME", envp);
+	if (home[0] == '\0')
+		return (0);
 	if (!home)
 	{
-		ft_putstr_fd("cd: HOME not set\n", 2);
-		return ;
+		err_message("cd", home, "HOME not set");
+		return (1);
 	}
 	if (chdir(home) != 0)
-		printf("minishell: cd: %s: %s\n", home, strerror(errno));
+	{
+		err_message("cd", home, strerror(errno));
+		return (1);
+	}
+	return (0);
 }
 
 int	ft_cd(t_shell *shell, char *path)
 {
+	int	ret;
+
+	ret = 0;
 	if (!path)
-		go_home(shell->envp);
+		ret = go_home(shell->envp);
 	else if (path[0] == '/')
 	{
 		if (chdir(path) != 0)
-			perror("cd failed");
+		{
+			err_message("cd", path, strerror(errno));
+			ret = 1;
+		}
 	}
 	else if (path[0] == '~')
-		expand_tilde(path, shell->envp);
+		ret = expand_tilde(path, shell->envp);
 	else if (path[0] == '-')
-		go_prev_dir(shell->envp);
+		ret = go_prev_dir(shell->envp);
 	else
-		relative_path(path, shell->envp);
+		ret = relative_path(path, shell->envp);
 	update_pwd(shell);
-	return (0);
+	return (ret);
 }

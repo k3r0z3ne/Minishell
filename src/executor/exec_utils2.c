@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:16:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 13:09:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:21:54 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	exec_builtin(t_shell *shell)
 		if (!shell->cmd->full_cmd[1] || !shell->cmd->full_cmd[2])
 			shell->last_status = ft_cd(shell, shell->cmd->full_cmd[1]);
 		else
+		{
 			ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+			shell->last_status = 1;
+		}
 	}
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
 		shell->last_status = ft_pwd(shell->argc);
