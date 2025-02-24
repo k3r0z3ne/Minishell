@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:34:29 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 19:56:53 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:10:13 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_shell(t_shell *shell, int argc, char **argv, char **envp)
 
 void	init_pids(t_shell *shell)
 {
-	if (shell->exec->builtin_less != 0)
+	if (shell->exec->cmd_count != 0)
 	{
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t) * \
 		shell->exec->cmd_count);

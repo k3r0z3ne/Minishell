@@ -3,29 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 17:41:05 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/21 19:57:07 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:51:09 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
 
-int	err_exit(t_shell *shell, char *err_message)
+int	err_exit(t_shell *shell, int code)
 {
-	perror(err_message);
 	cleanup_all(shell);
 	free(shell->input);
 	free_array(shell->envp);
 	free(shell);
-	exit(EXIT_FAILURE);
-}
-
-int	err_return(char *err_message)
-{
-	perror(err_message);
-	return (1);
+	exit(code);
 }
 
 void	err_message(char *cmd, char *arg, char *mess)

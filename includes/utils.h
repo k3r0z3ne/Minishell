@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:58 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/23 12:31:30 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:52:23 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ void	setup_child_signals(t_shell *shell);
 void	ignore_ctrl_c(t_shell *shell);
 
 /* error */
-int		err_exit(t_shell *shell, char *err_message);
-int		err_return(char *err_message);
+int		err_exit(t_shell *shell, int code);
 void	err_message(char *cmd, char *arg, char *mess);
 
 #endif
