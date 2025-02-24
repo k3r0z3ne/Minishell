@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:04:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 20:04:42 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:09:17 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int		ft_cd(t_shell *shell, char *path);
 
 /* cd_utils */
-void	go_prev_dir(char **envp);
+int		go_prev_dir(char **envp);
 void	update_pwd(t_shell *shell);
 
 /* echo */

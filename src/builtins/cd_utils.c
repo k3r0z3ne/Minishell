@@ -3,25 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:57:25 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:21:07 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:08:21 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	go_prev_dir(char **envp)
+int	go_prev_dir(char **envp)
 {
 	char	*go_path;
 
 	go_path = ft_getenv("OLDPWD", envp);
 	if (!go_path)
-		return ;
+		return (1);
 	if (chdir(go_path) != 0)
-		fprintf(stderr, "minishell: cd: %s: %s\n", go_path, strerror(errno));
+	{
+		err_message("cd", go_path, strerror(errno));
+		return (1);
+	}
 	printf("%s\n", go_path);
+	return (0);
 }
 
 static char	*join_path_to_env(char *env_var, char *new_path)
