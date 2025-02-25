@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:39:01 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:20:06 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:20:07 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*ft_getenv(const char *name, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
+		if (!ft_strncmp(envp[i], name, len) && envp[i][len] == '=')
 			return (envp[i] + len + 1);
 		i++;
 	}

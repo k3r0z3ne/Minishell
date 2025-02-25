@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:38:23 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/21 19:22:03 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 14:38:09 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	test_max_min(char *arg)
 	long	max;
 	long	min;
 
+	if (!arg)
+		return (1);
 	if (arg[0] == '-')
 	{
 		if (ft_strlen(arg) > 20)

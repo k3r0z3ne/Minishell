@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:29:41 by arotondo          #+#    #+#             */
-/*   Updated: 2024/06/03 14:40:38 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:14:54 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static size_t	set_in(char c, char const *set)
 	{
 		if (set[i] == c)
 			return (1);
-	i++;
+		i++;
 	}
 	return (0);
 }
@@ -35,9 +35,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	start = 0;
 	while (set_in((s1[start]), set))
-	{
-	start++;
-	}
+		start++;
 	end = ft_strlen(s1) - 1;
 	while (end > start && set_in(((char)s1[end]), set))
 	{
@@ -50,12 +48,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ft_strlcpy(s2, (s1 + start), len + 1);
 	return (s2);
 }
-/*
-int	main(void)
-{
-	char const  *str = "aaaabMarieaaa";
-	char const  *to_trim = "aaa";
-
-	printf("trimed string = %s\n", ft_strtrim(str, to_trim));
-	return (0);
-}*/

@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/24 16:40:20 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/25 12:48:45 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ char	*find_path(t_shell *shell)
 		i++;
 	if (shell->envp[i] == NULL || shell->envp[i][0] == '\0')
 		return (NULL);
+	else if (i == count_line(shell->envp))
+		return (NULL);
+	// fprintf(stderr, "shell->envp[i] = %s\n", shell->envp[i]);
 	return (shell->envp[i]);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/23 12:26:47 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/25 12:25:39 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ pid_t	process1(t_shell *shell)
 	else if (!ret)
 	{
 		setup_child_signals(shell);
+		redirection_check(shell, shell->exec);
 		is_redir(shell, shell->cmd->redirs);
 		exec_cmd(shell);
 	}
@@ -30,7 +31,6 @@ pid_t	process1(t_shell *shell)
 
 int	only_cmd(t_shell *shell)
 {
-	redirection_check(shell, shell->exec);
 	count_fds(shell);
 	if (g_signal < 0)
 		return (shell->last_status);
@@ -89,12 +89,17 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 	{
 		if (tmp->type == REDIRIN)
 		{
+			if (shell->exec->infile <= 0)
+				err_exit(shell, "infile failed");
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
 				err_exit(shell, "dup2a failed");
 			close(shell->exec->infile);
 		}
 		else if (tmp->type == REDIROUT || tmp->type == APPEND)
 		{
+			perror("outfile");
+			if (shell->exec->outfile <= 0)
+				err_exit(shell, "infile failed");
 			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
 				err_exit(shell, "dup2b failed");
 			close(shell->exec->outfile);
