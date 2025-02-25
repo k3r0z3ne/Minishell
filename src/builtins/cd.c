@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/03 15:56:27 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:44:56 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ static void	go_home(char **envp)
 
 int	ft_cd(t_shell *shell, char *path)
 {
+	if (shell->cmd->full_cmd[1] && shell->cmd->full_cmd[2])
+	{
+		err_message("cd", NULL, "too many arguments");
+		return (1);
+	}
 	if (!path)
 		go_home(shell->envp);
 	else if (path[0] == '/')

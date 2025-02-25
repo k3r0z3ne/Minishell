@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:00:09 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 20:01:00 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:29:41 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	parser(t_shell *shell);
 
 /* parser_init */
 char	**malloc_full_cmd(t_shell *shell, int size);
-int		how_much_cmd(t_shell *shell);
 t_exec	*init_exec(t_shell *shell);
 t_cmd	*init_cmd(t_shell *shell, t_token *tokens);
 

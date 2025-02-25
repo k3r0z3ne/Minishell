@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/22 16:32:45 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/24 21:11:14 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 {
 	while (redir)
 	{
-		perror("redirection");
 		if (redir->type == REDIRIN || redir->type == HEREDOC)
 			if_infile(shell, exec, redir);
-		if_outfile(shell, exec, redir);
-		if (exec->last_cmd == false)
+		else if (redir->type == REDIROUT || redir->type == APPEND)
+			if_outfile(shell, exec, redir);
+		else if (exec->last_cmd == false && exec->pipe[0] > 0)
 		{
 			if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 				err_exit(shell, "dup2j failed");
@@ -33,7 +33,6 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 
 int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
-	perror("infile");
 	if (redir->type == HEREDOC)
 		process_heredoc(shell);
 	else if (redir->type == REDIRIN)
@@ -44,6 +43,8 @@ int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 		if (dup2(exec->infile, STDIN_FILENO) < 0)
 			err_exit(shell, "dup2a failed");
 		close(exec->infile);
+		close(exec->pipe[0]);
+		exec->pipe[0] = 0;
 	}
 	return (0);
 }

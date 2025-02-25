@@ -6,17 +6,17 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 19:38:41 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:12:20 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
 // renvoie 1 si ouvert et 0 si ferme ou invalide
-// int	is_fd_open(int fd)
-// {
-// 	return (fcntl(fd, F_GETFD) != -1);
-// }
+int	is_fd_open(int fd)
+{
+	return (fcntl(fd, F_GETFD) != -1);
+}
 
 int	setup_old_pipe(t_shell *shell, t_exec *exec)
 {
@@ -31,6 +31,7 @@ int	setup_old_pipe(t_shell *shell, t_exec *exec)
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
 			err_exit(shell, "dup2p failed");
 		close(exec->pipe[1]);
+		exec->pipe[1] = 0;
 	}
 	return (0);
 }
@@ -63,7 +64,7 @@ int	wait_process(t_shell *shell, int n)
 	int	print_siqguit;
 
 	if (!shell || !shell->exec || !shell->exec->pids)
-		return (-1);
+		return (1);
 	i = 0;
 	status = 0;
 	print_siqguit = 0;
