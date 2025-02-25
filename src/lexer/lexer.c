@@ -6,11 +6,20 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/02/22 01:12:11 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/25 15:38:54 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	is_directory(char *path)
+{
+	struct stat	statbuf;
+
+	if (stat(path, &statbuf) != 0)
+		return (0);
+	return (S_ISDIR(statbuf.st_mode));
+}
 
 static void	check_special_cases(char *line, t_shell *shell, t_lexer *lexer)
 {
@@ -31,7 +40,7 @@ static void	check_special_cases(char *line, t_shell *shell, t_lexer *lexer)
 		shell->last_status = 1;
 		lexer->error = 1;
 	}
-	else if (line[0] == '/')
+	else if (line[0] == '/' && is_directory(line))
 	{
 		err_message(line, NULL, "Is a directory");
 		shell->last_status = 126;

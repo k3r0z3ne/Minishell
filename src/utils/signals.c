@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/25 12:26:05 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/25 15:34:53 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	setup_signals(t_shell *shell)
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = 0;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-		err_exit(shell, "sigaction");
+		err_exit(shell, 1);
 	sa_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-		err_exit(shell, "sigaction");
+		err_exit(shell, 1);
 	rl_event_hook = check_signal;
 }
 
@@ -56,12 +56,12 @@ void	setup_child_signals(t_shell *shell)
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = 0;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-		err_exit(shell, "sigaction");
+		err_exit(shell, 1);
 	sa_quit.sa_handler = SIG_DFL;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-		err_exit(shell, "sigaction");
+		err_exit(shell, 1);
 }
 
 void	ignore_ctrl_c(t_shell *shell)
@@ -72,5 +72,5 @@ void	ignore_ctrl_c(t_shell *shell)
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = 0;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-		err_exit(shell, "sigaction");
+		err_exit(shell, 1);
 }

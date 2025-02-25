@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 14:34:29 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:49:14 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/25 15:31:08 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	init_pids(t_shell *shell)
 		shell->exec->cmd_count);
 		// fprintf(stderr, "cmd_count = %d\n", shell->exec->cmd_count);
 		if (!shell->exec->pids)
-			err_exit(shell, "Memory allocation failed");
+			err_exit(shell, 1);
 	}
 }
