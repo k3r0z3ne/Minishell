@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:04:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/24 15:09:17 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/25 12:17:28 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		ft_env(char **envp);
 
 /* exit */
 void	ft_exit(t_shell *shell, char **cmd);
+void	simple_exit(t_shell *shell, int code);
 void	exit_code(t_shell *shell, char **args);
 void	exit_code_in_pipes(t_shell *shell, char **arg);
 

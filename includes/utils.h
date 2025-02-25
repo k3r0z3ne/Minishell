@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:58 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/23 12:31:30 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/25 12:20:47 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	init_pids(t_shell *shell);
 void	setup_signals(t_shell *shell);
 void	setup_child_signals(t_shell *shell);
 void	ignore_ctrl_c(t_shell *shell);
+void	setup_child_signals(t_shell *shell);
 
 /* error */
 int		err_exit(t_shell *shell, char *err_message);

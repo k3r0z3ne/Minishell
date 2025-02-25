@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/19 12:50:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:11:14 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 	{
 		if (redir->type == REDIRIN || redir->type == HEREDOC)
 			if_infile(shell, exec, redir);
-		if_outfile(shell, exec, redir);
+		else if (redir->type == REDIROUT || redir->type == APPEND)
+			if_outfile(shell, exec, redir);
+		else if (exec->last_cmd == false && exec->pipe[0] > 0)
+		{
+			if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
+				err_exit(shell, "dup2j failed");
+			close(exec->pipe[0]);
+		}
 		redir = redir->next;
 	}
 	return (0);
@@ -36,6 +43,8 @@ int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 		if (dup2(exec->infile, STDIN_FILENO) < 0)
 			err_exit(shell, "dup2a failed");
 		close(exec->infile);
+		close(exec->pipe[0]);
+		exec->pipe[0] = 0;
 	}
 	return (0);
 }
