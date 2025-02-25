@@ -6,7 +6,7 @@
 /*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:47:54 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/25 18:38:13 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exec_cmd(t_shell *shell)
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
 	{
-		err_message(shell->cmd->full_cmd[0], NULL, "No such file or directory");
+		err_message(shell->cmd->full_cmd[0], NULL, "command not found");
 		err_exit(shell, 127);
 	}
 	execve(path, shell->cmd->full_cmd, shell->envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:04:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:17:28 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/25 17:29:09 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 /* cd */
 int		ft_cd(t_shell *shell, char *path);
+int		go_home(char **envp);
 
 /* cd_utils */
 int		go_prev_dir(char **envp);
