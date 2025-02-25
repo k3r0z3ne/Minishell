@@ -6,7 +6,7 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 11:51:45 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/25 12:14:46 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,10 @@ pid_t	process1(t_shell *shell)
 		err_exit(shell, "Fork failed");
 	else if (!ret)
 	{
+		setup_child_signals(shell);
 		redirection_check(shell, shell->exec);
 		is_redir(shell, shell->cmd->redirs);
-		activate_ctrl_c(shell);
-		activate_ctrl_backslash(shell);
-		if (is_builtin(shell) == true)
-		{
-			exec_builtin(shell);
-			ft_exit(shell, shell->cmd->full_cmd);
-		}
-		else
-			exec_cmd(shell);
+		exec_cmd(shell);
 	}
 	return (ret);
 }
@@ -41,16 +34,20 @@ int	only_cmd(t_shell *shell)
 	count_fds(shell);
 	if (g_signal < 0)
 		return (shell->last_status);
-	if (shell->exec->cmd_count != 0)
+	if (shell->exec->builtin_less != 0)
 	{
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
 		if (!shell->exec->pids)
 			err_exit(shell, "Memory allocation failed");
 	}
-	shell->exec->pids[0] = process1(shell);
-	ignore_ctrl_c(shell);
-	fprintf(stderr, "pid = %d\n", shell->exec->pids[0]);
-	shell->last_status = wait_process(shell, shell->exec->cmd_count);
+	if (is_builtin(shell) == true)
+		exec_builtin(shell);
+	else
+	{
+		shell->exec->pids[0] = process1(shell);
+		ignore_ctrl_c(shell);
+		shell->last_status = wait_process(shell, shell->exec->builtin_less);
+	}
 	return (shell->last_status);
 }
 

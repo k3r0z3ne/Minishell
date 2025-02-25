@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/24 21:13:28 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:14:55 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ pid_t	process(t_shell *shell)
 		err_exit(shell, "Fork failed");
 	else if (ret == 0)
 	{
-		activate_ctrl_c(shell);
-		activate_ctrl_backslash(shell);
+		setup_child_signals(shell);
 		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		setup_old_pipe(shell, shell->exec);
 		if (is_builtin(shell) == true)
