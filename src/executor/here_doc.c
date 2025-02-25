@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/22 17:55:24 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/25 14:35:38 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_heredoc(t_shell *shell)
 	char	*file_name;
 	char	*idx_tmp;
 	int		loop_status;
-
+ 
 	idx_tmp = ft_itoa(shell->cmd->i_hd);
 	file_name = ft_strjoin2(".heredoc_", idx_tmp);
 	free(idx_tmp);
@@ -39,14 +39,17 @@ void	process_heredoc(t_shell *shell)
 	if (shell->cmd->last_file)
 		free(shell->cmd->last_file);
 	shell->cmd->last_file = file_name;
-	loop_status = loop_heredoc(shell);
+	while (shell->cmd->i_hd < shell->cmd->hd_count)
+	{
+		loop_status = loop_heredoc(shell);
+		shell->cmd->i_hd++;
+	}
 	close(shell->exec->infile);
 	if (loop_status == 2)
 	{
 		unlink(file_name);
 		return ;
 	}
-	shell->cmd->i_hd++;
 	redir_heredoc(shell, file_name);
 }
 
@@ -61,10 +64,7 @@ int	loop_heredoc(t_shell *shell)
 		line = readline("> ");
 		status = interrupt_heredoc(shell, line);
 		if (status >= 1)
-		{
-			free(line);
-			return (status);
-		}
+			break ;
 		if (!shell->cmd->is_quote)
 		{
 			tmp = expand_heredoc(shell, line);
@@ -74,7 +74,8 @@ int	loop_heredoc(t_shell *shell)
 		if (shell->cmd->is_quote)
 			free(line);
 	}
-	return (0);
+	free(line);
+	return (status);
 }
 
 void	redir_heredoc(t_shell *shell, char *file)

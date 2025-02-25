@@ -6,16 +6,16 @@
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/02/25 12:03:39 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/25 17:05:02 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char **malloc_full_cmd(t_shell *shell, int size)
+char	**malloc_full_cmd(t_shell *shell, int size)
 {
-	char **full_cmd;
-	int i;
+	char	**full_cmd;
+	int	i;
 
 	full_cmd = (char **)tracked_malloc(shell, sizeof(char *) * (size + 1));
 	if (!full_cmd)
@@ -49,9 +49,9 @@ int	how_much_cmd(t_shell *shell)
 	return (ret);
 }
 
-t_exec *init_exec(t_shell *shell)
+t_exec	*init_exec(t_shell *shell)
 {
-	t_exec *exec;
+	t_exec	*exec;
 
 	exec = tracked_malloc(shell, sizeof(t_exec));
 	if (!exec)
@@ -66,9 +66,9 @@ t_exec *init_exec(t_shell *shell)
 	return (exec);
 }
 
-t_cmd *init_cmd(t_shell *shell, t_token *tokens)
+t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	if (!shell || !tokens)
 		return (NULL);
@@ -87,7 +87,7 @@ t_cmd *init_cmd(t_shell *shell, t_token *tokens)
 	cmd->prev = NULL;
 	cmd->hd_count = count_heredoc(shell);
 	if (cmd->hd_count > 0)
-		cmd->limiter = (char **)tracked_malloc(shell, sizeof(char *) *
+		cmd->limiter = (char **)tracked_malloc(shell, sizeof(char *) * \
 														  (cmd->hd_count + 1));
 	else
 		cmd->limiter = NULL;

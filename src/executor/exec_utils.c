@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/24 21:12:20 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:29:45 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	sig_handler(t_shell *shell, int *status, int *print_sigquit)
 		if (signal == SIGINT)
 			write(2, "\n", 1);
 		shell->last_status = 128 + signal;
-		fprintf(stderr, "last status = %d\n", shell->last_status);
+		// fprintf(stderr, "last status = %d\n", shell->last_status);
 	}
 }
 
