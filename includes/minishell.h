@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 20:01:11 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 11:59:22 by xenon            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/02/25 12:22:56 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -95,6 +96,6 @@ typedef struct s_shell
 	t_clean	*clean;
 }			t_shell;
 
-extern int				g_signal;
+extern volatile sig_atomic_t	g_signal;
 
 #endif

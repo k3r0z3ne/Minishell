@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/17 13:55:04 by witong            #+#    #+#             */
-/*   Updated: 2025/02/25 12:14:22 by xenon            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/02/25 12:26:05 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -73,9 +74,3 @@ void	ignore_ctrl_c(t_shell *shell)
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
 		err_exit(shell, "sigaction");
 }
-
-
-// Ajouter activate_ctrl_backslash et activate_ctrl_c au debut des childs
-// A AJOUTER A LA FIN DES CHILDS
-// if (WIFSIGNALED(status))
-// 	g_signal = WTERMSIG(status) + 128;

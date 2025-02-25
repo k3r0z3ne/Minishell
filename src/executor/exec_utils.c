@@ -36,7 +36,7 @@ int	setup_old_pipe(t_shell *shell, t_exec *exec)
 	return (0);
 }
 
-static void	sig_handler(t_shell *shell, int *status, int print_sigquit)
+static void	sig_handler(t_shell *shell, int *status, int *print_sigquit)
 {
 	int	signal;
 
@@ -45,14 +45,14 @@ static void	sig_handler(t_shell *shell, int *status, int print_sigquit)
 	else if (WIFSIGNALED(*status))
 	{
 		signal = WTERMSIG(*status);
-		if (!print_sigquit && signal == SIGQUIT)
+		if (!(*print_sigquit) && signal == SIGQUIT)
 		{
 			ft_putstr_fd("Quit (core dumped)\n", 2);
-			print_sigquit = 1;
+			*print_sigquit = 1;
 		}
 		if (signal == SIGINT)
 			write(2, "\n", 1);
-		shell->last_status = 128 + WTERMSIG(*status);
+		shell->last_status = 128 + signal;
 		fprintf(stderr, "last status = %d\n", shell->last_status);
 	}
 }
@@ -61,20 +61,20 @@ int	wait_process(t_shell *shell, int n)
 {
 	int	i;
 	int	status;
-	int	print_siqguit;
+	int	print_sigquit;
 
 	if (!shell || !shell->exec || !shell->exec->pids)
 		return (1);
 	i = 0;
 	status = 0;
-	print_siqguit = 0;
+	print_sigquit = 0;
 	while (i < n)
 	{
 		if (shell->exec->pids[i] > 0)
 		{
 			if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 				err_exit(shell, "waitpid failed");
-			sig_handler(shell, &status, print_siqguit);
+			sig_handler(shell, &status, &print_sigquit);
 		}
 		i++;
 	}

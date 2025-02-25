@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:47:35 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 13:06:57 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/expand.h"
+#include "../../includes/minishell.h"
 
 char	*expand_string(t_shell *shell, char *line)
 {
@@ -29,8 +29,8 @@ char	*expand_string(t_shell *shell, char *line)
 			handle_dollar(shell, line, &i, &result);
 		else
 		{
-			result = ft_strjoin_track(shell, result, \
-				ft_substr_track(shell, line, i, 1));
+			result = ft_strjoin_track(shell, result,
+					ft_substr_track(shell, line, i, 1));
 			i++;
 		}
 	}

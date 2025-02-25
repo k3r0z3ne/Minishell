@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand2.c                                          :+:      :+:    :+:   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 19:42:41 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 19:46:20 by arotondo         ###   ########.fr       */
+/*   Created: 2025/02/22 13:04:42 by witong            #+#    #+#             */
+/*   Updated: 2025/02/22 13:07:08 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/expand.h"
+#include "../../includes/minishell.h"
 
 void	case_return(t_shell *shell, char **result)
 {
@@ -21,35 +21,6 @@ void	case_return(t_shell *shell, char **result)
 		return ;
 	*result = ft_strjoin_track(shell, *result, exit_status_str);
 	free(exit_status_str);
-}
-
-void	handle_dollar(t_shell *shell, char *line, int *i, char **result)
-{
-	char	*tmp;
-
-	tmp = NULL;
-	if (!line[(*i) + 1] || (!ft_isalnum(line[(*i) + 1]) && \
-	line[(*i) + 1] != '_' && line[(*i) + 1] != '?'))
-	{
-		tmp = ft_substr_track(shell, line, *i, 1);
-		*result = ft_strjoin_track(shell, *result, tmp);
-		(*i)++;
-		return ;
-	}
-	(*i)++;
-	if (line[*i] == '?')
-	{
-		case_return(shell, result);
-		(*i)++;
-		return ;
-	}
-	*i += process_expand(shell, result, &line[*i]);
-	if (line[*i] == ' ')
-	{
-		tmp = ft_substr_track(shell, line, *i, 1);
-		*result = ft_strjoin_track(shell, *result, tmp);
-		(*i)++;
-	}
 }
 
 int	get_var_len(char *value)
@@ -64,8 +35,8 @@ int	get_var_len(char *value)
 	}
 	else
 	{
-		while (value[i] && (ft_isalnum(value[i]) || \
-		value[i] == '_' || value[i] == '?'))
+		while (value[i]
+			&& (ft_isalnum(value[i]) || value[i] == '_' || value[i] == '?'))
 			i++;
 	}
 	return (i);
@@ -89,4 +60,32 @@ int	process_expand(t_shell *shell, char **result, char *value)
 		path = ft_strdup_track(shell, "");
 	*result = ft_strjoin_track(shell, *result, path);
 	return (len);
+}
+
+void	handle_dollar(t_shell *shell, char *line, int *i, char **result)
+{
+	char	*tmp;
+
+	if (!line[*i + 1] || (!ft_isalnum(line[*i + 1])
+			&& line[*i + 1] != '_' && line[*i + 1] != '?'))
+	{
+		tmp = ft_substr_track(shell, line, *i, 1);
+		*result = ft_strjoin_track(shell, *result, tmp);
+		(*i)++;
+		return ;
+	}
+	(*i)++;
+	if (line[*i] == '?')
+	{
+		case_return(shell, result);
+		(*i)++;
+		return ;
+	}
+	*i += process_expand(shell, result, &line[*i]);
+	if (line[*i] == ' ')
+	{
+		tmp = ft_substr_track(shell, line, *i, 1);
+		*result = ft_strjoin_track(shell, *result, tmp);
+		(*i)++;
+	}
 }

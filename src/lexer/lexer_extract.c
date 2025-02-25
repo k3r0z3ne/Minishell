@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_extract.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 15:15:54 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:14:55 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 01:16:41 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*extract_word(char *line, t_shell *shell, t_lexer *lexer)
 	while (line[lexer->j] && !ft_isspace(line[lexer->j]) \
 		&& !is_redirection(line[lexer->j]))
 	{
-		if (line[lexer->j] == '$' && line[lexer->j + 1] && \
-			(line[lexer->j + 1] == '\'' || line[lexer->j + 1] == '\"'))
+		if (line[lexer->j] == '$' && line[lexer->j + 1]
+			&& (line[lexer->j + 1] == '\'' || line[lexer->j + 1] == '\"'))
 			lexer->j++;
 		if (line[lexer->j] == '\'' || line[lexer->j] == '"')
 		{

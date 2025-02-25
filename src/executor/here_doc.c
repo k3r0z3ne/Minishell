@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 19:39:50 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:55:24 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	process_heredoc(t_shell *shell)
 {
 	char	*file_name;
 	char	*idx_tmp;
+	int		loop_status;
 
 	idx_tmp = ft_itoa(shell->cmd->i_hd);
 	file_name = ft_strjoin2(".heredoc_", idx_tmp);
@@ -38,44 +39,47 @@ void	process_heredoc(t_shell *shell)
 	if (shell->cmd->last_file)
 		free(shell->cmd->last_file);
 	shell->cmd->last_file = file_name;
-	loop_heredoc(shell);
-	shell->cmd->i_hd++;
+	loop_status = loop_heredoc(shell);
 	close(shell->exec->infile);
+	if (loop_status == 2)
+	{
+		unlink(file_name);
+		return ;
+	}
+	shell->cmd->i_hd++;
 	redir_heredoc(shell, file_name);
 }
 
-void	loop_heredoc(t_shell *shell)
+int	loop_heredoc(t_shell *shell)
 {
 	char	*line;
 	char	*tmp;
+	int		status;
 
 	while (1)
 	{
-		write(0, "> ", 3);
-		line = get_next_line(0);
-		if (interrupt_heredoc(shell, line))
-			break ;
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		if (ft_strcmp(line, shell->cmd->limiter[shell->cmd->i_hd]) == 0)
-			break ;
-		if (shell->cmd->is_quote == false)
+		line = readline("> ");
+		status = interrupt_heredoc(shell, line);
+		if (status >= 1)
+		{
+			free(line);
+			return (status);
+		}
+		if (!shell->cmd->is_quote)
 		{
 			tmp = expand_heredoc(shell, line);
 			line = tmp;
 		}
 		ft_putendl_fd(line, shell->exec->infile);
-		if (shell->cmd->is_quote == true)
+		if (shell->cmd->is_quote)
 			free(line);
 	}
-	free(line);
+	return (0);
 }
 
 void	redir_heredoc(t_shell *shell, char *file)
 {
-	if (g_signal < 0)
-		unlink(file);
-	else if (shell->cmd->i_hd == shell->cmd->hd_count)
+	if (shell->cmd->i_hd == shell->cmd->hd_count)
 	{
 		if (shell->exec->cmd_count)
 		{
@@ -92,7 +96,7 @@ void	redir_heredoc(t_shell *shell, char *file)
 	}
 	else
 		unlink(file);
-	get_next_line(-1);
+	rl_clear_history();
 }
 
 int	interrupt_heredoc(t_shell *shell, char *line)
@@ -100,16 +104,17 @@ int	interrupt_heredoc(t_shell *shell, char *line)
 	if (g_signal)
 	{
 		shell->last_status = 128 + g_signal;
-		g_signal = -1;
-		return (1);
+		g_signal = 0;
+		return (2);
 	}
-	else if (!line)
+	if (!line)
 	{
 		ft_putstr_fd("warning: here-document delimited by end-of-file '", 2);
 		ft_putstr_fd(shell->cmd->limiter[shell->cmd->i_hd], 2);
 		ft_putstr_fd("'\n", 2);
 		return (1);
 	}
-	else
-		return (0);
+	if (ft_strcmp(line, shell->cmd->limiter[shell->cmd->i_hd]) == 0)
+		return (1);
+	return (0);
 }
