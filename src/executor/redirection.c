@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/24 21:11:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:57:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 		else if (exec->last_cmd == false && exec->pipe[0] > 0)
 		{
 			if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
-				err_exit(shell, "dup2j failed");
+				err_message(shell, "redirection error", NULL, NULL);
 			close(exec->pipe[0]);
 		}
 		redir = redir->next;
@@ -39,9 +39,9 @@ int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 	{
 		exec->infile = open(redir->file, O_RDONLY, 0664);
 		if (exec->infile < 0)
-			err_exit(shell, "Invalid infile");
+			err_message(shell, redir->file, NULL, NULL);
 		if (dup2(exec->infile, STDIN_FILENO) < 0)
-			err_exit(shell, "dup2a failed");
+			err_message(shell, "redirection error", NULL, NULL);
 		close(exec->infile);
 		close(exec->pipe[0]);
 		exec->pipe[0] = 0;
@@ -58,9 +58,9 @@ int	if_outfile(t_shell *shell, t_exec *exec, t_redir *redir)
 	else
 		return (0);
 	if (exec->outfile < 0)
-		err_exit(shell, "Invalid outfile");
+		err_message(shell, redir->file, NULL, NULL);
 	if (dup2(exec->outfile, STDOUT_FILENO) < 0)
-		err_exit(shell, "dup2c failed");
+		err_message(shell, "redirection error", NULL, NULL);
 	close(exec->outfile);
 	close(exec->pipe[1]);
 	exec->pipe[1] = 0;

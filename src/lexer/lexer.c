@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/02/22 01:12:11 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/26 11:02:12 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	check_special_cases(char *line, t_shell *shell, t_lexer *lexer)
 	}
 	else if (line[0] == '/')
 	{
-		err_message(line, NULL, "Is a directory");
+		err_message(shell, line, NULL, "Is a directory");
 		shell->last_status = 126;
 		lexer->error = 1;
 	}

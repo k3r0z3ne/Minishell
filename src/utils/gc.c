@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 13:12:07 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:56:40 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:31:50 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	*tracked_malloc(t_shell *shell, size_t size)
 		return (NULL);
 	ptr = malloc(size);
 	if (!ptr)
-		err_exit(shell, "Memory allocation failed");
+		err_message(shell, "malloc", NULL, NULL);
 	node = (t_clean *)malloc(sizeof(t_clean));
 	if (!node)
 	{
 		free(ptr);
-		err_exit(shell, "Cleanup node creation failed");
+		err_message(shell, "malloc", NULL, NULL);
 	}
 	node->ptr = ptr;
 	node->next = shell->clean;

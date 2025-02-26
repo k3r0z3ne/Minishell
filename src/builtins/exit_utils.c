@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:38:23 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/22 14:38:09 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/26 13:01:14 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ void	exit_err(t_shell *shell)
 	if (is_exit_correct(shell, shell->cmd->full_cmd[1], 0))
 	{
 		code = 2;
-		err_message(shell->cmd->full_cmd[0], shell->cmd->full_cmd[1], \
+		err_message(shell, shell->cmd->full_cmd[0], shell->cmd->full_cmd[1], \
 		"numeric argument required");
 	}
 	else if (n > 2)
 	{
 		code = 1;
 		shell->last_status = code;
-		err_message(shell->cmd->full_cmd[0], NULL, "too many arguments");
+		err_message(shell, shell->cmd->full_cmd[0], NULL, "too many arguments");
 		return ;
 	}
 	cleanup_all(shell);

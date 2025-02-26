@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/24 16:16:45 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:24:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*find_path(t_shell *shell)
 		return (NULL);
 	else if (i == count_line(shell->envp))
 		return (NULL);
-	// fprintf(stderr, "shell->envp[i] = %s\n", shell->envp[i]);
 	return (shell->envp[i]);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:58 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:20:47 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/26 12:58:14 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	ignore_ctrl_c(t_shell *shell);
 void	setup_child_signals(t_shell *shell);
 
 /* error */
-int		err_exit(t_shell *shell, char *err_message);
-int		err_return(char *err_message);
-void	err_message(char *cmd, char *arg, char *mess);
+int		err_exit(t_shell *shell);
+void	err_message(t_shell *shell, char *cmd, char *arg, char *mess);
+void	err_message2(char *cmd, char *arg, char *mess);
 
 #endif

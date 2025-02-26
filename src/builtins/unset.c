@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:43:06 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 19:25:48 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:01:57 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,11 @@ int	ft_unset(t_shell *shell)
 	unset = false;
 	while (shell->cmd->full_cmd[i])
 	{
-		// if (!is_valid_var(shell->cmd->full_cmd[i]))
-		// {
-		// 	err_message("unset", shell->cmd->full_cmd[i], "not a valid identifier");
-		// 	return (2);
-		// }
 		j = ft_strlen(shell->cmd->full_cmd[i]);
 		unset = unset_word(shell, shell->cmd->full_cmd[i], j);
 		i++;
 	}
 	if (!unset)
-		return (1);
+		return (0);
 	return (0);
 }

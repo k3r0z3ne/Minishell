@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:39:01 by witong            #+#    #+#             */
-/*   Updated: 2025/02/24 17:20:07 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:01:27 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**arraydup(char **array)
 	lc = count_line(array);
 	dup = (char **)malloc(sizeof(char *) * (lc + 1));
 	if (!dup)
-		return (NULL);
+		return (perror(""), NULL);
 	dup[lc] = NULL;
 	lc = 0;
 	while (array[lc])

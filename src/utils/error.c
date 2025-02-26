@@ -6,15 +6,14 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 17:41:05 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/21 19:57:07 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:58:25 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
 
-int	err_exit(t_shell *shell, char *err_message)
+int	err_exit(t_shell *shell)
 {
-	perror(err_message);
 	cleanup_all(shell);
 	free(shell->input);
 	free_array(shell->envp);
@@ -22,13 +21,7 @@ int	err_exit(t_shell *shell, char *err_message)
 	exit(EXIT_FAILURE);
 }
 
-int	err_return(char *err_message)
-{
-	perror(err_message);
-	return (1);
-}
-
-void	err_message(char *cmd, char *arg, char *mess)
+void	err_message(t_shell *shell, char *cmd, char *arg, char *mess)
 {
 	ft_putstr_fd("minishell: ", 2);
 	write(2, cmd, ft_strlen(cmd));
@@ -38,5 +31,25 @@ void	err_message(char *cmd, char *arg, char *mess)
 		ft_putstr_fd(arg, 2);
 		write(2, ": ", 2);
 	}
-	ft_putendl_fd(mess, 2);
+	if (!mess)
+		perror("");
+	else
+		ft_putendl_fd(mess, 2);
+	err_exit(shell);
+}
+
+void	err_message2(char *cmd, char *arg, char *mess)
+{
+	ft_putstr_fd("minishell: ", 2);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": ", 2);
+	if (arg)
+	{
+		ft_putstr_fd(arg, 2);
+		write(2, ": ", 2);
+	}
+	if (!mess)
+		perror("");
+	else
+		ft_putendl_fd(mess, 2);
 }
