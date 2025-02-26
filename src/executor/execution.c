@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 13:11:15 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:50:26 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,19 @@ int	main_exec(t_shell *shell)
 	else if (shell->exec->cmd_count == 1)
 		shell->last_status = only_cmd(shell);
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
-		process_heredoc(shell);
+	{
+		while (shell->cmd->i_hd < shell->cmd->hd_count && shell->cmd->loop_status != 2)
+			process_heredoc(shell);
+	}
 	else
 		return (0);
 	tty_fd = open("/dev/tty", O_RDONLY);
 	if (tty_fd != -1)
 	{
-		dup2(tty_fd, STDIN_FILENO);
-		close(tty_fd);
+		if (dup2(tty_fd, STDIN_FILENO) < 0)
+			err_message(shell, "redirection error", NULL, NULL);
+		if (close(tty_fd) < 0)
+			err_message(shell, "close", NULL, NULL);
 	}
 	return (shell->last_status);
 }

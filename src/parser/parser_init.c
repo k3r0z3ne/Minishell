@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/02/26 12:56:18 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:02:08 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_exec	*init_exec(t_shell *shell)
 	exec->builtin_less = 0;
 	exec->last_cmd = false;
 	exec->if_pipe = false;
-	exec->cmd_on = false;
 	exec->old_pipe = -1;
 	return (exec);
 }
@@ -80,16 +79,19 @@ t_cmd	*init_cmd(t_shell *shell, t_token *tokens)
 	cmd->is_quote = false;
 	cmd->flag_hd = false;
 	cmd->i_hd = 0;
+	cmd->loop_status = 0;
 	cmd->in_count = 0;
-	cmd->out_count = 0;
 	cmd->last_file = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;
 	cmd->hd_count = count_heredoc(shell);
 	if (cmd->hd_count > 0)
+	{
 		cmd->limiter = (char **)tracked_malloc(shell, sizeof(char *) * \
-														  (cmd->hd_count + 1));
+		(cmd->hd_count + 1));
+		cmd->flag_hd = true;
+	}
 	else
 		cmd->limiter = NULL;
 	return (cmd);

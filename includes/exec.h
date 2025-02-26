@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 12:38:59 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:25:46 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int		redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir);
 int		if_infile(t_shell *shell, t_exec *exec, t_redir *redir);
 int		if_outfile(t_shell *shell, t_exec *exec, t_redir *redir);
 
+/* redirection2 */
+int		redirect_setup2(t_shell *shell, t_exec *exec, t_redir *redir);
+int		if_infile2(t_shell *shell, t_exec *exec, t_redir *redir);
+int		if_outfile2(t_shell *shell, t_exec *exec, t_redir *redir);
+
 /* exec_utils */
 int		is_fd_open(int fd);
 int		setup_old_pipe(t_shell *shell, t_exec *exec);
@@ -54,7 +59,7 @@ void	count_fds(t_shell *shell);
 int		count_heredoc(t_shell *shell);
 
 /* here_doc */
-char	*expand_heredoc(t_shell *shell, char *line);
+void	iter_heredoc(t_shell *shell);
 void	process_heredoc(t_shell *shell);
 int		loop_heredoc(t_shell *shell);
 void	redir_heredoc(t_shell *shell, char *file);

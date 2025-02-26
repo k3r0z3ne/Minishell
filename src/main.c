@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/25 12:22:36 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/26 19:45:21 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	shell_main_loop(t_shell *shell)
 	{
 		setup_signals(shell);
 		shell->input = readline("minishell> ");
+		fprintf(stderr, "shell->input\n");
 		// shell->input = my_readline(shell, "minishell> ");
 		if (g_signal)
 		{
@@ -90,6 +91,7 @@ static void	shell_main_loop(t_shell *shell)
 		}
 		cleanup_all(shell);
 		free(shell->input);
+		perror("END");
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:00:24 by witong            #+#    #+#             */
-/*   Updated: 2025/02/22 13:06:57 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/26 18:05:09 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,16 @@ void	expand_lexer(t_shell *shell, t_lexer *state, char *line)
 	}
 	else
 		append_char(shell, state, line[state->i]);
+}
+
+char	*expand_heredoc(t_shell *shell, char *line)
+{
+	char	*result;
+
+	if (!line)
+		return (NULL);
+	result = expand_string(shell, line);
+	if (!result)
+		return (NULL);
+	return (result);
 }

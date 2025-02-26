@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/26 12:56:00 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:02:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ typedef struct s_cmd
 	bool			flag_hd;
 	int				i_hd;
 	int				hd_count;
+	int				loop_status;
 	int				cmd_len;
 	int				in_count;
-	int				out_count;
 	char			*last_file;
 	char			**limiter;
 	struct s_redir	*redirs;
@@ -78,7 +78,6 @@ typedef struct s_exec
 	int		pipe[2];
 	int		old_pipe;
 	pid_t	*pids;
-	bool	cmd_on;
 	bool	last_cmd;
 	bool	if_pipe;
 }			t_exec;
