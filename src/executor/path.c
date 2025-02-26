@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:48:45 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/26 13:11:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*find_path(t_shell *shell)
 		return (NULL);
 	else if (i == count_line(shell->envp))
 		return (NULL);
-	// fprintf(stderr, "shell->envp[i] = %s\n", shell->envp[i]);
 	return (shell->envp[i]);
 }
 

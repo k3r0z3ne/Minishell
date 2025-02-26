@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:17:51 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/26 12:38:59 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		main_exec(t_shell *shell);
 pid_t	process1(t_shell *shell);
 int		only_cmd(t_shell *shell);
 void	is_redir(t_shell *shell, t_redir *redirs);
-void	close_files(t_shell *shell);
 
 /* several_commands */
 void	parent_pr(t_shell *shell);

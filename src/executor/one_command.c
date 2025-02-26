@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:25:39 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/26 12:56:52 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ pid_t	process1(t_shell *shell)
 
 	ret = fork();
 	if (ret < 0)
-		err_exit(shell, "Fork failed");
+		err_message(shell, "fork", NULL, NULL);
 	else if (!ret)
 	{
 		setup_child_signals(shell);
@@ -31,6 +31,7 @@ pid_t	process1(t_shell *shell)
 
 int	only_cmd(t_shell *shell)
 {
+	shell->exec->cmd_on = true;
 	count_fds(shell);
 	if (g_signal < 0)
 		return (shell->last_status);
@@ -38,7 +39,7 @@ int	only_cmd(t_shell *shell)
 	{
 		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
 		if (!shell->exec->pids)
-			err_exit(shell, "Memory allocation failed");
+			err_message(shell, "malloc", NULL, NULL);
 	}
 	if (is_builtin(shell) == true)
 		exec_builtin(shell);
@@ -74,7 +75,7 @@ int	redirection_check(t_shell *shell, t_exec *exec)
 		else if (tmp->type == HEREDOC)
 			process_heredoc(shell);
 		if (exec->infile < 0 || exec->outfile < 0)
-			err_exit(shell, "Invalid fd");
+			err_message(shell, tmp->file, NULL, NULL);
 		tmp = tmp->next;
 	}
 	return (0);
@@ -90,28 +91,20 @@ void	is_redir(t_shell *shell, t_redir *redirs)
 		if (tmp->type == REDIRIN)
 		{
 			if (shell->exec->infile <= 0)
-				err_exit(shell, "infile failed");
+				err_message(shell, tmp->file, NULL, NULL);
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-				err_exit(shell, "dup2a failed");
+				err_message(shell, "redirection error", NULL, NULL);
 			close(shell->exec->infile);
 		}
 		else if (tmp->type == REDIROUT || tmp->type == APPEND)
 		{
 			perror("outfile");
 			if (shell->exec->outfile <= 0)
-				err_exit(shell, "infile failed");
+				err_message(shell, tmp->file, NULL, NULL);
 			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
-				err_exit(shell, "dup2b failed");
+				err_message(shell, tmp->file, NULL, NULL);
 			close(shell->exec->outfile);
 		}
 		tmp = tmp->next;
 	}
-}
-
-void	close_files(t_shell *shell)
-{
-	if (shell->exec->infile != 0)
-		close(shell->exec->infile);
-	if (shell->exec->outfile != 0)
-		close(shell->exec->outfile);
 }

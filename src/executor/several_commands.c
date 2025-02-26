@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:25:46 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/26 12:56:29 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ pid_t	process(t_shell *shell)
 
 	ret = fork();
 	if (ret < 0)
-		err_exit(shell, "Fork failed");
+		err_message(shell, "fork", NULL, "Resource temporarily unavailable");
 	else if (ret == 0)
 	{
 		setup_child_signals(shell);
@@ -46,7 +46,7 @@ pid_t	process(t_shell *shell)
 	if (shell->exec->last_cmd == false)
 	{
 		if (close(shell->exec->pipe[1]) < 0)
-			perror("ERROR HERE2");
+			err_message(shell, "close", NULL, "Bad file descriptor");
 		shell->exec->old_pipe = shell->exec->pipe[0];
 	}
 	return (ret);
@@ -58,6 +58,7 @@ int	several_cmds(t_shell *shell)
 
 	i = 0;
 	init_pids(shell);
+	shell->exec->cmd_on = true;
 	while (shell->cmd && i < shell->exec->cmd_count)
 	{
 		count_fds(shell);
@@ -77,7 +78,7 @@ int	make_pipes(t_shell *shell)
 	if (shell->exec->last_cmd == false)
 	{
 		if (pipe(shell->exec->pipe) < 0)
-			err_exit(shell, "Creation pipe failed");
+			err_message(shell, "pipe", NULL, "Too many open files");
 		shell->exec->if_pipe = true;
 	}
 	return (0);

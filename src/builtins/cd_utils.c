@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:57:25 by witong            #+#    #+#             */
-/*   Updated: 2025/02/24 15:08:21 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/26 13:00:41 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	go_prev_dir(char **envp)
 		return (1);
 	if (chdir(go_path) != 0)
 	{
-		err_message("cd", go_path, strerror(errno));
+		err_message2("cd", go_path, NULL);
 		return (1);
 	}
 	printf("%s\n", go_path);

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/24 21:12:20 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:58:46 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	setup_old_pipe(t_shell *shell, t_exec *exec)
 	if (exec->old_pipe != -1)
 	{
 		if (dup2(exec->old_pipe, STDIN_FILENO) < 0)
-			err_exit(shell, "dup2o failed");
+			err_message(shell, "redirection error", NULL, NULL);
 		close(exec->old_pipe);
 	}
 	if (exec->last_cmd == false && exec->pipe[1] != 0)
 	{
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
-			err_exit(shell, "dup2p failed");
+			err_message(shell, "redirection error", NULL, NULL);
 		close(exec->pipe[1]);
 		exec->pipe[1] = 0;
 	}
@@ -53,7 +53,6 @@ static void	sig_handler(t_shell *shell, int *status, int *print_sigquit)
 		if (signal == SIGINT)
 			write(2, "\n", 1);
 		shell->last_status = 128 + signal;
-		fprintf(stderr, "last status = %d\n", shell->last_status);
 	}
 }
 
@@ -73,7 +72,7 @@ int	wait_process(t_shell *shell, int n)
 		if (shell->exec->pids[i] > 0)
 		{
 			if (waitpid(shell->exec->pids[i], &status, 0) < 0)
-				err_exit(shell, "waitpid failed");
+				err_message(shell, "waitpid", NULL, NULL);
 			sig_handler(shell, &status, &print_sigquit);
 		}
 		i++;

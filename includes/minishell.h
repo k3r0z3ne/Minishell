@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/25 12:22:56 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/26 12:56:00 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_exec
 	int		pipe[2];
 	int		old_pipe;
 	pid_t	*pids;
+	bool	cmd_on;
 	bool	last_cmd;
 	bool	if_pipe;
 }			t_exec;

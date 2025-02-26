@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 18:38:13 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/26 13:11:15 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	exec_cmd(t_shell *shell)
 	tmp = find_path(shell);
 	if (!tmp)
 	{
-		err_message(shell->cmd->full_cmd[0], NULL, "No such file or directory");
-		err_exit(shell, 127);
+		shell->last_status = 127;
+		err_message(shell, shell->cmd->full_cmd[0], NULL, "command not found");
 	}
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
 	{
-		err_message(shell->cmd->full_cmd[0], NULL, "command not found");
-		err_exit(shell, 127);
+		shell->last_status = 127;
+		err_message(shell, shell->cmd->full_cmd[0], NULL, "command not found");
 	}
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
@@ -47,7 +47,7 @@ int	main_exec(t_shell *shell)
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
 		process_heredoc(shell);
 	else
-		err_return("No command found");
+		return (0);
 	tty_fd = open("/dev/tty", O_RDONLY);
 	if (tty_fd != -1)
 	{

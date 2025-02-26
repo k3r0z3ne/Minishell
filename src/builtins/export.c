@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/02/21 19:24:05 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:01:31 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	handle_env_var(t_shell *shell, char *arg)
 
 	if (!is_valid_var(arg))
 	{
-		err_message("export", arg, "not a valid identifier");
+		err_message2("export", arg, "not a valid identifier");
 		shell->last_status = 1;
 		return ;
 	}
