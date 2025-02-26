@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:58 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 13:06:36 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:25:16 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ignore_ctrl_c(t_shell *shell);
 
 /* error */
 int		err_exit(t_shell *shell);
-void	err_message(char *cmd, char *arg, char *mess);
+void	err_message(t_shell *shell, char *cmd, char *arg, char *mess);
 void	err_message2(char *cmd, char *arg, char *mess);
 
 #endif

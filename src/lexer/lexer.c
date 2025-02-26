@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:46:56 by witong            #+#    #+#             */
-/*   Updated: 2025/02/26 13:12:57 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:46:46 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ t_token	*lexer(char *line, t_shell *shell)
 	if (!line || !*line)
 		return (NULL);
 	init_lexer(&lexer);
-	check_special_cases(line, shell, &lexer);
-	check_illegal(line, shell, &lexer);
 	lexer.expand_input = add_spaces(shell, &lexer, line);
+	check_special_cases(lexer.expand_input, shell, &lexer);
+	check_illegal(lexer.expand_input, shell, &lexer);
 	lexer.j = 0;
 	while (lexer.expand_input[lexer.j])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/25 12:22:36 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/26 17:48:53 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static void	shell_main_loop(t_shell *shell)
 		}
 		if (!shell->input)
 		{
-			fprintf(stderr, "%d\n", shell->last_status);
 			ft_putstr_fd("exit\n", 1);
 			break ;
 		}
@@ -88,6 +87,7 @@ static void	shell_main_loop(t_shell *shell)
 				shell->last_status = main_exec(shell);
 			}
 		}
+		printf("%d\n", shell->last_status);
 		cleanup_all(shell);
 		free(shell->input);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 17:41:05 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/26 13:13:20 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:25:49 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	err_message(t_shell *shell, char *cmd, char *arg, char *mess)
 		perror("");
 	else
 		ft_putendl_fd(mess, 2);
-	err_exit(shell);
+	simple_exit(shell, shell->last_status);
 }
 
 void	err_message2(char *cmd, char *arg, char *mess)
