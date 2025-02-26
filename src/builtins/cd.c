@@ -6,9 +6,10 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 13:00:23 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:09:02 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -43,9 +44,13 @@ static int	relative_path(char *path, char **envp)
 {
 	char	*tmp;
 	char	*go_path;
+	char	*pwd;
 
 	go_path = NULL;
-	tmp = ft_strjoin2(ft_getenv("PWD", envp), "/");
+	pwd = ft_getenv("PWD", envp);
+	if (!pwd)
+		return (go_home(envp));
+	tmp = ft_strjoin2(pwd, "/");
 	if (!tmp)
 		return (1);
 	go_path = ft_strjoin2(tmp, path);
@@ -62,7 +67,7 @@ static int	relative_path(char *path, char **envp)
 	return (0);
 }
 
-static int	go_home(char **envp)
+int	go_home(char **envp)
 {
 	char	*home;
 
