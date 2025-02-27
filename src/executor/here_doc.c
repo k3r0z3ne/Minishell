@@ -3,28 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 18:10:43 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:24:46 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void	iter_heredoc(t_shell *shell)
+int	iter_heredoc(t_shell *shell)
 {
-	t_redir	*tmp;
-
-	tmp = shell->cmd->redirs;
-	if (tmp->type != HEREDOC)
-		return ;
-	while (tmp->type == HEREDOC)
+	if (shell->cmd->redirs->type != HEREDOC)
+		return (0);
+	while (shell->cmd->redirs->type == HEREDOC)
 	{
 		if (shell->cmd->i_hd < shell->cmd->hd_count && shell->cmd->loop_status != 2)
 			process_heredoc(shell);
-		tmp = tmp->next;
+		shell->cmd->redirs = shell->cmd->redirs->next;
 	}
+	return (shell->cmd->loop_status);
 }
 
 void	process_heredoc(t_shell *shell)
@@ -46,13 +44,12 @@ void	process_heredoc(t_shell *shell)
 	shell->cmd->i_hd++;
 	if (shell->cmd->loop_status == 2)
 	{
-		close(shell->exec->infile);
 		unlink(shell->cmd->last_file);
+		close(shell->exec->infile);
 		free(shell->cmd->last_file);
 		shell->cmd->last_file = NULL;
-		simple_exit(shell, shell->last_status);
+		return ;
 	}
-	unlink(shell->cmd->last_file);
 	close(shell->exec->infile);
 	redir_heredoc(shell, shell->cmd->last_file);
 }
@@ -65,7 +62,6 @@ int	loop_heredoc(t_shell *shell)
 
 	while (1)
 	{
-		perror("LOOP");
 		line = readline("> ");
 		status = interrupt_heredoc(shell, line);
 		if (status > 0)
@@ -93,12 +89,11 @@ void	redir_heredoc(t_shell *shell, char *file)
 				shell->exec->infile = open(shell->cmd->last_file, 00, 0664);
 			if (shell->exec->infile < 0)
 				err_message(shell, shell->cmd->last_file, NULL, NULL);
-			if (shell->exec->infile)
+			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)	
 				err_message(shell, shell->cmd->last_file, NULL, NULL);
-			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-				err_message(shell, shell->cmd->last_file, NULL, NULL);
+			perror("DUP");
+			close(shell->exec->infile);
 		}
-		close(shell->exec->infile);
 	}
 	unlink(file);
 	free(shell->cmd->last_file);

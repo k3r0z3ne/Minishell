@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 19:50:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:27:15 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	main_exec(t_shell *shell)
 		shell->last_status = only_cmd(shell);
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
 	{
-		while (shell->cmd->i_hd < shell->cmd->hd_count && shell->cmd->loop_status != 2)
-			process_heredoc(shell);
+		if (iter_heredoc(shell) == 2)
+			return (shell->last_status);
 	}
 	else
 		return (0);

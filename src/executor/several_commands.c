@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   several_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 19:47:47 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:47:11 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ pid_t	process(t_shell *shell)
 		err_message(shell, "fork", NULL, "Resource temporarily unavailable");
 	else if (ret == 0)
 	{
+		perror("CHILD");
 		setup_child_signals(shell);
 		redirect_setup(shell, shell->exec, shell->cmd->redirs);
 		setup_old_pipe(shell, shell->exec);
@@ -41,6 +42,7 @@ pid_t	process(t_shell *shell)
 		else
 			exec_cmd(shell);
 	}
+	perror("AFTER");
 	if (shell->exec->old_pipe != -1)
 		close(shell->exec->old_pipe);
 	if (shell->exec->last_cmd == false)
@@ -48,6 +50,7 @@ pid_t	process(t_shell *shell)
 		if (close(shell->exec->pipe[1]) < 0)
 			err_message(shell, "close", NULL, "Bad file descriptor");
 		shell->exec->old_pipe = shell->exec->pipe[0];
+		perror("LAST");
 	}
 	return (ret);
 }
@@ -60,6 +63,11 @@ int	several_cmds(t_shell *shell)
 	init_pids(shell);
 	while (shell->cmd && i < shell->exec->cmd_count)
 	{
+		if (shell->cmd->flag_hd == true)
+		{
+			if (iter_heredoc(shell) == 2)
+				return (shell->last_status);
+		}
 		count_fds(shell);
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		make_pipes(shell);

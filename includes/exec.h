@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 19:25:46 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:51:15 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*find_path(t_shell *shell);
 char	*set_path(t_shell *shell, char **tab, char **cmd);
 
 /* redirection */
-int		redirection_check(t_shell *shell, t_exec *exec);
 int		redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir);
 int		if_infile(t_shell *shell, t_exec *exec, t_redir *redir);
 int		if_outfile(t_shell *shell, t_exec *exec, t_redir *redir);
@@ -59,7 +58,7 @@ void	count_fds(t_shell *shell);
 int		count_heredoc(t_shell *shell);
 
 /* here_doc */
-void	iter_heredoc(t_shell *shell);
+int		iter_heredoc(t_shell *shell);
 void	process_heredoc(t_shell *shell);
 int		loop_heredoc(t_shell *shell);
 void	redir_heredoc(t_shell *shell, char *file);

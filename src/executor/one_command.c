@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 19:46:38 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:49:27 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	only_cmd(t_shell *shell)
 		if (!shell->exec->pids)
 			err_message(shell, "malloc", NULL, NULL);
 	}
+	if (shell->cmd->flag_hd == true)
+	{
+		if (iter_heredoc(shell) == 2)
+			return (shell->last_status);
+	}
 	if (is_builtin(shell) == true)
 	{
 		redirect_setup2(shell, shell->exec, shell->cmd->redirs);
@@ -46,7 +51,6 @@ int	only_cmd(t_shell *shell)
 	}
 	else
 	{
-		// if (shell->cmd->flag_hd == true)
 		shell->exec->pids[0] = process1(shell);
 		ignore_ctrl_c(shell);
 		shell->last_status = wait_process(shell, shell->exec->builtin_less);

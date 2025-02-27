@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 10:57:00 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:42:13 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 {
 	while (redir)
 	{
-		if (redir->type == REDIRIN || redir->type == HEREDOC)
+		if (redir->type == REDIRIN)
 			if_infile(shell, exec, redir);
 		else if (redir->type == REDIROUT || redir->type == APPEND)
 			if_outfile(shell, exec, redir);
 		else if (exec->last_cmd == false && exec->pipe[0] > 0)
 		{
+			perror("HERE");
 			if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
 				err_message(shell, "redirection error", NULL, NULL);
 			close(exec->pipe[0]);
@@ -33,18 +34,22 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 
 int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
-	if (redir->type == HEREDOC)
-		process_heredoc(shell);
-	else if (redir->type == REDIRIN)
+	if (redir->type == REDIRIN)
 	{
 		exec->infile = open(redir->file, O_RDONLY, 0664);
-		if (exec->infile < 0)
+		if (exec->infile <= 0)
 			err_message(shell, redir->file, NULL, NULL);
-		if (dup2(exec->infile, STDIN_FILENO) < 0)
-			err_message(shell, "redirection error", NULL, NULL);
-		close(exec->infile);
-		close(exec->pipe[0]);
-		exec->pipe[0] = 0;
+		shell->cmd->in_count--;
+		if (!shell->cmd->in_count)
+		{
+			if (dup2(exec->infile, STDIN_FILENO) < 0)
+				err_message(shell, "redirection error", NULL, NULL);
+			if (close(exec->pipe[0]) < 0)
+				err_message(shell, "close", NULL, NULL);
+			exec->pipe[0] = 0;
+		}
+		if (close(exec->infile) < 0)
+			err_message(shell, "close", NULL, NULL);
 	}
 	return (0);
 }

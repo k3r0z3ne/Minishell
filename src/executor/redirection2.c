@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:24:42 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 19:47:27 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:51:57 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	redirect_setup2(t_shell *shell, t_exec *exec, t_redir *redir)
 {
 	while (redir)
 	{
-		if (redir->type == REDIRIN || redir->type == HEREDOC)
+		if (redir->type == REDIRIN)
 			if_infile2(shell, exec, redir);
 		else if (redir->type == REDIROUT || redir->type == APPEND)
 			if_outfile2(shell, exec, redir);
