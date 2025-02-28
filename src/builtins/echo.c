@@ -3,28 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 17:08:32 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:58:47 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// en suspens : test avec append void test_echo.sh
-// gerer le cas ./my_echo - aaa		-->	doit ecrire a partir de a
-
-void	apply_flag(bool flag)
-{
-	if (flag == false)
-		write(1, "\n", 1);
-}
-
 bool	check_flag(char **flag, int *idx)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	bool	ret;
 
 	i = 1;
 	if (flag[i] == NULL)
@@ -37,14 +29,13 @@ bool	check_flag(char **flag, int *idx)
 		if (flag[i][j] == '\0')
 		{
 			(*idx)++;
-			return (true);
+			i++;
 		}
 		else
-			return (false);
-		(*idx)++;
-		i++;
+			break ;
 	}
-	return (false);
+	ret = *idx > 0;
+	return (ret);
 }
 
 int	ft_echo(int nb, char **arg, char **envp)
@@ -73,6 +64,6 @@ int	ft_echo(int nb, char **arg, char **envp)
 			ft_putchar_fd(' ', 1);
 	}
 	if (flag == false)
-		apply_flag(flag);
+		write(1, "\n", 1);
 	return (0);
 }
