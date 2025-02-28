@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:06:42 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 14:19:27 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:40:04 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,12 @@ int	ft_echo(int nb, char **arg, char **envp)
 		if (i != nb - 1)
 			ft_putchar_fd(' ', 1);
 	}
+	last_check(flag);
+	return (0);
+}
+
+void	last_check(int flag)
+{
 	if (flag == false)
 		write(1, "\n", 1);
-	return (0);
 }

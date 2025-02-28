@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/27 22:51:15 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/28 20:33:11 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 /* execution */
 void	exec_cmd(t_shell *shell);
+void	tty_handler(t_shell *shell);
 int		main_exec(t_shell *shell);
 
 /* one_command */

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 13:32:01 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:34:21 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,7 @@ pid_t	process1(t_shell *shell)
 int	only_cmd(t_shell *shell)
 {
 	count_fds(shell);
-	if (g_signal < 0)
-		return (shell->last_status);
-	if (shell->exec->builtin_less != 0)
-	{
-		shell->exec->pids = tracked_malloc(shell, sizeof(pid_t));
-		if (!shell->exec->pids)
-			err_message(shell, "malloc", NULL, NULL);
-	}
+	init_pids(shell);
 	if (shell->cmd->flag_hd == true)
 	{
 		if (iter_heredoc(shell) == 2)

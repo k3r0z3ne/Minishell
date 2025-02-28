@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:24:42 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 14:11:00 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:34:34 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	redirect_setup2(t_shell *shell, t_exec *exec, t_redir *redir)
 {
-	if (is_builtin(shell) == true)
-	{
-		exec->tty_fd0 = dup(STDIN_FILENO);
-		exec->tty_fd1 = dup(STDOUT_FILENO);
-	}
 	while (redir)
 	{
 		if (redir->type == REDIRIN)
@@ -32,6 +27,7 @@ int	redirect_setup2(t_shell *shell, t_exec *exec, t_redir *redir)
 
 int	if_infile2(t_shell *shell, t_exec *exec, t_redir *redir)
 {
+	exec->tty_fd0 = dup(STDIN_FILENO);
 	if (redir->type == REDIRIN)
 	{
 		exec->infile = open(redir->file, O_RDONLY, 0664);
@@ -50,6 +46,7 @@ int	if_infile2(t_shell *shell, t_exec *exec, t_redir *redir)
 
 int	if_outfile2(t_shell *shell, t_exec *exec, t_redir *redir)
 {
+	exec->tty_fd1 = dup(STDOUT_FILENO);
 	if (redir->type == REDIROUT)
 		exec->outfile = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	else if (redir->type == APPEND)

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:38:23 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/26 13:01:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:10:24 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	test_max_min(char *arg)
 	long	min;
 
 	if (!arg)
-		return (1);
+		return (0);
 	if (arg[0] == '-')
 	{
 		if (ft_strlen(arg) > 20)
@@ -72,7 +72,6 @@ void	exit_err(t_shell *shell)
 	int	code;
 
 	n = count_line(shell->cmd->full_cmd);
-	fprintf(stderr, "n = %d\n", n);
 	code = 0;
 	if (is_exit_correct(shell, shell->cmd->full_cmd[1], 0))
 	{

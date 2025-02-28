@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 17:55:04 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/28 16:20:03 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -28,7 +27,6 @@ static int	expand_tilde(char *path, char **envp)
 	{
 		if (chdir(home) != 0)
 			err_message2("cd", path, NULL);
-		printf("%s\n", home);
 	}
 	else
 	{
@@ -92,7 +90,7 @@ int	ft_cd(t_shell *shell, char *path)
 	int	ret;
 
 	ret = 0;
-	if (shell->cmd->full_cmd[2])
+	if (count_line(shell->cmd->full_cmd) > 2)
 		return (err_message2("cd", NULL, "too many arguments"), 1);
 	if (!path)
 		ret = go_home(shell->envp);
