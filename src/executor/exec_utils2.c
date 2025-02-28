@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:16:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 12:25:09 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/28 13:26:33 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 void	exec_builtin(t_shell *shell)
 {
 	if (!ft_strcmp(shell->cmd->full_cmd[0], "echo"))
+	{
 		shell->last_status = ft_echo(count_line \
 		(shell->cmd->full_cmd), shell->cmd->full_cmd, shell->envp);
+	}
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "cd"))
 		shell->last_status = ft_cd(shell, shell->cmd->full_cmd[1]);
 	else if (!ft_strcmp(shell->cmd->full_cmd[0], "pwd"))
@@ -64,10 +66,6 @@ void	count_fds(t_shell *shell)
 	{
 		if (tmp->type == REDIRIN)
 			shell->cmd->in_count++;
-		else if (tmp->type == REDIROUT)
-			shell->cmd->out_count++;
-		else if (tmp->type == APPEND)
-			shell->cmd->out_count++;
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 12:56:52 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:32:01 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ pid_t	process1(t_shell *shell)
 	else if (!ret)
 	{
 		setup_child_signals(shell);
-		redirection_check(shell, shell->exec);
-		is_redir(shell, shell->cmd->redirs);
+		redirect_setup2(shell, shell->exec, shell->cmd->redirs);
 		exec_cmd(shell);
 	}
 	return (ret);
@@ -31,7 +30,6 @@ pid_t	process1(t_shell *shell)
 
 int	only_cmd(t_shell *shell)
 {
-	shell->exec->cmd_on = true;
 	count_fds(shell);
 	if (g_signal < 0)
 		return (shell->last_status);
@@ -41,8 +39,16 @@ int	only_cmd(t_shell *shell)
 		if (!shell->exec->pids)
 			err_message(shell, "malloc", NULL, NULL);
 	}
+	if (shell->cmd->flag_hd == true)
+	{
+		if (iter_heredoc(shell) == 2)
+			return (shell->last_status);
+	}
 	if (is_builtin(shell) == true)
+	{
+		redirect_setup2(shell, shell->exec, shell->cmd->redirs);
 		exec_builtin(shell);
+	}
 	else
 	{
 		shell->exec->pids[0] = process1(shell);
@@ -50,61 +56,4 @@ int	only_cmd(t_shell *shell)
 		shell->last_status = wait_process(shell, shell->exec->builtin_less);
 	}
 	return (shell->last_status);
-}
-
-int	redirection_check(t_shell *shell, t_exec *exec)
-{
-	t_redir	*tmp;
-
-	tmp = shell->cmd->redirs;
-	if (tmp->type == END)
-		return (0);
-	while (tmp)
-	{
-		if (tmp->type == REDIRIN)
-		{
-			if (shell->cmd->in_count)
-				close(exec->infile);
-			exec->infile = open(tmp->file, O_RDONLY, 0664);
-			shell->cmd->in_count--;
-		}
-		else if (tmp->type == REDIROUT)
-			exec->outfile = open(tmp->file, 01 | O_CREAT | O_TRUNC, 0664);
-		else if (tmp->type == APPEND)
-			exec->outfile = open(tmp->file, 01 | O_CREAT | O_APPEND, 0664);
-		else if (tmp->type == HEREDOC)
-			process_heredoc(shell);
-		if (exec->infile < 0 || exec->outfile < 0)
-			err_message(shell, tmp->file, NULL, NULL);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-void	is_redir(t_shell *shell, t_redir *redirs)
-{
-	t_redir	*tmp;
-
-	tmp = redirs;
-	while (tmp)
-	{
-		if (tmp->type == REDIRIN)
-		{
-			if (shell->exec->infile <= 0)
-				err_message(shell, tmp->file, NULL, NULL);
-			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
-				err_message(shell, "redirection error", NULL, NULL);
-			close(shell->exec->infile);
-		}
-		else if (tmp->type == REDIROUT || tmp->type == APPEND)
-		{
-			perror("outfile");
-			if (shell->exec->outfile <= 0)
-				err_message(shell, tmp->file, NULL, NULL);
-			if (dup2(shell->exec->outfile, STDOUT_FILENO) < 0)
-				err_message(shell, tmp->file, NULL, NULL);
-			close(shell->exec->outfile);
-		}
-		tmp = tmp->next;
-	}
 }

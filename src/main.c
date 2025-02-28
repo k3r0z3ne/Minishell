@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/26 17:48:53 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/28 14:19:02 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static void	shell_main_loop(t_shell *shell)
 	{
 		setup_signals(shell);
 		shell->input = readline("minishell> ");
-		// shell->input = my_readline(shell, "minishell> ");
 		if (g_signal)
 		{
 			shell->last_status = 128 + g_signal;

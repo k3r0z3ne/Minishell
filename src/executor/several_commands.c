@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 12:56:29 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:45:48 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,13 @@ int	several_cmds(t_shell *shell)
 
 	i = 0;
 	init_pids(shell);
-	shell->exec->cmd_on = true;
 	while (shell->cmd && i < shell->exec->cmd_count)
 	{
+		if (shell->cmd->flag_hd == true)
+		{
+			if (iter_heredoc(shell) == 2)
+				return (shell->last_status);
+		}
 		count_fds(shell);
 		shell->exec->last_cmd = (i == shell->exec->cmd_count - 1);
 		make_pipes(shell);

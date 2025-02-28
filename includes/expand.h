@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:59:22 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/21 19:59:23 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:05:18 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 /* expand.c */
 void	expand_lexer(t_shell *shell, t_lexer *state, char *line);
 char	*expand_string(t_shell *shell, char *line);
+char	*expand_heredoc(t_shell *shell, char *line);
 
 /* expand_utils.c */
 void	case_return(t_shell *shell, char **result);

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 10:58:46 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:56:11 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	setup_old_pipe(t_shell *shell, t_exec *exec)
 	{
 		if (dup2(exec->pipe[1], STDOUT_FILENO) < 0)
 			err_message(shell, "redirection error", NULL, NULL);
-		close(exec->pipe[1]);
+		if (close(exec->pipe[1]) < 0)
+			err_message(shell, "close", NULL, NULL);
 		exec->pipe[1] = 0;
 	}
 	return (0);
