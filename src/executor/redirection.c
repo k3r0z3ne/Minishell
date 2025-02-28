@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/27 23:42:13 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/28 12:54:05 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 			if_infile(shell, exec, redir);
 		else if (redir->type == REDIROUT || redir->type == APPEND)
 			if_outfile(shell, exec, redir);
-		else if (exec->last_cmd == false && exec->pipe[0] > 0)
+		else if (exec->last_cmd == false && exec->pipe[0] != 0)
 		{
-			perror("HERE");
-			if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
-				err_message(shell, "redirection error", NULL, NULL);
-			close(exec->pipe[0]);
+			if (shell->cmd->flag_hd == false)
+			{
+				if (dup2(exec->pipe[0], STDIN_FILENO) < 0)
+					err_message(shell, "redirection error", NULL, NULL);
+				close(exec->pipe[0]);
+			}
 		}
 		redir = redir->next;
 	}

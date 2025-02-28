@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/27 23:27:15 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/28 14:11:19 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	exec_cmd(t_shell *shell)
 
 int	main_exec(t_shell *shell)
 {
-	int	tty_fd;
-
-	tty_fd = 0;
 	shell->exec->cmd_count = count_cmd(shell->cmd);
 	shell->exec->builtin_less = how_much_cmd(shell);
 	if (shell->exec->cmd_count > 1)
@@ -51,13 +48,12 @@ int	main_exec(t_shell *shell)
 	}
 	else
 		return (0);
-	tty_fd = open("/dev/tty", O_RDONLY);
-	if (tty_fd != -1)
+	if (shell->exec->cmd_count == 1 && is_builtin(shell) == true)
 	{
-		if (dup2(tty_fd, STDIN_FILENO) < 0)
+		if (dup2(shell->exec->tty_fd0, STDIN_FILENO) < 0)
 			err_message(shell, "redirection error", NULL, NULL);
-		if (close(tty_fd) < 0)
-			err_message(shell, "close", NULL, NULL);
+		if (dup2(shell->exec->tty_fd1, STDOUT_FILENO) < 0)
+			err_message(shell, "redirection error", NULL, NULL);
 	}
 	return (shell->last_status);
 }

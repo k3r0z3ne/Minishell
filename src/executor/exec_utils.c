@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:35:31 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/27 23:43:55 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/28 12:56:11 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	wait_process(t_shell *shell, int n)
 		{
 			if (waitpid(shell->exec->pids[i], &status, 0) < 0)
 				err_message(shell, "waitpid", NULL, NULL);
-			perror("WAIt");
 			sig_handler(shell, &status, &print_sigquit);
 		}
 		i++;

@@ -6,20 +6,22 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 17:41:05 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/26 13:20:34 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:16:33 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
 
-// int	err_exit(t_shell *shell)
-// {
-// 	cleanup_all(shell);
-// 	free(shell->input);
-// 	free_array(shell->envp);
-// 	free(shell);
-// 	exit(EXIT_FAILURE);
-// }
+void	close_pipes(t_shell *shell)
+{
+	if (shell->exec->last_cmd == false)
+	{
+		if (shell->exec->pipe[0])
+			close(shell->exec->pipe[0]);
+		if (shell->exec->pipe[1])
+			close(shell->exec->pipe[1]);
+	}
+}
 
 void	err_message(t_shell *shell, char *cmd, char *arg, char *mess)
 {
@@ -35,6 +37,8 @@ void	err_message(t_shell *shell, char *cmd, char *arg, char *mess)
 		perror("");
 	else
 		ft_putendl_fd(mess, 2);
+	if (shell->exec->cmd_count > 1)
+		close_pipes(shell);
 	simple_exit(shell, shell->last_status);
 }
 

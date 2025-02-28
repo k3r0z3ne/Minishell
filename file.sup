@@ -1,5 +1,5 @@
 {
-   <readline_leaks>
+echo aaa > outfile   <readline_leaks>
    Memcheck:Leak
    match-leak-kinds: reachable
    ...

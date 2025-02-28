@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/02/26 18:02:08 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:03:07 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ t_exec	*init_exec(t_shell *shell)
 	exec->last_cmd = false;
 	exec->if_pipe = false;
 	exec->old_pipe = -1;
+	exec->tty_fd0 = -1;
+	exec->tty_fd1 = -1;
 	return (exec);
 }
 

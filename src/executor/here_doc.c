@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/27 23:24:46 by xenon            ###   ########.fr       */
+/*   Updated: 2025/02/28 12:48:39 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,8 @@ void	redir_heredoc(t_shell *shell, char *file)
 				shell->exec->infile = open(shell->cmd->last_file, 00, 0664);
 			if (shell->exec->infile < 0)
 				err_message(shell, shell->cmd->last_file, NULL, NULL);
-			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)	
+			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)
 				err_message(shell, shell->cmd->last_file, NULL, NULL);
-			perror("DUP");
 			close(shell->exec->infile);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 16:47:32 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:18:12 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_exit(t_shell *shell, char **cmd)
 
 void	simple_exit(t_shell *shell, int code)
 {
-	perror("SIMPLE EXIT");
 	if (shell->last_status == 0)
 		code = 1;
 	else
