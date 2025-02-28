@@ -6,11 +6,19 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 20:43:51 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:46:44 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
+
+static int	errno_status(void)
+{
+	if (errno == 13)
+		return (126);
+	else
+		return (127);
+}
 
 void	exec_cmd(t_shell *shell)
 {
@@ -21,14 +29,18 @@ void	exec_cmd(t_shell *shell)
 	tmp = find_path(shell);
 	if (!tmp)
 	{
-		shell->last_status = 127;
-		err_message(shell, shell->cmd->full_cmd[0], NULL, "command not found");
+		shell->last_status = errno_status();
+		err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
 	}
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
 	{
-		shell->last_status = 127;
-		err_message(shell, shell->cmd->full_cmd[0], NULL, "command not found");
+		shell->last_status = errno_status();
+		if (shell->last_status != 127)
+			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
+		else
+			err_message(shell, shell->cmd->full_cmd[0], NULL, "command not found");
+
 	}
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
