@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 13:18:12 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:32:28 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ void	ft_exit(t_shell *shell, char **cmd)
 
 void	simple_exit(t_shell *shell, int code)
 {
-	if (shell->last_status == 0)
-		code = 1;
-	else
-		code = shell->last_status;
+	code = shell->last_status;
 	cleanup_all(shell);
 	free(shell->input);
 	free_array(shell->envp);

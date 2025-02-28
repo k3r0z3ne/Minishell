@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/28 14:19:02 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:43:25 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	shell_main_loop(t_shell *shell)
 		{
 			shell->last_status = 128 + g_signal;
 			g_signal = 0;
+			continue ;
 		}
 		if (!shell->input)
 		{
@@ -76,17 +77,9 @@ static void	shell_main_loop(t_shell *shell)
 			add_history(shell->input);
 		shell->token = lexer(shell->input, shell);
 		if (shell->token)
-		{
-			// print_tokens(shell->token);
 			parser(shell);
-			if (shell->cmd)
-			{
-				// print_table(shell->cmd);
-				// print_redirs(shell->cmd);
-				shell->last_status = main_exec(shell);
-			}
-		}
-		printf("%d\n", shell->last_status);
+		if (shell->token && shell->cmd)
+			shell->last_status = main_exec(shell);
 		cleanup_all(shell);
 		free(shell->input);
 	}
