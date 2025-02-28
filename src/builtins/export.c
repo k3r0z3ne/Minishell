@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:25:23 by witong            #+#    #+#             */
-/*   Updated: 2025/02/26 13:01:31 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:27:49 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	update_env_var(t_shell *shell, int i, char *arg)
 	shell->envp[i] = ft_strdup(arg);
 }
 
-static void	handle_env_var(t_shell *shell, char *arg)
+static int	handle_env_var(t_shell *shell, char *arg)
 {
 	char	*var_name;
 	int		var_index;
@@ -60,8 +60,7 @@ static void	handle_env_var(t_shell *shell, char *arg)
 	if (!is_valid_var(arg))
 	{
 		err_message2("export", arg, "not a valid identifier");
-		shell->last_status = 1;
-		return ;
+		return (1);
 	}
 	var_name = get_var_name(shell, arg);
 	var_index = find_env_var(shell->envp, var_name);
@@ -72,22 +71,25 @@ static void	handle_env_var(t_shell *shell, char *arg)
 		else
 			add_to_env(shell, arg);
 	}
+	return (0);
 }
 
 int	ft_export(t_shell *shell)
 {
 	int	i;
+	int	status;
 
 	i = 1;
+	status = 0;
 	if (!shell->cmd->full_cmd[1])
 		ft_env_export(shell->envp);
 	else
 	{
 		while (shell->cmd->full_cmd[i])
 		{
-			handle_env_var(shell, shell->cmd->full_cmd[i]);
+			status = handle_env_var(shell, shell->cmd->full_cmd[i]);
 			i++;
 		}
 	}
-	return (shell->last_status);
+	return (status);
 }

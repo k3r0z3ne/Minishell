@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:37:27 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/26 13:09:02 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:55:04 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ int	go_home(char **envp)
 	char	*home;
 
 	home = ft_getenv("HOME", envp);
-	if (home[0] == '\0')
-		return (0);
 	if (!home)
 	{
-		err_message2("cd", home, NULL);
+		err_message2("cd", home, "HOME not set");
 		return (1);
 	}
+	if (home[0] == '\0')
+		return (0);
 	if (chdir(home) != 0)
 	{
 		err_message2("cd", home, NULL);
@@ -92,6 +92,8 @@ int	ft_cd(t_shell *shell, char *path)
 	int	ret;
 
 	ret = 0;
+	if (shell->cmd->full_cmd[2])
+		return (err_message2("cd", NULL, "too many arguments"), 1);
 	if (!path)
 		ret = go_home(shell->envp);
 	else if (path[0] == '/')
