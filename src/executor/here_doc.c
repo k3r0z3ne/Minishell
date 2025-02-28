@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 12:48:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:34:26 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ int	iter_heredoc(t_shell *shell)
 {
 	if (shell->cmd->redirs->type != HEREDOC)
 		return (0);
+	shell->exec->tty_fd0 = dup(STDIN_FILENO);
 	while (shell->cmd->redirs->type == HEREDOC)
 	{
-		if (shell->cmd->i_hd < shell->cmd->hd_count && shell->cmd->loop_status != 2)
+		if (shell->cmd->i_hd < shell->cmd->hd_count && \
+			shell->cmd->loop_status != 2)
 			process_heredoc(shell);
 		shell->cmd->redirs = shell->cmd->redirs->next;
 	}
@@ -44,8 +46,8 @@ void	process_heredoc(t_shell *shell)
 	shell->cmd->i_hd++;
 	if (shell->cmd->loop_status == 2)
 	{
-		unlink(shell->cmd->last_file);
 		close(shell->exec->infile);
+		unlink(shell->cmd->last_file);
 		free(shell->cmd->last_file);
 		shell->cmd->last_file = NULL;
 		return ;

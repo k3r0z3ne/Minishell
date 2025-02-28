@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 14:49:40 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/28 20:46:44 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,24 @@ void	exec_cmd(t_shell *shell)
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 
+void	tty_handler(t_shell *shell)
+{
+	if (shell->exec->tty_fd0 != -1)
+	{
+		if (dup2(shell->exec->tty_fd0, STDIN_FILENO) < 0)
+			err_message(shell, "redirection error", NULL, NULL);
+		close(shell->exec->tty_fd0);
+		shell->exec->tty_fd0 = -1;
+	}
+	if (shell->exec->tty_fd1 != -1)
+	{
+		if (dup2(shell->exec->tty_fd1, STDOUT_FILENO) < 0)
+			err_message(shell, "redirection error", NULL, NULL);
+		close(shell->exec->tty_fd1);
+		shell->exec->tty_fd1 = -1;
+	}
+}
+
 int	main_exec(t_shell *shell)
 {
 	shell->exec->cmd_count = count_cmd(shell->cmd);
@@ -59,13 +77,7 @@ int	main_exec(t_shell *shell)
 			return (shell->last_status);
 	}
 	else
-		return (0);
-	if (shell->exec->cmd_count == 1 && is_builtin(shell) == true)
-	{
-		if (dup2(shell->exec->tty_fd0, STDIN_FILENO) < 0)
-			err_message(shell, "redirection error", NULL, NULL);
-		if (dup2(shell->exec->tty_fd1, STDOUT_FILENO) < 0)
-			err_message(shell, "redirection error", NULL, NULL);
-	}
+		err_message2(shell->cmd->redirs->file, NULL, "No such file or directory");
+	tty_handler(shell);
 	return (shell->last_status);
 }

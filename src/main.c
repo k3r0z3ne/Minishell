@@ -3,58 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/28 16:43:25 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/28 20:45:34 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 volatile sig_atomic_t	g_signal = 0;
-
-// static char	*my_readline(t_shell *shell, char *prompt)
-// {
-// 	(void)shell;
-// 	// ssize_t	buf_len;
-// 	// char	buffer[1024];
-// 	char	*ret;
-
-// 	ret = NULL;
-// 	if (isatty(STDIN_FILENO))
-// 	{
-// 		ret = readline(prompt);
-// 		fprintf(stderr, "readline\n");
-// 	}
-// 	// else
-// 	// {
-// 	// 	// fprintf(stderr, "HERE\n");
-// 	// 	// buf_len = read(STDIN_FILENO, buffer, sizeof(buffer));
-// 	// 	// if (buf_len < 0)
-// 	// 	// 	return (NULL);
-// 	// 	// while (buffer[buf_len] != '\n' || buffer[buf_len] != '\0')
-// 	// 	// 	buf_len++;
-// 	// 	// buffer[buf_len] = '\0';
-// 	// 	// ret = ft_strdup_track(shell, buffer);
-// 	// }
-// 	fprintf(stderr, "ret\n");
-// 	return (ret);
-// }
-
-// static char	*my_readline(char *prompt)
-// {
-// 	char	*ret;
-// 	ssize_t	buf_len;
-
-// 	ret = prompt;
-// 	buf_len = 0;
-// 	if (isatty(STDIN_FILENO) == 1)
-// 		ret = readline(prompt);
-// 	else
-// 		buf_len = read(STDIN_FILENO, ret, 12);
-// 	return (ret);
-// }
 
 static void	shell_main_loop(t_shell *shell)
 {
@@ -66,6 +24,7 @@ static void	shell_main_loop(t_shell *shell)
 		{
 			shell->last_status = 128 + g_signal;
 			g_signal = 0;
+			free(shell->input);
 			continue ;
 		}
 		if (!shell->input)
@@ -77,7 +36,11 @@ static void	shell_main_loop(t_shell *shell)
 			add_history(shell->input);
 		shell->token = lexer(shell->input, shell);
 		if (shell->token)
+		{
 			parser(shell);
+			if (shell->cmd)
+				shell->last_status = main_exec(shell);
+		}
 		if (shell->token && shell->cmd)
 			shell->last_status = main_exec(shell);
 		cleanup_all(shell);

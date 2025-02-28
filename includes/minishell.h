@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/28 14:02:42 by arotondo         ###   ########.fr       */
+/*   Created: 2025/02/28 14:20:59 by arotondo          #+#    #+#             */
+/*   Updated: 2025/02/28 14:22:32 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -37,10 +36,10 @@
 # include "builtins.h"
 # include "utils.h"
 
-typedef struct s_shell	t_shell;
-typedef struct s_token	t_token;
-typedef enum e_type		t_type;
-typedef struct s_clean	t_clean;
+typedef struct s_shell			t_shell;
+typedef struct s_token			t_token;
+typedef enum e_type				t_type;
+typedef struct s_clean			t_clean;
 
 /* redirections structure */
 typedef struct s_redir

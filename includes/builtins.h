@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:04:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/25 17:29:09 by witong           ###   ########.fr       */
+/*   Updated: 2025/02/28 14:40:22 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int		go_prev_dir(char **envp);
 void	update_pwd(t_shell *shell);
 
 /* echo */
-void	apply_flag(bool flag);
 bool	check_flag(char **flag, int *idx);
 int		ft_echo(int nb, char **arg, char **envp);
+void	last_check(int flag);
 
 /* env */
 int		ft_env(char **envp);
