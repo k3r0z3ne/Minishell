@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/02/28 20:45:34 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:41:39 by witong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 volatile sig_atomic_t	g_signal = 0;
+
+static void	shell_main_process(t_shell *shell)
+{
+	shell->token = lexer(shell->input, shell);
+	if (shell->token)
+		parser(shell);
+	if (shell->token && shell->cmd)
+		shell->last_status = main_exec(shell);
+	cleanup_all(shell);
+	free(shell->input);
+}
 
 static void	shell_main_loop(t_shell *shell)
 {
@@ -34,17 +45,7 @@ static void	shell_main_loop(t_shell *shell)
 		}
 		if (*shell->input != '\0')
 			add_history(shell->input);
-		shell->token = lexer(shell->input, shell);
-		if (shell->token)
-		{
-			parser(shell);
-			if (shell->cmd)
-				shell->last_status = main_exec(shell);
-		}
-		if (shell->token && shell->cmd)
-			shell->last_status = main_exec(shell);
-		cleanup_all(shell);
-		free(shell->input);
+		shell_main_process(shell);
 	}
 }
 
