@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/01 17:00:07 by witong           ###   ########.fr       */
+/*   Updated: 2025/03/03 00:02:36 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	exec_cmd(t_shell *shell)
 		if (shell->last_status != 127)
 			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
 		else
-			err_message(shell, shell->cmd->full_cmd[0], NULL \
-		, "command not found");
+			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
 	}
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
@@ -53,6 +52,7 @@ void	tty_handler(t_shell *shell)
 			err_message(shell, "redirection error", NULL, NULL);
 		close(shell->exec->tty_fd0);
 		shell->exec->tty_fd0 = -1;
+		perror("HERE");
 	}
 	if (shell->exec->tty_fd1 != -1)
 	{
@@ -77,8 +77,8 @@ int	main_exec(t_shell *shell)
 			return (shell->last_status);
 	}
 	else
-		err_message2(shell->cmd->redirs->file \
-	, NULL, "No such file or directory");
+		err_message2(shell->cmd->redirs->file, \
+		NULL, "No such file or directory");
 	tty_handler(shell);
 	return (shell->last_status);
 }

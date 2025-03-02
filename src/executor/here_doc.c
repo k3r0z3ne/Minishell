@@ -3,19 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 20:34:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/02 23:43:48 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
+void	second_check(t_shell *shell)
+{
+	t_redir	*tmp;
+
+	tmp = shell->cmd->redirs;
+	while (tmp)
+	{
+		if (tmp->type == HEREDOC)
+		{
+			shell->cmd->redirs = tmp;
+			shell->exec->tty_fd0 = dup(STDIN_FILENO);
+			while (shell->cmd->redirs->type == HEREDOC)
+			{
+				if (shell->cmd->i_hd < shell->cmd->hd_count && \
+					shell->cmd->loop_status != 2)
+					process_heredoc(shell);
+				shell->cmd->redirs = shell->cmd->redirs->next;
+			}
+			if (shell->cmd->i_hd == shell->cmd->hd_count - 1)
+				break ;
+		}
+		tmp = tmp->next;
+	}
+}
+
 int	iter_heredoc(t_shell *shell)
 {
 	if (shell->cmd->redirs->type != HEREDOC)
-		return (0);
+	{
+		second_check(shell);
+		fprintf(stderr, "loop status = %d\n", shell->cmd->loop_status);
+		return (shell->cmd->loop_status);
+	}
 	shell->exec->tty_fd0 = dup(STDIN_FILENO);
 	while (shell->cmd->redirs->type == HEREDOC)
 	{
