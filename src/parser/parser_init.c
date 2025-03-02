@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:48:05 by witong            #+#    #+#             */
-/*   Updated: 2025/02/28 20:46:39 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/02 21:34:42 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	**malloc_full_cmd(t_shell *shell, int size)
 {
 	char	**full_cmd;
-	int		i;
 	int		i;
 
 	full_cmd = (char **)tracked_malloc(shell, sizeof(char *) * (size + 1));
