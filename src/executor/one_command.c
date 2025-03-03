@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:46:38 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 20:34:21 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:51:43 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ pid_t	process1(t_shell *shell)
 
 int	only_cmd(t_shell *shell)
 {
-	count_fds(shell);
 	init_pids(shell);
 	if (shell->cmd->flag_hd == true)
 	{
 		if (iter_heredoc(shell) == 2)
 			return (shell->last_status);
 	}
+	count_fds(shell);
 	if (is_builtin(shell) == true)
 	{
 		redirect_setup2(shell, shell->exec, shell->cmd->redirs);

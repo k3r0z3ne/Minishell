@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/03 00:02:36 by xenon            ###   ########.fr       */
+/*   Updated: 2025/03/03 15:37:26 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	tty_handler(t_shell *shell)
 			err_message(shell, "redirection error", NULL, NULL);
 		close(shell->exec->tty_fd0);
 		shell->exec->tty_fd0 = -1;
-		perror("HERE");
 	}
 	if (shell->exec->tty_fd1 != -1)
 	{
@@ -74,7 +73,10 @@ int	main_exec(t_shell *shell)
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
 	{
 		if (iter_heredoc(shell) == 2)
+		{
+			tty_handler(shell);
 			return (shell->last_status);
+		}
 	}
 	else
 		err_message2(shell->cmd->redirs->file, \
