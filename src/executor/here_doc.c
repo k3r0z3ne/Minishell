@@ -6,19 +6,48 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 20:34:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:45:02 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
+void	second_check(t_shell *shell)
+{
+	t_redir	*tmp;
+
+	tmp = shell->cmd->redirs;
+	while (tmp)
+	{
+		if (tmp->type == HEREDOC)
+		{
+			shell->cmd->redirs = tmp;
+			while (shell->cmd->redirs->type == HEREDOC)
+			{
+				if (shell->cmd->i_hd < shell->cmd->hd_count && \
+					shell->cmd->loop_status != 2)
+					process_heredoc(shell);
+				shell->cmd->redirs = shell->cmd->redirs->next;
+			}
+			if (shell->cmd->i_hd == shell->cmd->hd_count)
+				break ;
+		}
+		tmp = tmp->next;
+	}
+}
+
 int	iter_heredoc(t_shell *shell)
 {
-	if (shell->cmd->redirs->type != HEREDOC)
-		return (0);
 	shell->exec->tty_fd0 = dup(STDIN_FILENO);
+	if (shell->cmd->redirs->type != HEREDOC)
+	{
+		second_check(shell);
+		return (shell->cmd->loop_status);
+	}
 	while (shell->cmd->redirs->type == HEREDOC)
 	{
+		// if (shell->cmd->redirs->type == REDIRIN && (shell->cmd->i_hd != shell->cmd->hd_count))
+			// shell->cmd->redirs = shell->cmd->redirs->next;
 		if (shell->cmd->i_hd < shell->cmd->hd_count && \
 			shell->cmd->loop_status != 2)
 			process_heredoc(shell);
@@ -87,8 +116,7 @@ void	redir_heredoc(t_shell *shell, char *file)
 	{
 		if (shell->cmd->i_hd == shell->cmd->hd_count)
 		{
-			if (shell->cmd->hd_count)
-				shell->exec->infile = open(shell->cmd->last_file, 00, 0664);
+			shell->exec->infile = open(shell->cmd->last_file, 00, 0664);
 			if (shell->exec->infile < 0)
 				err_message(shell, shell->cmd->last_file, NULL, NULL);
 			if (dup2(shell->exec->infile, STDIN_FILENO) < 0)

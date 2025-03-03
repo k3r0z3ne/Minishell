@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/01 17:00:07 by witong           ###   ########.fr       */
+/*   Updated: 2025/03/03 15:37:26 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	exec_cmd(t_shell *shell)
 		if (shell->last_status != 127)
 			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
 		else
-			err_message(shell, shell->cmd->full_cmd[0], NULL \
-		, "command not found");
+			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
 	}
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
@@ -74,11 +73,14 @@ int	main_exec(t_shell *shell)
 	else if (!shell->exec->cmd_count && shell->cmd->redirs->type == HEREDOC)
 	{
 		if (iter_heredoc(shell) == 2)
+		{
+			tty_handler(shell);
 			return (shell->last_status);
+		}
 	}
 	else
-		err_message2(shell->cmd->redirs->file \
-	, NULL, "No such file or directory");
+		err_message2(shell->cmd->redirs->file, \
+		NULL, "No such file or directory");
 	tty_handler(shell);
 	return (shell->last_status);
 }

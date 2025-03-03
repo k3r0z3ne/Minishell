@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 17:41:05 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/28 14:19:36 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/02 21:47:16 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	err_message(t_shell *shell, char *cmd, char *arg, char *mess)
 		ft_putendl_fd(mess, 2);
 	if (shell->exec->cmd_count > 1)
 		close_pipes(shell);
+	tty_handler(shell);
 	simple_exit(shell, shell->last_status);
 }
 

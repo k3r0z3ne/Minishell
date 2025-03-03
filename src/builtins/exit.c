@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: witong <witong@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/01 14:31:54 by witong           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:47:49 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,7 @@ void	exit_code_in_pipes(t_shell *shell, char **arg)
 	else if (!is_exit_correct(shell, arg[1], 0))
 		code = ft_atol(arg[1]);
 	else
-	{
-		perror("HERE");
 		exit_err(shell);
-	}
 	code = shell->last_status;
 	cleanup_all(shell);
 	free(shell->input);

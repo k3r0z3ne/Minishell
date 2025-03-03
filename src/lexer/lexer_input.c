@@ -43,40 +43,41 @@ static void	handle_double_ops_space(t_shell *shell, t_lexer *lexer, char *line)
 	lexer->i += 2;
 }
 
-static void	handle_single_ops_space(t_shell *shell, t_lexer *lexer, char *line)
-{
-	if (lexer->j > 0 && !ft_isspace(line[lexer->j - 1]) \
-		&& !ft_isspace(lexer->expand_input[lexer->j - 1]))
-		append_char(shell, lexer, ' ');
-	append_char(shell, lexer, line[lexer->i]);
-	if (line[lexer->i + 1] && !ft_isspace(line[lexer->i + 1]))
-		append_char(shell, lexer, ' ');
-	lexer->i++;
-}
-
-char	*add_spaces(t_shell *shell, t_lexer *lexer, char *line)
-{
-	lexer->expand_input = ft_strdup_track(shell, "");
-	while (line[lexer->i])
+	static void	handle_single_ops_space(t_shell *shell, t_lexer *lexer, char *line)
 	{
-		if (lexer->j >= 3 && ft_isspace(lexer->expand_input[lexer->j -1]) \
-			&& lexer->expand_input[lexer->j - 2] != '<' \
-			&& lexer->expand_input[lexer->j - 3] != '<')
-			lexer->is_heredoc = false;
-		if ((line[lexer->i] == '<' && line[lexer->i + 1] == '<') \
-			|| (line[lexer->i] == '>' && line[lexer->i + 1] == '>'))
-			handle_double_ops_space(shell, lexer, line);
-		else if (line[lexer->i] == '|' || line[lexer->i] == '<' \
-			|| line[lexer->i] == '>')
-			handle_single_ops_space(shell, lexer, line);
-		else
-		{
-			if (line[lexer->i] == '$' && !lexer->is_heredoc \
-				&& lexer->quote != '\'')
-				expand_lexer(shell, lexer, line);
-			else
-				append_char(shell, lexer, line[lexer->i++]);
-		}
+		// fprintf(stderr, "DEBUG: lexer->i = %d, line length = %lu\n", lexer->j, strlen(line));
+		if (lexer->j > 0 && !ft_isspace(line[lexer->j - 1]) \
+			&& !ft_isspace(lexer->expand_input[lexer->j - 1]))
+			append_char(shell, lexer, ' ');
+		append_char(shell, lexer, line[lexer->i]);
+		if (line[lexer->i + 1] && !ft_isspace(line[lexer->i + 1]))
+			append_char(shell, lexer, ' ');
+		lexer->i++;
 	}
-	return (lexer->expand_input);
-}
+
+	char	*add_spaces(t_shell *shell, t_lexer *lexer, char *line)
+	{
+		lexer->expand_input = ft_strdup_track(shell, "");
+		while (line[lexer->i])
+		{
+			if (lexer->j >= 3 && ft_isspace(lexer->expand_input[lexer->j -1]) \
+				&& lexer->expand_input[lexer->j - 2] != '<' \
+				&& lexer->expand_input[lexer->j - 3] != '<')
+				lexer->is_heredoc = false;
+			if ((line[lexer->i] == '<' && line[lexer->i + 1] == '<') \
+				|| (line[lexer->i] == '>' && line[lexer->i + 1] == '>'))
+				handle_double_ops_space(shell, lexer, line);
+			else if (line[lexer->i] == '|' || line[lexer->i] == '<' \
+				|| line[lexer->i] == '>')
+				handle_single_ops_space(shell, lexer, line);
+			else
+			{
+				if (line[lexer->i] == '$' && !lexer->is_heredoc \
+					&& lexer->quote != '\'')
+					expand_lexer(shell, lexer, line);
+				else
+					append_char(shell, lexer, line[lexer->i++]);
+			}
+		}
+		return (lexer->expand_input);
+	}
