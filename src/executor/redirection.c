@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 20:35:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:15:14 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	redirect_setup(t_shell *shell, t_exec *exec, t_redir *redir)
 
 int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
-	exec->tty_fd0 = dup(STDIN_FILENO);
 	if (redir->type == REDIRIN)
 	{
 		exec->infile = open(redir->file, O_RDONLY, 0664);
@@ -59,7 +58,6 @@ int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 
 int	if_outfile(t_shell *shell, t_exec *exec, t_redir *redir)
 {
-	exec->tty_fd1 = dup(STDOUT_FILENO);
 	if (redir->type == REDIROUT)
 		exec->outfile = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	else if (redir->type == APPEND)

@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:48:25 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/03 14:47:49 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 19:10:42 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	exit_code_in_pipes(t_shell *shell, char **arg)
 	int	code;
 
 	code = 0;
+	if (count_line(arg) == 1)
+		simple_exit(shell, code);
 	if (count_line(arg) > 2)
 		exit_err(shell);
 	else if (!is_exit_correct(shell, arg[1], 0))
@@ -81,6 +83,5 @@ void	exit_code_in_pipes(t_shell *shell, char **arg)
 	free(shell->input);
 	free_array(shell->envp);
 	free(shell);
-	fprintf(stderr, "code = %d\n", code);
 	exit(code);
 }

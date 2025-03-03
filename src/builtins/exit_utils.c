@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:38:23 by xenon             #+#    #+#             */
-/*   Updated: 2025/02/28 16:10:24 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 19:35:46 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	test_max_min(char *arg)
 	long	min;
 
 	if (!arg)
+		return (1);
+	if (!ft_atol(arg))
 		return (0);
 	if (arg[0] == '-')
 	{
@@ -75,7 +77,7 @@ void	exit_err(t_shell *shell)
 	code = 0;
 	if (is_exit_correct(shell, shell->cmd->full_cmd[1], 0))
 	{
-		code = 2;
+		shell->last_status = 2;
 		err_message(shell, shell->cmd->full_cmd[0], shell->cmd->full_cmd[1], \
 		"numeric argument required");
 	}
@@ -83,7 +85,7 @@ void	exit_err(t_shell *shell)
 	{
 		code = 1;
 		shell->last_status = code;
-		err_message(shell, shell->cmd->full_cmd[0], NULL, "too many arguments");
+		err_message2(shell->cmd->full_cmd[0], NULL, "too many arguments");
 		return ;
 	}
 	cleanup_all(shell);
