@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/03 16:55:54 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:12:55 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	exec_cmd(t_shell *shell)
 		if (shell->last_status != 127)
 			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
 		else
-			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
+			err_message(shell, shell->cmd->full_cmd[0], NULL, \
+				"command not found");
 	}
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }

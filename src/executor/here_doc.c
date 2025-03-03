@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:39:36 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/03 16:58:40 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:24:29 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	iter_heredoc(t_shell *shell)
 {
 	t_redir	*tmp;
-	
+
 	shell->exec->tty_fd0 = dup(STDIN_FILENO);
 	tmp = shell->cmd->redirs;
 	while (tmp)
