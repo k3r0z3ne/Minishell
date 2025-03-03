@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:04:33 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 14:40:22 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:21:24 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	exit_code_in_pipes(t_shell *shell, char **arg);
 int		test_max_min(char *arg);
 int		is_exit_correct(t_shell *shell, char *arg, int i);
 void	exit_err(t_shell *shell);
+void	simple_exit2(t_shell *shell, int code);
 
 /* export */
 int		ft_export(t_shell *shell);

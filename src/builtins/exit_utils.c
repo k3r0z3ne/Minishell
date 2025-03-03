@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:38:23 by xenon             #+#    #+#             */
-/*   Updated: 2025/03/03 19:35:46 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:22:50 by xenon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,16 @@ void	exit_err(t_shell *shell)
 	}
 	cleanup_all(shell);
 	free(shell->input);
+	free_array(shell->envp);
+	free(shell);
+	exit(code);
+}
+
+void	simple_exit2(t_shell *shell, int code)
+{
+	perror("");
+	code = shell->last_status;
+	cleanup_all(shell);
 	free_array(shell->envp);
 	free(shell);
 	exit(code);
