@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/03 15:37:26 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:55:54 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,6 @@ int	main_exec(t_shell *shell)
 			return (shell->last_status);
 		}
 	}
-	else
-		err_message2(shell->cmd->redirs->file, \
-		NULL, "No such file or directory");
 	tty_handler(shell);
 	return (shell->last_status);
 }
