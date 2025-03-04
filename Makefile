@@ -28,7 +28,7 @@ SRC =	main.c utils/init.c \
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 # SFLAGS = -fsanitize=address -g
-CFLAGS = -Wall -Wextra -Werror -g3 -I $(INC_DIR) -I $(LIBFT_DIR)
+CFLAGS = -Wall -Wextra -Werror -I $(INC_DIR) -I $(LIBFT_DIR)
 LIBS = -L $(LIBFT_DIR) -lft -lreadline
 
 DEF_COLOR = \033[0;39m
