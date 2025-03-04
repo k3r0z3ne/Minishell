@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:04:51 by witong            #+#    #+#             */
-/*   Updated: 2025/03/03 22:22:59 by xenon            ###   ########.fr       */
+/*   Updated: 2025/03/04 13:29:03 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,9 @@ static void	shell_main_loop(t_shell *shell)
 	{
 		setup_signals(shell);
 		if (isatty(STDIN_FILENO))
-		{
-			if (write(STDOUT_FILENO, "minishell> ", 11) == -1)
-				simple_exit2(shell, 1);
 			shell->input = readline("minishell> ");
-		}
+		else
+			simple_exit2(shell, 1);
 		if (g_signal)
 		{
 			shell->last_status = 128 + g_signal;
@@ -58,7 +56,6 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell	*shell;
 
-	signal(SIGPIPE, SIG_IGN);
 	shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);
