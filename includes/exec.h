@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 20:33:11 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:36:24 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		make_pipes(t_shell *shell);
 /* path */
 char	*check_path(t_shell *shell, char **cmd, char *env);
 char	*find_path(t_shell *shell);
+char	*access_check(t_shell *shell, char *path);
 char	*set_path(t_shell *shell, char **tab, char **cmd);
 
 /* redirection */

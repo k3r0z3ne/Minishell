@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 10:27:01 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/03 17:15:14 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:15:52 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ int	if_infile(t_shell *shell, t_exec *exec, t_redir *redir)
 	if (redir->type == REDIRIN)
 	{
 		exec->infile = open(redir->file, O_RDONLY, 0664);
-		if (exec->infile <= 0)
+		if (exec->infile < 0)
+		{
+			shell->last_status = 1;
 			err_message(shell, redir->file, NULL, NULL);
+		}
 		shell->cmd->in_count--;
 		if (!shell->cmd->in_count)
 		{

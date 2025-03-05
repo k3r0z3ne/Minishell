@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/03 20:12:55 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:12:48 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,7 @@ void	exec_cmd(t_shell *shell)
 	}
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
-	{
-		shell->last_status = errno_status();
-		if (shell->last_status != 127)
-			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
-		else
-			err_message(shell, shell->cmd->full_cmd[0], NULL, \
-				"command not found");
-	}
+		err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 
@@ -78,6 +71,12 @@ int	main_exec(t_shell *shell)
 			tty_handler(shell);
 			return (shell->last_status);
 		}
+	}
+	else if (shell->cmd->redirs->type == REDIRIN)
+	{
+		shell->last_status = 1;
+		err_message2(shell->cmd->redirs->file, NULL, "No such file \
+		or directory");
 	}
 	tty_handler(shell);
 	return (shell->last_status);
