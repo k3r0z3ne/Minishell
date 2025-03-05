@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:03:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/05 12:36:24 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:06:22 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 /* execution */
 void	exec_cmd(t_shell *shell);
 void	tty_handler(t_shell *shell);
+void	only_infile(t_shell *shell);
 int		main_exec(t_shell *shell);
 
 /* one_command */
