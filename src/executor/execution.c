@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/05 14:06:07 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:22:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,13 @@ void	tty_handler(t_shell *shell)
 
 void	only_infile(t_shell *shell)
 {	
-	if (shell->cmd->redirs->type == REDIRIN)
+	shell->exec->infile = open(shell->cmd->redirs->file, O_RDONLY, 0664);
+	if (shell->exec->infile < 0)
 	{
-		shell->exec->infile = open(shell->cmd->redirs->file, O_RDONLY, 0664);
-		if (shell->exec->infile < 0)
-		{
-			shell->last_status = 1;
-			err_message2(shell->cmd->redirs->file, NULL, NULL);
-		}
-		close(shell->exec->infile);
+		shell->last_status = 1;
+		err_message2(shell->cmd->redirs->file, NULL, NULL);
 	}
+	close(shell->exec->infile);
 }
 
 int	main_exec(t_shell *shell)
@@ -75,7 +72,8 @@ int	main_exec(t_shell *shell)
 			return (shell->last_status);
 		}
 	}
-	only_infile(shell);
+	else if (shell->cmd->redirs->type == REDIRIN)
+		only_infile(shell);
 	tty_handler(shell);
 	return (shell->last_status);
 }
