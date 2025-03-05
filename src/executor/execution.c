@@ -6,19 +6,11 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:44:23 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/03 20:12:55 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:22:51 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
-
-static int	errno_status(void)
-{
-	if (errno == 13)
-		return (126);
-	else
-		return (127);
-}
 
 void	exec_cmd(t_shell *shell)
 {
@@ -28,20 +20,10 @@ void	exec_cmd(t_shell *shell)
 	path = NULL;
 	tmp = find_path(shell);
 	if (!tmp)
-	{
-		shell->last_status = errno_status();
 		err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
-	}
 	path = check_path(shell, shell->cmd->full_cmd, tmp);
 	if (path && path[0] == '\0')
-	{
-		shell->last_status = errno_status();
-		if (shell->last_status != 127)
-			err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
-		else
-			err_message(shell, shell->cmd->full_cmd[0], NULL, \
-				"command not found");
-	}
+		err_message(shell, shell->cmd->full_cmd[0], NULL, NULL);
 	execve(path, shell->cmd->full_cmd, shell->envp);
 }
 
@@ -63,6 +45,17 @@ void	tty_handler(t_shell *shell)
 	}
 }
 
+void	only_infile(t_shell *shell)
+{	
+	shell->exec->infile = open(shell->cmd->redirs->file, O_RDONLY, 0664);
+	if (shell->exec->infile < 0)
+	{
+		shell->last_status = 1;
+		err_message2(shell->cmd->redirs->file, NULL, NULL);
+	}
+	close(shell->exec->infile);
+}
+
 int	main_exec(t_shell *shell)
 {
 	shell->exec->cmd_count = count_cmd(shell->cmd);
@@ -79,6 +72,8 @@ int	main_exec(t_shell *shell)
 			return (shell->last_status);
 		}
 	}
+	else if (shell->cmd->redirs->type == REDIRIN)
+		only_infile(shell);
 	tty_handler(shell);
 	return (shell->last_status);
 }

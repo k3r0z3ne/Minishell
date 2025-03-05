@@ -6,7 +6,7 @@
 /*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:52:03 by arotondo          #+#    #+#             */
-/*   Updated: 2025/02/28 12:45:48 by arotondo         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:24:32 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ pid_t	process(t_shell *shell)
 		if (close(shell->exec->pipe[1]) < 0)
 			err_message(shell, "close", NULL, "Bad file descriptor");
 		shell->exec->old_pipe = shell->exec->pipe[0];
+		perror("STEP3");
 	}
 	return (ret);
 }

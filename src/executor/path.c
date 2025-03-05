@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xenon <xenon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arotondo <arotondo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:16:49 by arotondo          #+#    #+#             */
-/*   Updated: 2025/03/02 22:46:21 by xenon            ###   ########.fr       */
+/*   Updated: 2025/03/05 13:12:11 by arotondo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ char	*find_path(t_shell *shell)
 	return (shell->envp[i]);
 }
 
+char	*access_check(t_shell *shell, char *path)
+{
+	if (!access(path, F_OK))
+	{
+		if (!access(path, X_OK))
+			return (path);
+		else
+		{
+			shell->last_status = 126;
+			err_message(shell, path, NULL, NULL);
+		}
+	}
+	return (NULL);
+}
+
 char	*set_path(t_shell *shell, char **tab, char **cmd)
 {
 	int		i;
@@ -60,8 +75,9 @@ char	*set_path(t_shell *shell, char **tab, char **cmd)
 
 	i = 0;
 	shell->cmd->cmd_len = ft_strlen(shell->cmd->full_cmd[0]);
-	if (access(shell->cmd->full_cmd[0], F_OK | X_OK) == 0)
-		return (shell->cmd->full_cmd[0]);
+	path = access_check(shell, shell->cmd->full_cmd[0]);
+	if (path)
+		return (path);
 	while (tab[i])
 	{
 		tmp = ft_strjoin_track(shell, tab[i], "/");
@@ -70,7 +86,8 @@ char	*set_path(t_shell *shell, char **tab, char **cmd)
 		path = ft_strjoin_track(shell, tmp, cmd[0]);
 		if (!path)
 			return (NULL);
-		if (access(path, F_OK) == 0)
+		path = access_check(shell, path);
+		if (path)
 			break ;
 		path = "";
 		i++;
